@@ -1,0 +1,93 @@
+
+
+.btn-outline-dark {
+  width: 200px;
+}
+
+/*  */
+.sidebar {
+  height: 100%;
+  /* 100% Full-height */
+  width: 0;
+  /* 0 width */
+  position: fixed;
+  /* Fixed place */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  right: 0;
+  background-color: rgb(255, 255, 239);
+  /* Disable horizontal scroll */
+  overflow-x: hidden;
+  /* Place content 60px from the top */
+  padding-top: 60px;
+  /* Transition effect to slide 
+      in the sidebar */
+  transition: 0.5s;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: rgb(173, 216, 230);
+}
+
+/* Position and style the close 
+button at top right corner */
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 150px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #444;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #111;
+}
+
+
+
+/* Style page content - pushes the
+page content to the right when the 
+sidebar is opened */
+#main {
+  /* If you want a transition effect */
+  transition: margin-right 0.5s;
+
+  /* padding: 20dp; */
+}
+
+
+
+/* On smaller screens, where height is 
+less than 450px, change the style of
+the side-nav (less padding and a 
+smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+/*  */

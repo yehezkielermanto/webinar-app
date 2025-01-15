@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction</title>
+    <style>
+        
+        h1{
+            text-align: center;
+        }
+        p.date {
+            text-align: right;
+        }
+        p.main {
+            text-align: justify;
+        }
+    </style>
+    <script>
+        window.onload=timeout;
+        function timeout(){
+            window.setTimeout("redirect()",5000)
+        }
+        function redirect(){
+            window.location ="test-anim-splash.html"
+            return
+        }
+    </script>
+</head>
+<body onload="timeout()">
+   <img src="..images/logo_if.png" alt="">
+   <br>
+<form>
+<input type="button" value="Home Page" onClick="redirect()">
+<p>Thank You For Visiting!</p>
+</form>
+</body>
+</html>

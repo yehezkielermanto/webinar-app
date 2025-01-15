@@ -1,0 +1,16 @@
+#cards{
+  background-color: #ADD8E6;
+  padding-bottom: 15px;
+  border-radius: 15px;
+  background: rgba(250,250,250,0.9)
+}
+#cards img{
+  width: 145px;
+  height: 200px;
+  border-radius: 10px;
+  float: left;
+  padding-right: 5px;
+}
+#cards h3{
+  padding-top: 15px
+}
