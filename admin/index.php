@@ -3,10 +3,11 @@
 <!-- Penomoran Otomatis -->
 <?php
 // hubungkan ke database
+$koneksi = null;
 include 'koneksi.php';
 
 // mengambil data ID event yang tertinggi 
-$query = mysqli_query($koneksi, "SELECT max(id_event) as IDTerbesar FROM master_event");
+$query = mysqli_query($koneksi, "SELECT max(id_event) as IDTerbesar FROM events");
 $data = mysqli_fetch_array($query);
 $IDTerbesar = $data['IDTerbesar'];
 

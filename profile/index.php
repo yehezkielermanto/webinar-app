@@ -1,3 +1,18 @@
+<?php
+include "../koneksi.php";
+session_start();
+if(!isset($_SESSION['email'])){
+    header("Location:/session.php");
+    exit;
+}
+$user_data = [];
+array_push($user_data, array("id" => $_SESSION['id_peserta']));
+array_push($user_data, array("fn" => $_SESSION['nama_lengkap']));
+array_push($user_data, array("em" => $_SESSION['email']));
+array_push($user_data, array("ph" => $_SESSION['phone']));
+array_push($user_data, array("gn" => $_SESSION['gender']));
+array_push($user_data, array("in" => $_SESSION['institution']));
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -20,20 +35,28 @@
                     <div class="left-bottom">
                         <div class="pad-left">
                             <br>
-                            <h3 class="xl-f" id="name">John Doe</h3>
+                            <h3 class="xl-f" id="name">
+                                <?php echo $_SESSION['nama_lengkap']; ?>
+                            </h3>
                             <br>
                             <table class="s-f user-table">
                                 <tr>
                                     <td><i class="nf nf-md-email"></i></td>
-                                    <td id="email">johndoe@email.com</td>
+                                    <td id="email">
+                                        <?php echo $_SESSION['email']; ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><i class="nf nf-fa-phone"></i></td>
-                                    <td id="phone">+69 420 3334 4002</td>
+                                    <td id="phone">
+                                        <?php echo $_SESSION['phone']; ?>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><i class="nf nf-fa-briefcase"></i></td>
-                                    <td id="instansi">Penjaga Rumah</td>
+                                    <td id="instansi">
+                                        <?php echo $_SESSION['institution']; ?>
+                                    </td>
                                 </tr>
                             </table>
                         </div>

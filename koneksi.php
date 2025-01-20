@@ -22,8 +22,8 @@ date_default_timezone_set('Asia/Jakarta'); //define local time
 /*$password = "";*/
 /*$database = "ifukdcco_webinar";*/
 $server = "localhost";
-$username = "app_user";
-$password = "app_password";
-$database = "app_db";
+$username = "root";
+$password = "";
+$database = "ukdc_webinar";
 
 $koneksi = mysqli_connect($server, $username, $password, $database) or die(mysqli_error($koneksi));
