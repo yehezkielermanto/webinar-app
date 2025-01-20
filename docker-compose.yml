@@ -1,0 +1,39 @@
+services:
+  php-apache:
+    image: php:8.2-apache
+    container_name: php-apache
+    ports:
+      - "8080:80" # Map port 8080 on the host to port 80 in the container
+    volumes:
+      - ./:/var/www/html # Mount your local "html" directory to Apache's web root
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Set the MySQL root password
+      MYSQL_DATABASE: app_db           # Initial database to create
+      MYSQL_USER: app_user             # Create a user
+      MYSQL_PASSWORD: app_password     # Set the user's password
+    ports:
+      - "3306:3306" # Expose MySQL's port
+    volumes:
+      - mysql_data:/var/lib/mysql # Use a named volume to persist MySQL data
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql # Hostname of the MySQL server (should match the service name)
+      PMA_USER: app_user # MySQL user
+      PMA_PASSWORD: app_password # MySQL user's password
+      PMA_ABSOLUTE_URI: http://localhost:8081
+    ports:
+      - "8081:80" # Access phpMyAdmin at localhost:8081
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data: # Named volume for MySQL persistence
