@@ -350,7 +350,7 @@
     width: 100%;
 }
 
-#editbtn, #save-edit {
+#editbtn, #save-edit, #logoutbtn {
     cursor: pointer;
     text-align: center;
     border: 2px solid white;
@@ -360,7 +360,7 @@
     margin-bottom: 0;
 }
 
-#save-edit {
+#save-edit, #logoutbtn {
     margin-bottom: 5px;
     border: none;
     background: white;

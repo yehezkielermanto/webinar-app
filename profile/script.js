@@ -46,10 +46,10 @@ document.addEventListener("DOMContentLoaded", function() {
     modProfile.addEventListener("click", function() {
         editMode = !editMode;
         if (editMode) {
-            email.innerHTML = `<input class="inp-edit-mode" type="text" value="${curEmail}">`;
-            phone.innerHTML = `<input class="inp-edit-mode" type="text" value="${curPhone}">`;
-            name.innerHTML = `<input  class="inp-edit-mode" type="text" value="${curName}">`;
-            instansi.innerHTML = `<input class="inp-edit-mode" type="text" value="${curInstansi}">`;
+            //email.innerHTML = `<input id="email" class="inp-edit-mode" type="text" value="${curEmail}">`;
+            phone.innerHTML = `<input id="ed-phone" class="inp-edit-mode" type="text" value="${curPhone}">`;
+            name.innerHTML = `<input  id="ed-name" class="inp-edit-mode" type="text" value="${curName}">`;
+            instansi.innerHTML = `<input id="ed-inst" class="inp-edit-mode" type="text" value="${curInstansi}">`;
             saveEdit.style.display = "block";
         } else {
             email.innerHTML = curEmail;
@@ -58,6 +58,50 @@ document.addEventListener("DOMContentLoaded", function() {
             instansi.innerHTML = curInstansi;
             saveEdit.style.display = "none";
         }
+    });
+
+    // save change
+    saveEdit.addEventListener("click", function() {
+        const newPhone = document.getElementById("ed-phone").value;
+        const newName = document.getElementById("ed-name").value;
+        const newInstansi = document.getElementById("ed-inst").value;
+
+        // Create a form dynamically
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/profile/ubah-profile.php";
+
+        // Add input fields to the form
+        const emailInput = document.createElement("input");
+        emailInput.type = "hidden";
+        emailInput.name = "email";
+        emailInput.value = curEmail;
+        form.appendChild(emailInput);
+        const phoneInput = document.createElement("input");
+        phoneInput.type = "hidden";
+        phoneInput.name = "phone";
+        phoneInput.value = newPhone;
+        form.appendChild(phoneInput);
+        const nameInput = document.createElement("input");
+        nameInput.type = "hidden";
+        nameInput.name = "name";
+        nameInput.value = newName;
+        form.appendChild(nameInput);
+        const instansiInput = document.createElement("input");
+        instansiInput.type = "hidden";
+        instansiInput.name = "instansi";
+        instansiInput.value = newInstansi;
+        form.appendChild(instansiInput);
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    });
+
+    // logout
+    const logoutBut = document.getElementById("logoutbtn");
+    logoutBut.addEventListener("click", function() {
+        window.location.href = "/logout.php";
     });
 
     // card hover effect

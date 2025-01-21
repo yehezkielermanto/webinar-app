@@ -40,7 +40,7 @@ if (isset($_POST['bsimpan'])) {
             move_uploaded_file($file_tmp, '../avatar/flyer/' . $nama_gambar_baru);
             // VB
             move_uploaded_file($file_tmp2, '../avatar/VB/' . $nama_gambar_baru2);
-            $simpan = mysqli_query($koneksi, "INSERT INTO master_event VALUES ('$nama_gambar_baru','$deskripsi','$ID_event','$jam_mulai', '$jam_selesai', '$jenis_event', '$judul_event', '$link_meet', '$pembicara',1, '$convert_date', '$nama_gambar_baru2', '$feedback')");
+            $simpan = mysqli_query($koneksi, "INSERT INTO events VALUES ('$nama_gambar_baru','$deskripsi','$ID_event','$jam_mulai', '$jam_selesai', '$jenis_event', '$judul_event', '$link_meet', '$pembicara',1, '$convert_date', '$nama_gambar_baru2', '$feedback')");
             if ($simpan) {
                 echo "<script>
                     alert('Simpan Event Sukses, Terima kasih');

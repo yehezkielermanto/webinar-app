@@ -29,7 +29,12 @@ if(!isset($_SESSION['email'])){
                         <div class="pad-left">
                             <br>
                             <h3 class="xl-f" id="name">
-                                <?php echo $_SESSION['nama_lengkap']; ?>
+                                <?php 
+                                echo $_SESSION['nama_lengkap'];
+                                //if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "admin") {
+                                //    echo " (Admin)";
+                                //}
+                                ?>
                             </h3>
                             <br>
                             <table class="s-f user-table">
@@ -55,6 +60,7 @@ if(!isset($_SESSION['email'])){
                         </div>
                         <div class="center-me">
                             <div style="display:none;" class="s-f" id="save-edit"><i class="nf nf-fa-save"></i> Save</div>
+                            <div class="s-f" id="logoutbtn"><i class="nf nf-fa-sign_out"></i> Logout</div>
                             <div class="s-f" id="editbtn"><i class="nf nf-fa-edit"></i> Rubah Profile</div>
                         </div>
                     </div>

@@ -15,6 +15,7 @@ $data = mysqli_fetch_array($login);
 
 // Uji jika user dan pass ditemukan atau sesuai
 if ($data) {
+    $_SESSION['id_peserta'] = $data['user_id'];
     $_SESSION['id_user'] = $data['user_id'];
     $_SESSION['user'] = $data['username'];
     $_SESSION['pass'] = $data['password'];
@@ -22,6 +23,7 @@ if ($data) {
     $_SESSION['nama_lengkap'] = $data['fullname'];
     $_SESSION['phone'] = $data['phone'];
     $_SESSION['institution'] = $data['institution'];
+    $_SESSION['is_admin'] = $data['role'];
     // arahkan ke halaman admin
     header('location:index.php');
 } else {
