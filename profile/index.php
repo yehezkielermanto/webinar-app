@@ -5,13 +5,6 @@ if(!isset($_SESSION['email'])){
     header("Location:/session.php");
     exit;
 }
-$user_data = [];
-array_push($user_data, array("id" => $_SESSION['id_peserta']));
-array_push($user_data, array("fn" => $_SESSION['nama_lengkap']));
-array_push($user_data, array("em" => $_SESSION['email']));
-array_push($user_data, array("ph" => $_SESSION['phone']));
-array_push($user_data, array("gn" => $_SESSION['gender']));
-array_push($user_data, array("in" => $_SESSION['institution']));
 ?>
 <!DOCTYPE html>
 <html lang="en">
