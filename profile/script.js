@@ -35,12 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const email = document.getElementById("email");
     const phone = document.getElementById("phone");
     const name = document.getElementById("name");
+    const address = document.getElementById("address");
     const instansi = document.getElementById("instansi");
     const saveEdit = document.getElementById("save-edit");
     const curEmail = email.innerText;
     const curPhone = phone.innerText;
     const curName = name.innerText;
     const curInstansi = instansi.innerText;
+    const curAddress = address.innerText;
 
     const modProfile = document.getElementById("editbtn");
     modProfile.addEventListener("click", function() {
@@ -50,12 +52,14 @@ document.addEventListener("DOMContentLoaded", function() {
             phone.innerHTML = `<input id="ed-phone" class="inp-edit-mode" type="text" value="${curPhone}">`;
             name.innerHTML = `<input  id="ed-name" class="inp-edit-mode" type="text" value="${curName}">`;
             instansi.innerHTML = `<input id="ed-inst" class="inp-edit-mode" type="text" value="${curInstansi}">`;
+            address.innerHTML = `<input id="ed-addr" class="inp-edit-mode" type="text" value="${curAddress}">`;
             saveEdit.style.display = "block";
         } else {
             email.innerHTML = curEmail;
             phone.innerHTML = curPhone;
             name.innerHTML = curName;
             instansi.innerHTML = curInstansi;
+            address.innerText = curAddress;
             saveEdit.style.display = "none";
         }
     });
@@ -65,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const newPhone = document.getElementById("ed-phone").value;
         const newName = document.getElementById("ed-name").value;
         const newInstansi = document.getElementById("ed-inst").value;
+        const newAddress = document.getElementById("ed-addr").value;
 
         // Create a form dynamically
         const form = document.createElement("form");
@@ -92,6 +97,11 @@ document.addEventListener("DOMContentLoaded", function() {
         instansiInput.name = "instansi";
         instansiInput.value = newInstansi;
         form.appendChild(instansiInput);
+        const addressInput = document.createElement("input");
+        addressInput.type = "hidden";
+        addressInput.name = "alamat";
+        addressInput.value = newAddress;
+        form.appendChild(addressInput);
 
         // Append the form to the body and submit it
         document.body.appendChild(form);

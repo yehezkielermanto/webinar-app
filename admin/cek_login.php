@@ -23,6 +23,7 @@ if ($data) {
     $_SESSION['nama_lengkap'] = $data['fullname'];
     $_SESSION['phone'] = $data['phone'];
     $_SESSION['institution'] = $data['institution'];
+    $_SESSION['address'] = $data['address'];
     $_SESSION['is_admin'] = $data['role'];
     // arahkan ke halaman admin
     header('location:index.php');

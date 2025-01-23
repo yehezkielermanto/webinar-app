@@ -24,6 +24,7 @@ if (isset($_POST['masuklogin'])) {
         $_SESSION['email'] = $row['email'];
         $_SESSION['phone'] = $row['phone'];
         $_SESSION['gender'] = $row['gender'];
+        $_SESSION['address'] = $row['address'];
         $_SESSION['institution'] = $row['institution'];
         if ($row['status_verification'] == 1) {
             header('location:beranda.php');

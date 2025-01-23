@@ -51,6 +51,12 @@ if(!isset($_SESSION['email'])){
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td><i class="nf nf-fa-home"></i></td>
+                                    <td id="address">
+                                        <?php echo $_SESSION['address']; ?>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td><i class="nf nf-fa-briefcase"></i></td>
                                     <td id="instansi">
                                         <?php echo $_SESSION['institution']; ?>
