@@ -25,9 +25,8 @@ $IDTerbesar = $huruf . sprintf("%03s", $urutan);
 </div>
 <div>
     <form method="POST" action="action.php" enctype="multipart/form-data">
-        <input type="text" name="event_id" readonly placeholder="event id" value="<?= $IDTerbesar ?>">
+        <input type="text" name="event_name" readonly placeholder="event id" value="<?= $IDTerbesar ?>">
         <input type="text" name="post_url" placeholder="URL Poster">
-        <input type="text" name="event_name" placeholder="Event Name">
         <input type="text" name="bg-ol-url" placeholder="URL Background zoom">
         <input type="text" name="title" placeholder="Title">
         <input type="text" name="desc" placeholder="Description">
@@ -41,13 +40,13 @@ $IDTerbesar = $huruf . sprintf("%03s", $urutan);
         <input type="text" name="link" placeholder="Link Zoom">
         <input type="text" name="speaker" placeholder="Pembicara">
         <!-- is_internal -->
-        <input type="radio" name="internal" value="yes">Internal
-        <input type="radio" name="internal" value="no">Eksternal
+        <input type="radio" name="internal" value="1">Internal
+        <input type="radio" name="internal" value="0">Eksternal
 
         <input type="text" name="status" placeholder="status"><br>
-        <!-- is_internal -->
-        <input type="radio" name="at-type" value="on">Online
-        <input type="radio" name="at-type" value="of">Offline
+        <!-- online ? -->
+        <input type="radio" name="at-type" value="online">Online
+        <input type="radio" name="at-type" value="offline">Offline
 
         <br>
         <input type="submit" name="submit" value="Submit">
