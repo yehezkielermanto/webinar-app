@@ -1,9 +1,79 @@
 <?php
+$koneksi = null;
 include "../koneksi.php";
 session_start();
 if(!isset($_SESSION['email'])){
     header("Location:/session.php");
     exit;
+}
+
+$user_id = $_SESSION['id_peserta'];
+$particapated = array();
+
+$query = "
+SELECT 
+    e.event_id, 
+    e.poster_url, 
+    e.event_name, 
+    e.background_online_url, 
+    e.title, 
+    e.description, 
+    e.date, 
+    e.start_time, 
+    e.end_time, 
+    e.type, 
+    e.link, 
+    e.speaker, 
+    e.published, 
+    e.is_internal, 
+    e.status AS event_status, 
+    e.attendance_type, 
+    e.slug, 
+    e.remark, 
+    ep.event_participant_id, 
+    ep.user_id, 
+    ep.status AS participant_status, 
+    ep.event_role, 
+    ep.certificate_url
+FROM 
+    event_participants ep
+JOIN 
+    events e 
+ON 
+    ep.event_id = e.event_id
+WHERE 
+    ep.user_id =".$user_id;
+
+$result = mysqli_query($koneksi, $query);
+$result_len = mysqli_num_rows($result);
+if ($result_len > 0) {
+    while ($row = $result->fetch_assoc()) {
+        array_push($particapated, $row);
+    }
+}
+
+function create_card(array $c) {
+    $name = $c['title'];
+    $date = $c['date'];
+    $speaker = $c['speaker'];
+    $evRole = $c['event_role'];
+    echo '
+    <div class="card">
+        <div class="card-upper">
+            <div class="wimg-container">
+                <img class="responsive-image2" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmikrocentrum.nl%2Fassets%2FUploads%2FALG_Webinars-min-v2.jpg&f=1&nofb=1&ipt=1067cd4cae67259b4c613752d1b1cecf932f0e5d111a6c527eec068a3eb9d1e3&ipo=images"/>
+            </div>
+        </div>
+        <div class="card-bottom">
+            <p class="m-f bold-f mb-5 mb-0">'.$name.'</p>
+            <p class="s-f mb-0">'.$date.'</p>
+            <p class="s-f mb-0">'.$speaker.'</p>
+            <div class="card-status">
+                <p class="xs-f">'.$evRole.'</p>
+            </div>
+        </div>
+    </div>
+    ';
 }
 ?>
 <!DOCTYPE html>
@@ -104,39 +174,26 @@ if(!isset($_SESSION['email'])){
                         </div>
                     </div>
                     <div class="card-container">
-                        <!-- first entry -->
-                        <div class="card">
-                            <div class="card-upper">
-                                <div class="wimg-container">
-                                    <!--<img class="responsive-image2" src="https://assetsio.gnwcdn.com/Honkai-Star-Rail-The-Herta-materials%2C-kit%2C-and-Eidolons-cover.jpg?width=1200&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp"/>-->
-                                    <img class="responsive-image2" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmikrocentrum.nl%2Fassets%2FUploads%2FALG_Webinars-min-v2.jpg&f=1&nofb=1&ipt=1067cd4cae67259b4c613752d1b1cecf932f0e5d111a6c527eec068a3eb9d1e3&ipo=images"/>
-                                </div>
-                            </div>
-                            <div class="card-bottom">
-                                <p class="m-f bold-f mb-5 mb-0">Webinar A</p>
-                                <p class="s-f mb-0">1/1/1111</p>
-                                <p class="s-f mb-0">Manusia</p>
-                                <div class="card-status">
-                                    <p class="xs-f">Panitia</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- second entry -->
-                        <div class="card">
-                            <div class="card-upper">
-                                <div class="wimg-container">
-                                    <img class="responsive-image2" src="tmp-poster.jpeg"/>
-                                </div>
-                            </div>
-                            <div class="card-bottom">
-                                <p class="m-f bold-f mb-5 mb-0">Webinar A</p>
-                                <p class="s-f mb-0">1/1/1111</p>
-                                <p class="s-f mb-0">Manusia</p>
-                                <!--<div class="card-status">-->
-                                <!--    <p class="xs-f">Panitia</p>-->
-                                <!--</div>-->
-                            </div>
-                        </div>
+                        <?php
+                        foreach ($particapated as $entry) {
+                            create_card($entry);
+                        }
+                        ?>
+                        <!--<div class="card">-->
+                        <!--    <div class="card-upper">-->
+                        <!--        <div class="wimg-container">-->
+                        <!--            <img class="responsive-image2" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmikrocentrum.nl%2Fassets%2FUploads%2FALG_Webinars-min-v2.jpg&f=1&nofb=1&ipt=1067cd4cae67259b4c613752d1b1cecf932f0e5d111a6c527eec068a3eb9d1e3&ipo=images"/>-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="card-bottom">-->
+                        <!--        <p class="m-f bold-f mb-5 mb-0">Webinar A</p>-->
+                        <!--        <p class="s-f mb-0">1/1/1111</p>-->
+                        <!--        <p class="s-f mb-0">Manusia</p>-->
+                        <!--        <div class="card-status">-->
+                        <!--            <p class="xs-f">Panitia</p>-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--</div>-->
                     </div>
                     <div class="more-card-btn">
                         <div class="white-grad inner-footer">
