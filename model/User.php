@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once "Connection.php";
 
@@ -67,7 +66,21 @@ class User
         $stmt->bindParam(':type', $req['type'], PDO::PARAM_STR);
         $stmt->bindParam(':status', $req['status'], PDO::PARAM_STR);
 
-        $stmt->execute();
+        try {
+            $success = $stmt->execute();
+
+            // If the query is successful, return the last inserted ID
+            if ($success) {
+                return $this->conn->lastInsertId();
+            }
+
+            error_log("Execute failed: " . print_r($stmt->errorInfo(), true));
+            return false; 
+        } catch (PDOException $e) {
+
+            error_log("PDO Exception: " . $e->getMessage());
+            return false;
+        }
     }
 
     // Read all users
@@ -88,12 +101,12 @@ class User
 
     }
 
-    function count($req) : int
+    function count($username) : int
     {
         $sql = "SELECT COUNT(username) FROM users WHERE username = :username";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':username', $req['username'], PDO::PARAM_STR);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
 
         $count = $stmt->fetchColumn();

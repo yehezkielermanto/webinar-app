@@ -1,7 +1,7 @@
 <?php
-session_start();
 
 require_once __DIR__ . "/../model/User.php";
+require_once __DIR__ . "/../error/ResponseError.php";
 
 class UserService 
 {
@@ -18,7 +18,7 @@ class UserService
 
         // Check if the username already exists
         if ($countUser > 0) {
-            return "Username already exists";
+            throw new ResponseError("Username already exists");
         }
 
         // Hash the password
