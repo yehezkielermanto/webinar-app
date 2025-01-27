@@ -21,6 +21,10 @@ if (isset($_POST['my_ticket'])) {
     header('Location: myticket.php');
 }
 
+if (isset($_POST['ticket'])) {
+    header('Location: ticket.php');
+}
+
 $userId = $_SESSION['user']['id'];
 
 $supportController = new SupportController();
@@ -60,6 +64,12 @@ $supports = $supportController->list($userId);
                     <button type="submit" name="my_ticket" class="btn btn-link">
                         My Ticket
                     </button>
+
+                    <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
+                        <button type="submit" name="ticket" class="btn btn-link">
+                            Ticket
+                        </button>
+                    <?php endif; ?>
                 </form>
             </div>
 

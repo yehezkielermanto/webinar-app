@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="container-login-form-btn p-t-15 p-b-40">
-                    <button class="login-form-btn " name="resgiter"><a style="color: white;">Daftar</a>
+                    <button class="login-form-btn " name="register"><a style="color: white;">Daftar</a>
                     </button>
               </div>
             </form>
