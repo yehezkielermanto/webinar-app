@@ -42,4 +42,23 @@ class UserService
         return $user->create($req);
     }
 
+    function login($req) 
+    {
+
+        $user = new User();
+
+        $userExists = $user->readUnique($req['username']);
+
+        if (!$userExists) {
+            throw new ResponseError("Username or password is wrong");
+        }
+
+        if (!password_verify($req['password'], $userExists['password'])) {
+            throw new ResponseError("Username or password is wrong");
+        } 
+
+        return $userExists;
+    }
+        
+
 }

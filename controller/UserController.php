@@ -22,4 +22,23 @@ class UserController
             return $e->getMessage();
         }
     }
+
+    function login($req)
+    {
+        $userService = new UserService();
+
+        try {
+            $result = $userService->login($req);
+
+            return $result;
+        
+        } catch (ResponseError $e) {
+            
+            return $e->getMessage();
+    
+        } catch (PDOException $e) {
+            
+            return $e->getMessage();
+        }
+    }
 }

@@ -4,10 +4,12 @@ require_once __DIR__ . "/controller/UserController.php";
 
 session_start();
 
+// Check if the user is already logged in
 if (isset($_POST['registration'])) {
 
     $userController = new UserController();
 
+    // Data to be sent to the controller
     $data = [
         'fullname' => $_POST['fullname'],
         'username' => $_POST['username'],
@@ -19,8 +21,10 @@ if (isset($_POST['registration'])) {
         'address' => $_POST['address']
     ];
 
+    // Call the register function from the controller
     $result = $userController->register($data);
 
+    // Check the result
     if ($result === "Username already exists") {
         echo "<script>alert('Username already exists');</script>";
     } else if ($result) {
@@ -49,12 +53,17 @@ if (isset($_POST['registration'])) {
 
         <div class="row">
             <div class="col-12">
+                <a href="login.php">Login</a>
+            </div>
+
+            <div class="col-12">
                 <h1 class="text-center">Register</h1>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12 ">
+                <!-- FORM SECTION -->
                 <form method="post">
                     <div class="mb-3">
                         <label for="fullname" class="form-label">Fullname</label>
@@ -104,7 +113,7 @@ if (isset($_POST['registration'])) {
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
 
-                    <button type="submit" name="registration" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="registration" class="btn btn-primary">Register</button>
                 </form>
             </div>
         </div>

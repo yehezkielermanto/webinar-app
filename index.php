@@ -33,11 +33,11 @@
                 </div>
 
                 <div class="container-login-form-btn p-t-30 p-b-15">
-                    <button class="login-form-btn " name="masuk"><a style="color:white;">Masuk</a></button>
+                    <button class="login-form-btn " name="login"><a style="color:white;">Masuk</a></button>
                 </div>
 
                 <div class="container-login-form-btn p-t-15 p-b-40">
-                    <button class="login-form-btn " name="daftar"><a style="color: white;">Daftar</a>
+                    <button class="login-form-btn " name="resgiter"><a style="color: white;">Daftar</a>
                     </button>
               </div>
             </form>
@@ -60,11 +60,11 @@
 
 </html>
 <?php
-if (isset($_POST['masuk'])) {
-    header('Location: masuk.php');
+if (isset($_POST['login'])) {
+    header('Location: login.php');
 }
-if (isset($_POST['daftar'])) {
-    header('Location:buat-akun.php');
+if (isset($_POST['register'])) {
+    header('Location: register.php');
 }
 
 ?>

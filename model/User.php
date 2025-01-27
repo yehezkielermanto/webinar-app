@@ -89,6 +89,35 @@ class User
 
     }
 
+    // Read a user
+    function readUnique($username) 
+    {
+
+        $sql = 
+        "
+            SELECT username, password 
+            FROM users 
+            WHERE username = :username
+        ";
+        
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+
+        try {
+
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } catch (PDOException $e) {
+
+            error_log("PDO Exception: " . $e->getMessage());
+            return false;
+        }
+    }
+
     // Update a user
     function update() 
     {
