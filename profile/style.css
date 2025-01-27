@@ -360,8 +360,15 @@
     margin-bottom: 0;
 }
 
-#save-edit, #logoutbtn {
+#save-edit {
     margin-bottom: 5px;
+    border: none;
+    background: white;
+    color: rgb(182,163,232);
+}
+
+#logoutbtn {
+    margin-top: 5px;
     border: none;
     background: white;
     color: rgb(182,163,232);

@@ -136,8 +136,8 @@ function create_card(array $c) {
                         </div>
                         <div class="center-me">
                             <div style="display:none;" class="s-f" id="save-edit"><i class="nf nf-fa-save"></i> Save</div>
-                            <div class="s-f" id="logoutbtn"><i class="nf nf-fa-sign_out"></i> Logout</div>
                             <div class="s-f" id="editbtn"><i class="nf nf-fa-edit"></i> Rubah Profile</div>
+                            <div class="s-f" id="logoutbtn"><i class="nf nf-fa-sign_out"></i> Logout</div>
                         </div>
                     </div>
                 </div>
