@@ -72,10 +72,13 @@ $supports = $supportController->list($userId);
             <div class="row">
                 <div class="col-12 d-flex flex-wrap justify-content-between">
 
+                    <!-- CHECK RESPONSE SUCCESSFULLY -->
                     <?php if ($supports["success"]) : ?>
 
+                        <!-- CHECK DATA TICKET -->
                         <?php if (count($supports["data"]) > 0) : ?>
 
+                            <!-- ITERATE TICKET -->
                             <?php foreach ($supports["data"] as $support) : ?>
                                 <div class="card m-2" style="width: 20rem;">
                                     <div class="card-body">
@@ -89,14 +92,14 @@ $supports = $supportController->list($userId);
                                         <?php if ($support["status"] == "SOLVED") : ?>
                                             <span class="badge bg-success text-light">Solved</span>
                                         <?php endif; ?>
-                                        
+
                                     </div>
                                 </div>
                             <?php endforeach; ?>
 
                         <?php else : ?>
 
-                            <div class="alert alert-info" role="alert">
+                            <div class="alert alert-info w-100" role="alert">
                                 No ticket found
                             </div>
 
@@ -104,7 +107,7 @@ $supports = $supportController->list($userId);
 
                     <?php else : ?>
 
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-danger w-100" role="alert">
                             <?= $supports["message"] ?>
                         </div>
 
