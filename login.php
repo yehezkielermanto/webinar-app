@@ -26,6 +26,7 @@ if (isset($_POST['login'])) {
     } else if ($result) {
         
         $_SESSION['user'] = $result;
+
         header('Location: homepage.php');
         
     } else if (!$result) {

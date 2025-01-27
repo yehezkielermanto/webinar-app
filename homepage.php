@@ -1,10 +1,17 @@
 <?php
-
 session_start();
 
 if (isset($_POST['logout'])) {
     session_destroy();
     header('Location: index.php');
+}
+
+if (isset($_POST['support'])) {
+    header('Location: support.php');
+}
+
+if (isset($_POST['home'])) {
+    header('Location: homepage.php');
 }
 
 
@@ -27,9 +34,13 @@ if (isset($_POST['logout'])) {
     <div class="container w-50 my-3">
         <div class="row">
             <div class="col-12">
+                <!-- CAN CREATE COMPONENT FOR NAVIGATION -->
                 <form method="post">
                     <button type="submit" name="logout" class="btn btn-link">
                         Logout
+                    </button>
+                    <button type="submit" name="home" class="btn btn-link">
+                        Home
                     </button>
                     <button type="submit" name="support" class="btn btn-link">
                         Support
