@@ -71,6 +71,39 @@ class Supports
 
     }
 
+    // Read by user id
+    function readByUserId($userId) 
+    {
+
+        $sql = "
+            SELECT 
+                id, 
+                subject,
+                status  
+            FROM 
+                supports 
+            WHERE 
+                user_id = :user_id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } else {
+
+            return null;
+        }
+
+    }
+
     // Update a support ticket
     function update() 
     {

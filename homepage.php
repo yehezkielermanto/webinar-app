@@ -14,6 +14,9 @@ if (isset($_POST['home'])) {
     header('Location: homepage.php');
 }
 
+if (isset($_POST['my_ticket'])) {
+    header('Location: myticket.php');
+}
 
 ?>
 
@@ -44,6 +47,9 @@ if (isset($_POST['home'])) {
                     </button>
                     <button type="submit" name="support" class="btn btn-link">
                         Support
+                    </button>
+                    <button type="submit" name="my_ticket" class="btn btn-link">
+                        My Ticket
                     </button>
                 </form>
             </div>

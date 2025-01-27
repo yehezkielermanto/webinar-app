@@ -20,4 +20,11 @@ class SupportService
     {
 
     }
+
+    function list($userId): array
+    {
+        $support = new Supports();
+
+        return $support->readByUserId($userId);
+    }
 }

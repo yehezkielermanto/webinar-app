@@ -33,4 +33,30 @@ class SupportController
 
         
     }
+
+    function list($userId)
+    {
+        $supportService = new SupportService();
+
+        try {
+
+            $result = $supportService->list($userId);
+
+            return [
+                "success" => true,
+                "message" => "Support ticket retrieved successfully",
+                "data" => $result
+            ];
+
+        } catch (PDOException $e) {
+
+            error_log("(CONTROLLER) Error retrieving support ticket: " . $e->getMessage());
+
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+
+        }
+    }
 }
