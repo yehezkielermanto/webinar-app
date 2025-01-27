@@ -16,9 +16,16 @@ class SupportService
         return $support->create($req);
     }
 
-    function sendSupportTicketEmail(): void
+    function sendSupportTicketEmail($to, $subject, $description, $from): void
     {
+        // Send email to the support team
+        
+        $result  = mail($to, $subject, $description, "From: $from");
 
+        if (!$result) {
+            throw new ResponseError("Failed to send email");
+        }
+        
     }
 
     function list($userId): array

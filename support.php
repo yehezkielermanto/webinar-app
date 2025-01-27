@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . "/controller/SupportController.php";
+require_once __DIR__ . "/middleware/AuthMiddleware.php";
+AuthMiddleware::check();
 
-session_start();
+require_once __DIR__ . "/controller/SupportController.php";
 
 if (isset($_POST['logout'])) {
     session_destroy();

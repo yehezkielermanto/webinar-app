@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once __DIR__ . "/middleware/AuthMiddleware.php";
+AuthMiddleware::check();
 
 if (isset($_POST['logout'])) {
     session_destroy();
