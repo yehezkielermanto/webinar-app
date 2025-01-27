@@ -25,15 +25,12 @@ if (isset($_POST['registration'])) {
     $result = $userController->register($data);
 
     // Check the result
-    if ($result === "Username already exists") {
-        echo "<script>alert('Username already exists');</script>";
-    } else if ($result) {
+    if ($result['success']) {
         echo "<script>alert('User created successfully');</script>";
-    } else if (!$result) {
-        echo "<script>alert('Error creating user');</script>";
+    } else {
+        echo "<script>alert('" . $result['message'] . "');</script>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>

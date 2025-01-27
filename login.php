@@ -19,18 +19,13 @@ if (isset($_POST['login'])) {
 
     $result = $userController->login($data);
 
-    if ($result === "Username or password is wrong") {
+    if ($result['success']) {
 
-        echo "<script>alert('Username or password is wrong');</script>";
-
-    } else if ($result) {
-        
-        $_SESSION['user'] = $result;
-
+        $_SESSION['user'] = $result['data'];
         header('Location: homepage.php');
+    } else {
         
-    } else if (!$result) {
-        echo "<script>alert('Error logging in');</script>";
+        echo "<script>alert('" . $result['message'] . "');</script>";
     }
 }
 

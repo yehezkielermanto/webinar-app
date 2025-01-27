@@ -54,9 +54,13 @@ class Supports
 
         $result = $stmt->execute();
 
+        // Return the request if the query is successfull
+        // Can be changed with specific value
         if ($result) {
+
             return $req;
         } else {
+
             return null;
         }
     }

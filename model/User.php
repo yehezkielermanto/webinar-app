@@ -66,20 +66,19 @@ class User
         $stmt->bindParam(':type', $req['type'], PDO::PARAM_STR);
         $stmt->bindParam(':status', $req['status'], PDO::PARAM_STR);
 
-        try {
-            $success = $stmt->execute();
+        $success = $stmt->execute();
 
-            // If the query is successful, return the last inserted ID
-            if ($success) {
-                return $this->conn->lastInsertId();
-            }
+        // If the query is successful, return the last inserted ID
+        if ($success) {
 
-            error_log("Execute failed: " . print_r($stmt->errorInfo(), true));
-            return false; 
-        } catch (PDOException $e) {
-
-            error_log("PDO Exception: " . $e->getMessage());
-            return false;
+            return [
+                "id" => $this->conn->lastInsertId(),
+                "username" => $req['username'],
+                "email" => $req['email']
+            ];
+        } else {
+            
+            return null;
         }
     }
 
@@ -92,7 +91,6 @@ class User
     // Read a user
     function readUnique($username) 
     {
-
         $sql = 
         "
             SELECT id, username, password 
@@ -104,17 +102,16 @@ class User
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
 
-        try {
+        $success = $stmt->execute();
 
-            $stmt->execute();
+        if ($success) {
+
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             return $result;
+        } else {
 
-        } catch (PDOException $e) {
-
-            error_log("PDO Exception: " . $e->getMessage());
-            return false;
+            return null;
         }
     }
 

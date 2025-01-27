@@ -11,15 +11,30 @@ class UserController
         try {
             $result = $userService->register($req);
 
-            return $result;
+            return [
+                "success" => true,
+                "message" => "User created successfully",
+                "data" => $result
+            ];
         
         } catch (ResponseError $e) {
+
+            error_log("(CONTROLLER) Error creating user: " . $e->getMessage());
             
-            return $e->getMessage();
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
     
         } catch (PDOException $e) {
+
+            error_log("(CONTROLLER) Error creating user: " . $e->getMessage());
             
-            return $e->getMessage();
+            return [
+                "success" => false,
+                "message" => "Error creating user"
+            ];
+            
         }
     }
 
@@ -30,15 +45,25 @@ class UserController
         try {
             $result = $userService->login($req);
 
-            return $result;
+            return [
+                "success" => true,
+                "message" => "User logged in successfully",
+                "data" => $result
+            ];
         
         } catch (ResponseError $e) {
             
-            return $e->getMessage();
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
     
         } catch (PDOException $e) {
             
-            return $e->getMessage();
+            return [
+                "success" => false,
+                "message" => "Error logging in"
+            ];
         }
     }
 }
