@@ -1,11 +1,89 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
+    async function fetchCard() {
+        try {
+            const response = await fetch("/profile/get-particaped-event.php");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json(); // Parse JSON from the response
+            return data; // Return the JSON object
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return null;
+        }
+    }
+
+    async function createCard() {
+        const jsonData = await fetchCard();
+        const cContainer = document.getElementById("c-container");
+        if (jsonData) {
+            for (let i = 0; i < jsonData.length; i++) {
+                const card = jsonData[i];
+                cContainer.innerHTML += `
+<div class="card">
+<div class="card-upper">
+<div class="wimg-container">
+<img class="responsive-image2" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmikrocentrum.nl%2Fassets%2FUploads%2FALG_Webinars-min-v2.jpg&f=1&nofb=1&ipt=1067cd4cae67259b4c613752d1b1cecf932f0e5d111a6c527eec068a3eb9d1e3&ipo=images"/>
+</div>
+</div>
+<div class="card-bottom">
+<p class="m-f bold-f mb-5 mb-0">${card.title}</p>
+<p class="s-f mb-0">${card.date}</p>
+<p class="s-f mb-0">${card.speaker}</p>
+<div class="card-status">
+<p class="xs-f">${card.event_role}</p>
+</div>
+</div>
+</div>
+`;
+            }
+
+            // card hover effect
+            const hoverEls = document.querySelectorAll(".card");
+            hoverEls.forEach((hoverEl) => {
+                hoverEl.addEventListener("mouseover", function () {
+                    if (isMobile()) {
+                        return;
+                    }
+                    const newEl = document.createElement("div");
+                    //newEl.textContent = hoverEl.textContent;
+                    newEl.innerHTML = hoverEl.innerHTML;
+                    newEl.style.position = "absolute";
+                    newEl.style.background = "rgba(255, 255, 255, 1)";
+                    newEl.style.padding = "5px";
+                    newEl.style.borderRadius = "12px";
+                    newEl.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+                    newEl.style.pointerEvents = "none";
+                    newEl.style.width = "200px";
+                    document.body.appendChild(newEl);
+                    const moveHandler = (event) => {
+                        newEl.style.left = `${event.pageX + 10}px`;
+                        newEl.style.top = `${event.pageY + 10}px`;
+                    };
+                    document.addEventListener("mousemove", moveHandler);
+                    hoverEl.addEventListener(
+                        "mouseout",
+                        function () {
+                            newEl.remove();
+                            document.removeEventListener("mousemove", moveHandler);
+                            console.log("removing");
+                        },
+                        { once: true },
+                    );
+                });
+            });
+        } else {
+            console.log("No data fetched or an error occurred.");
+        }
+    }
+
     function isMobile() {
         return window.innerWidth <= 768;
     }
     // toggle advanced search button
     const toggleAdvS = document.getElementById("toggle-advs");
 
-    toggleAdvS.addEventListener("click", function() {
+    toggleAdvS.addEventListener("click", function () {
         const advS = document.getElementById("as-dialog");
         if (advS.style.display === "none") {
             advS.style.display = "block";
@@ -17,16 +95,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // search button
     const searchBut = document.getElementById("sbut");
-    searchBut.addEventListener("click", function() {
+    searchBut.addEventListener("click", function () {
         console.log("do search");
     });
     const prevBut = document.getElementById("prev-but");
     const currentPage = document.getElementById("current-page");
     const nextBut = document.getElementById("next-but");
-    prevBut.addEventListener("click", function() {
+    prevBut.addEventListener("click", function () {
         console.log("prev page");
     });
-    nextBut.addEventListener("click", function() {
+    nextBut.addEventListener("click", function () {
         console.log("next page");
     });
 
@@ -45,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const curAddress = address.innerText;
 
     const modProfile = document.getElementById("editbtn");
-    modProfile.addEventListener("click", function() {
+    modProfile.addEventListener("click", function () {
         editMode = !editMode;
         if (editMode) {
             //email.innerHTML = `<input id="email" class="inp-edit-mode" type="text" value="${curEmail}">`;
@@ -65,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // save change
-    saveEdit.addEventListener("click", function() {
+    saveEdit.addEventListener("click", function () {
         const newPhone = document.getElementById("ed-phone").value;
         const newName = document.getElementById("ed-name").value;
         const newInstansi = document.getElementById("ed-inst").value;
@@ -110,39 +188,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // logout
     const logoutBut = document.getElementById("logoutbtn");
-    logoutBut.addEventListener("click", function() {
+    logoutBut.addEventListener("click", function () {
         window.location.href = "/logout.php";
     });
-
-    // card hover effect
-    const hoverEls = document.querySelectorAll(".card");
-    hoverEls.forEach((hoverEl) => {
-        hoverEl.addEventListener("mouseover", function () {
-            if (isMobile()) {
-                return;
-            }
-            const newEl = document.createElement("div");
-            //newEl.textContent = hoverEl.textContent;
-            newEl.innerHTML = hoverEl.innerHTML;
-            newEl.style.position = "absolute";
-            newEl.style.background = "rgba(255, 255, 255, 1)";
-            newEl.style.padding = "5px";
-            newEl.style.borderRadius = "12px";
-            newEl.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
-            newEl.style.pointerEvents = "none";
-            newEl.style.width = "200px";
-            document.body.appendChild(newEl);
-            const moveHandler = (event) => {
-                newEl.style.left = `${event.pageX + 10}px`;
-                newEl.style.top = `${event.pageY + 10}px`;
-            };
-            document.addEventListener("mousemove", moveHandler);
-            hoverEl.addEventListener("mouseout", function () {
-                newEl.remove();
-                document.removeEventListener("mousemove", moveHandler);
-                console.log("removing");
-            }, { once: true });
-        });
-    });
+    createCard();
 });
-
