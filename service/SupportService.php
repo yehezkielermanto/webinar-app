@@ -107,4 +107,17 @@ class SupportService
 
         return $support->update($req['id'], $req['status'], $req['description']);
     }
+
+
+    /**
+     * Update support ticket status
+     * @param $req
+     * @return mixed (array|null)
+     */
+    function updateStatus($req)
+    {
+        $support = new Supports();
+
+        return $support->updateStatus($req['id'], $req['status']);
+    }
 }

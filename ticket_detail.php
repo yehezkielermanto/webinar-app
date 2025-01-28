@@ -18,6 +18,23 @@ if (isset($_GET['id'])) {
     $support = $supportController->getbyId($_GET['id']);
 }
 
+if (isset($_POST['change_status'])) {
+    $data = [
+        "id" => $_GET['id'],
+        "status" => $_POST['status'],
+    ];
+
+    $result = $supportController->updateStatus($data);
+
+    if ($result['success']) {
+
+        echo "<script>alert('Support ticket updated successfully');</script>";
+    } else {
+
+        echo "<script>alert('Failed to update support ticket');</script>";
+    }
+}
+
 if (isset($_POST['submit'])) {
     $data = [
         "id" => $_GET['id'],
@@ -27,15 +44,14 @@ if (isset($_POST['submit'])) {
         "status" => "SOLVED",
     ];
 
-    
+
     $result = $supportController->update($data);
 
     if ($result['success']) {
 
         echo "<script>alert('Support ticket updated successfully');</script>";
-
     } else {
-        
+
         echo "<script>alert('Failed to update support ticket');</script>";
     }
 }
@@ -91,6 +107,56 @@ if (isset($_POST['submit'])) {
 
             </div>
 
+            <!-- CHANGE STATUS -->
+
+            <div class="col-12">
+
+                <div class="card mx-auto mt-3">
+
+                    <div class="card-body">
+
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Change Status
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <form method="post">
+
+                                            <div class="mb-3">
+
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status" id="status" value="PENDING" required>
+                                                    <label class="form-check-label" for="status">
+                                                        Pending
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="status" id="status" value="Solved" required>
+                                                    <label class="form-check-label" for="status">
+                                                        Solved
+                                                    </label>
+                                                </div>
+
+                                            </div>
+
+                                            <button type="submit" name="change_status" class="btn btn-primary">Change Status</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- FORM REPLY -->
+
             <div class="col-12">
 
                 <div class="card mx-auto mt-3">
@@ -105,7 +171,7 @@ if (isset($_POST['submit'])) {
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">Answer</label>
-                                <textarea class="form-control" id="reply" name="description" rows="3"></textarea>
+                                <textarea class="form-control" id="reply" name="description" rows="3" required></textarea>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -116,6 +182,11 @@ if (isset($_POST['submit'])) {
         </div>
 
     </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </body>
 

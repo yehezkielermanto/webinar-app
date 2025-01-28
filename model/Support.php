@@ -229,6 +229,45 @@ class Supports
 
     }
 
+
+    /**
+     * Update a support ticket status
+     * @param $id
+     * @param $status
+     * @return mixed (array|null)
+     */
+    function updateStatus($id, $status) 
+    {
+
+        $sql = "
+            UPDATE 
+                supports 
+            SET 
+                status = :status
+            WHERE 
+                id = :id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            return [
+                "id" => $id,
+                "status" => $status
+            ];
+
+        } else {
+
+            return null;
+        }
+
+    }
+
     // Delete a support ticket
     function delete() 
     {

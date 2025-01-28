@@ -198,4 +198,45 @@ class SupportController
 
         }
     }
+
+
+    /**
+     * Update support ticket status
+     * @param $req
+     * @return mixed (array|null)
+     */
+    function updateStatus($req)
+    {
+        $supportService = new SupportService();
+
+        try {
+
+            $result = $supportService->updateStatus($req);
+
+            return [
+                "success" => true,
+                "message" => "Support ticket status updated successfully",
+                "data" => $result
+            ];
+
+        } catch (PDOException $e) {
+
+            error_log("(CONTROLLER) Error updating support ticket status: " . $e->getMessage());
+
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+
+        } catch (ResponseError $e) {
+
+            error_log("(CONTROLLER) Error updating support ticket status: " . $e->getMessage());
+
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+
+        }
+    }
 }
