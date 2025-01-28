@@ -191,5 +191,13 @@ document.addEventListener("DOMContentLoaded", function () {
     logoutBut.addEventListener("click", function () {
         window.location.href = "/logout.php";
     });
+
+    // hamburg menu
+    const hamburgBtn = document.getElementById("toggle-menu");
+    const sidebar = document.getElementById("hmenu");
+    hamburgBtn.addEventListener("click", function() {
+        console.log("hello");
+        sidebar.hidden = !sidebar.hidden;
+    });
     createCard();
 });

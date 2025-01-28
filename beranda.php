@@ -212,6 +212,7 @@ $result_event_feature = $koneksi->query(
                 <a href="event.php">Webinar</a>
                 <a href="sertifikat.php">Certificate</a>
                 <a href="ganti-password.php">Ganti Password</a>
+                <a href="profile/index.php">Profile</a>
                 <a href="logout.php">Keluar</a>
             </div>
             <span style="font-size:25px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>

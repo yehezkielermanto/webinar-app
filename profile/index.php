@@ -16,12 +16,27 @@ if(!isset($_SESSION['email'])){
         <script src="script.js"></script>
     </head>
     <body>
+        <div class="floating-menu">
+            <div class="hamburg-menu" id="hmenu" hidden>
+                <div class="hamburg-inner m-f">
+                    <a href="/beranda.php">Home</a>
+                    <a href="/event.php">Webinar</a>
+                    <a href="/sertifikat.php">Certificate</a>
+                    <a href="/ganti-password.php">Ganti Password</a>
+                    <a href="">Profile</a>
+                </div>
+            </div>
+            <div class="floating-hamburg" id="toggle-menu">
+                <p class="accent-cf bold-f">
+                <i class="nf nf-md-menu"></i>
+                </p>
+            </div>
+        </div>
         <div class="container">
             <div class="sidebar-left">
                 <div class="left-back">
                     <div class="left-upper">
                         <div class="img-container">
-                            <!--<img class="responsive-image" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic0.gamerantimages.com%2Fwordpress%2Fwp-content%2Fuploads%2F2024%2F11%2Fhonkai-star-rail-5-star-herta-weapon-begging-for-a-crossover.jpg&f=1&nofb=1&ipt=cdc5b71bc8c7e562bafff3e47e12433d91faf108929f1097301690332d4d1ed5&ipo=images"/>-->
                             <img class="responsive-image" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpreview.redd.it%2Fy7o9g85gp2q51.jpg%3Fwidth%3D960%26crop%3Dsmart%26auto%3Dwebp%26s%3D831fd62b4deffa1908a3807c5920b5f80e88e35c&f=1&nofb=1&ipt=c50e28045007b7979226d1202f05e370c467da1710a2c530d88c1e2e7d2512c0&ipo=images"/>
                         </div>
                     </div>

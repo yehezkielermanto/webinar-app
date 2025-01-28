@@ -379,6 +379,52 @@
     color: rgb(182,163,232);
 }
 
+.floating-menu {
+    position: fixed;
+    z-index: 1000;
+    right: 1%;
+}
+
+.floating-hamburg {
+    border-radius: 25%;
+    background-color: white;
+    padding: 15px;
+    width: 24px;
+    height: 24px;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.2));
+    text-align: center;
+    align-items: center;
+    align-content: center;
+    z-index: 1;
+}
+
+.hamburg-inner {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 100px;
+    overflow: hidden;
+}
+.hamburg-inner a {
+    padding: 10px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    font-style: normal;
+    text-decoration: none;
+}
+
+.hamburg-menu {
+    border-radius: 12px;
+    position: fixed;
+    background-color: white;
+    height: 100%;
+    width: 300px;
+    top: 0%;
+    right: 0;
+    z-index: 0;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.1));
+}
+
 .user-table {
     padding: 5px;
     border-collapse: collapse;
@@ -432,5 +478,9 @@
         position: fixed;
         top: 0;
         filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.1));
+    }
+
+    .hamburg-menu {
+        width: 70%;
     }
 }
