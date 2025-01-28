@@ -18,8 +18,8 @@ date_default_timezone_set('Asia/Jakarta'); //define local time
 // }
 // mysqli_close($koneksi);
 $server = "localhost";
-$username = "ifukdcco_webinar";
+$username = "root";
 $password = "";
-$database = "ifukdcco_webinar";
+$database = "ukdc_webinar";
 
 $koneksi = mysqli_connect($server, $username, $password, $database) or die(mysqli_error($koneksi));
