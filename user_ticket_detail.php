@@ -50,11 +50,11 @@ if (isset($_GET['id'])) {
 <body>
 
     <!-- NAVBAR | CAN IMPROVE WITH COMPONENT -->
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary sticky-sm-top">
         <div class="container-fluid">
             <div class="">
 
-                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <span class="material-symbols-outlined">
                         menu
                     </span>

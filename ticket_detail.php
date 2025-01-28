@@ -95,11 +95,11 @@ if (isset($_POST['submit'])) {
 <body>
 
     <!-- NAVBAR | CAN IMPROVE WITH COMPONENT -->
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary sticky-sm-top">
         <div class="container-fluid">
             <div class="">
 
-                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <span class="material-symbols-outlined">
                         menu
                     </span>
@@ -199,12 +199,12 @@ if (isset($_POST['submit'])) {
 
                             <div class="mb-3">
                                 <label for="subject" class="form-label">Subject</label>
-                                <input type="text" class="form-control" id="subject" name="subject" required>
+                                <input type="text" class="form-control" id="subject" name="subject" required placeholder="Subject email">
                             </div>
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">Answer</label>
-                                <textarea class="form-control" id="reply" name="description" rows="3" required></textarea>
+                                <textarea class="form-control" id="reply" name="description" rows="3" required placeholder="Description email"></textarea>
                             </div>
 
                             <div class="d-flex flex-row-reverse">

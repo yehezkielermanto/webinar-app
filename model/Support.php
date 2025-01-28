@@ -89,6 +89,8 @@ class Supports
                 created_by
             FROM 
                 supports
+            ORDER BY 
+                status DESC
         ";
 
         $stmt = $this->conn->prepare($sql);
@@ -125,6 +127,8 @@ class Supports
                 supports 
             WHERE 
                 user_id = :user_id
+            ORDER BY 
+                status DESC
         ";
 
         $stmt = $this->conn->prepare($sql);

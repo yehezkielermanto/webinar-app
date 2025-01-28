@@ -68,11 +68,11 @@ if (isset($_POST['send_ticket'])) {
 <body>
 
     <!-- NAVBAR | CAN IMPROVE WITH COMPONENT -->
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary sticky-sm-top">
         <div class="container-fluid">
             <div class="">
 
-                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <span class="material-symbols-outlined">
                         menu
                     </span>
@@ -97,20 +97,20 @@ if (isset($_POST['send_ticket'])) {
                 <form method="post">
                     <div class="mb-3">
                         <label for="subject" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject" name="subject" required>
+                        <input type="text" class="form-control" id="subject" name="subject" required placeholder="Subject email">
                     </div>
                     <div class="mb-3">
                         <label for="created_by" class="form-label">Fullname</label>
-                        <input type="text" class="form-control" id="created_by" name="created_by" required>
+                        <input type="text" class="form-control" id="created_by" name="created_by" required placeholder="John Doe">
                     </div>
                     <div class="mb-3">
                         <label for="reported_email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="reported_email" aria-describedby="emailHelp" name="reported_email" required>
+                        <input type="email" class="form-control" id="reported_email" aria-describedby="emailHelp" name="reported_email" required placeholder="Johndoe@domain.address">
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                        <textarea class="form-control" name="description" id="description" rows="3" placeholder="Description email"></textarea>
                     </div>
 
                     <div class="mb-3">

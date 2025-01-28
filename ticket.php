@@ -49,14 +49,14 @@ $supports = $supportController->get();
 
 </head>
 
-<body>
+<body id="test">
 
     <!-- NAVBAR | CAN IMPROVE WITH COMPONENT -->
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar bg-body-tertiary sticky-sm-top">
         <div class="container-fluid">
             <div class="">
 
-                <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                     <span class="material-symbols-outlined">
                         menu
                     </span>
@@ -194,5 +194,6 @@ $supports = $supportController->get();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </body>
+
 
 </html>
