@@ -106,9 +106,9 @@ if(!isset($_SESSION['email'])){
                     <div id="as-dialog" style="display: none;">
                         <div class="inner-dialog">
                             <p class="m-f bold-f">Advanced Search</p>
-                            <label class="bold-f" for="from">Sebelum:</label>
-                            <input id="before" type="date" placeholder="before">
                             <label class="bold-f" for="from">Sesudah:</label>
+                            <input id="before" type="date" placeholder="before">
+                            <label class="bold-f" for="from">Sebelum:</label>
                             <input id="after" type="date" placeholder="after">
                             <label class="bold-f" for="from">Sortir:</label>
                             <radio-group>

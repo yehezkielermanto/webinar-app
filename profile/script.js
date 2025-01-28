@@ -1,4 +1,5 @@
-var jsonData = {};
+var jsonData = [];
+var editableData = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     async function fetchCard() {
@@ -15,9 +16,64 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    //function filter_event(filter) {
+    //    editableData = [];
+    //    for (let i = 0; i < jsonData.length; i++) {
+    //        const current = jsonData[i];
+    //        const fStartTime = parseInt(filter.before.replace(/-/g, ""), 10);
+    //        const fEndTime = parseInt(filter.after.replace(/-/g, ""), 10);
+    //        if (current.title.toLowerCase().includes(filter.query.toLowerCase()) ||
+    //            current.speaker.toLowerCase().includes(filter.query.toLowerCase()) ||
+    //            current.description.toLowerCase().includes(filter.query.toLowerCase())
+    //        ) {
+    //            const eventDate = parseInt(current.date.replace(/-/g, ""), 10);
+    //            let addCurrentEvent = false;
+    //
+    //            if (!isNaN(fStartTime) && fStartTime <= eventDate) {
+    //                addCurrentEvent = true;
+    //            }
+    //            if (!isNaN(fEndTime) && fEndTime >= eventDate) {
+    //                addCurrentEvent = true;
+    //            }
+    //
+    //
+    //            if (addCurrentEvent) {
+    //                editableData.push(current);
+    //            }
+    //        }
+    //    }
+    //    const cContainer = document.getElementById("c-container");
+    //    cContainer.innerHTML = "";
+    //    renderCard(editableData);
+    //}
     function filter_event(filter) {
-        console.log("got : ", filter);
+        editableData = [];
+        for (let i = 0; i < jsonData.length; i++) {
+            const current = jsonData[i];
+            const fStartTime = parseInt(filter.before?.replace(/-/g, ""), 10);
+            const fEndTime = parseInt(filter.after?.replace(/-/g, ""), 10);
+            const eventDate = parseInt(current.date.replace(/-/g, ""), 10);
+
+            if (
+                current.title.toLowerCase().includes(filter.query.toLowerCase()) ||
+                    current.speaker.toLowerCase().includes(filter.query.toLowerCase()) ||
+                    current.description.toLowerCase().includes(filter.query.toLowerCase())
+            ) {
+                const isWithinRange =
+                    (isNaN(fStartTime) || fStartTime <= eventDate) &&
+                        (isNaN(fEndTime) || fEndTime >= eventDate);
+
+                if (isWithinRange) {
+                    editableData.push(current);
+                }
+            }
+        }
+
+        const cContainer = document.getElementById("c-container");
+        cContainer.innerHTML = "";
+        renderCard(editableData);
     }
+
 
     function renderCard(data) {
         const cContainer = document.getElementById("c-container");
@@ -121,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
         filter_event(filter);
     });
     const prevBut = document.getElementById("prev-but");
+    // TODO add pagination support.
     const currentPage = document.getElementById("current-page");
     const nextBut = document.getElementById("next-but");
     prevBut.addEventListener("click", function () {
