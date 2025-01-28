@@ -160,6 +160,7 @@ class Supports
                 subject,
                 description,
                 reported_email,
+                answer,
                 type,
                 status,
                 created_by
