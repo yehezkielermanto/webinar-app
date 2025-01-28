@@ -379,6 +379,10 @@
     color: rgb(182,163,232);
 }
 
+.mr-5 {
+    margin-right: 5px;
+}
+
 .floating-menu {
     position: fixed;
     z-index: 1000;
@@ -402,21 +406,41 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    margin-right: 100px;
+    margin-right: 75px;
     overflow: hidden;
+    margin-top: 20px;
 }
-.hamburg-inner a {
+
+.hamburg-inner hr {
+    margin-right: 20px;
+    margin-left: 20px;
+    color: rgba(0, 0, 0, 0.1);
+}
+.hamburg-inner .hamburg-btn {
     padding: 10px;
     padding-bottom: 15px;
     padding-top: 15px;
+}
+
+.hamburg-btn a {
     font-style: normal;
     text-decoration: none;
+    font-weight: bold;
+    /*color: rgb(182,163,232);*/
+    color: black;
+}
+
+.hamburg-btn:hover {
+    text-shadow: 0px 0px 5px rgb(182,163,232);
+    border-radius: 16px;
 }
 
 .hamburg-menu {
-    border-radius: 12px;
+    border-radius: 12px 0 0 12px;
     position: fixed;
     background-color: white;
+    /*background: linear-gradient(0deg, rgba(182,163,232,1) 10%, #eaeaea 100%);*/
+    opacity: 90%;
     height: 100%;
     width: 300px;
     top: 0%;

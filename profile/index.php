@@ -19,11 +19,15 @@ if(!isset($_SESSION['email'])){
         <div class="floating-menu">
             <div class="hamburg-menu" id="hmenu" hidden>
                 <div class="hamburg-inner m-f">
-                    <a href="/beranda.php">Home</a>
-                    <a href="/event.php">Webinar</a>
-                    <a href="/sertifikat.php">Certificate</a>
-                    <a href="/ganti-password.php">Ganti Password</a>
-                    <a href="">Profile</a>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/beranda.php">Home</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-lightning_bolt"></i> <a href="/event.php">Webinar</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-certificate"></i> <a href="/sertifikat.php">Certificate</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/ganti-password.php">Ganti Password</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="">Profile</a></div>
                 </div>
             </div>
             <div class="floating-hamburg" id="toggle-menu">
