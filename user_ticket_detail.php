@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . "/middleware/AuthMiddleware.php";
+require __DIR__ . "/middleware/AuthMiddleware.php";
 AuthMiddleware::check();
 
-require_once __DIR__ . "/controller/SupportController.php";
+require __DIR__ . "/controller/SupportController.php";
 
 if (isset($_POST['logout'])) {
     session_destroy();
@@ -25,29 +25,11 @@ if (isset($_POST['ticket'])) {
     header('Location: ticket.php');
 }
 
-if (isset($_POST['send_ticket'])) {
-    $supportController = new SupportController();
+$supportController = new SupportController();
 
-    $data = [
-        "subject" => $_POST['subject'],
-        "description" => $_POST['description'],
-        "reported_email" => $_POST['reported_email'],
-        "type" => $_POST['type'],
-        "created_by" => $_POST['created_by'],
-        "user_id" => $_SESSION['user']['id']
-    ];
-
-    $result = $supportController->create($data);
-
-    if ($result['success']) {
-
-        echo "<script>alert('Support ticket created successfully');</script>";
-    } else {
-
-        echo "<script>alert('Failed to create support ticket');</script>";
-    }
+if (isset($_GET['id'])) {
+    $support = $supportController->getbyId($_GET['id']);
 }
-
 
 ?>
 
@@ -57,7 +39,7 @@ if (isset($_POST['send_ticket'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support</title>
+    <title>User Ticket Detail</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -80,64 +62,64 @@ if (isset($_POST['send_ticket'])) {
 
                 <img src="./images/logo_if.png" alt="Logo" width="40" height="24" class="d-inline-block align-text-top">
 
-                <span class="mx-2 h6">Support</span>
+                <span class="h6 mx-2">Ticket Detail</span>
 
             </div>
         </div>
     </nav>
 
     <div class="col-12">
-        <h1 class="text-center my-5">Hello <?= $_SESSION["user"]["username"] ?>, what can we help ?</h1>
+        <h1 class="text-center my-5">Ticket <?= $_GET["id"] ?></h1>
     </div>
 
     <div class="container w-50 my-3">
+
         <div class="row mx-3">
-            <div class="col-12 ">
-                <!-- FORM SECTION -->
-                <form method="post">
-                    <div class="mb-3">
-                        <label for="subject" class="form-label">Subject</label>
-                        <input type="text" class="form-control" id="subject" name="subject" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="created_by" class="form-label">Fullname</label>
-                        <input type="text" class="form-control" id="created_by" name="created_by" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="reported_email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="reported_email" aria-describedby="emailHelp" name="reported_email" required>
-                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="type" class="form-label">Type Ticket</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="type" id="type" value="QUESTION" required>
-                            <label class="form-check-label" for="type">
-                                Question
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="type" id="type" value="SUPPORT" required>
-                            <label class="form-check-label" for="type">
-                                Support
-                            </label>
-                        </div>
-                    </div>
+            <div class="col-12">
 
-                    <div class="d-flex flex-row-reverse">
-                        <button type="submit" name="send_ticket" class="btn btn-primary">Send</button>
+                <div class="card mx-auto">
+                    <div class="card-body">
+                        <!-- SUBJECT -->
+                        <h5 class="card-title"><?= $support["data"]["subject"] ?></h5>
+                        <!-- DESCRIPTION -->
+                        <p class="card-text"><?= $support["data"]["description"] ?></p>
                     </div>
-                </form>
+                </div>
+
+                <div class="card mx-auto mt-3">
+                    <div class="card-body">
+
+                        <h6 class="card-title">
+                            Answer
+
+                            <?php if ($support["data"]["status"] == "PENDING") : ?>
+                                <span class="badge bg-warning text-light">Pending</span>
+                            <?php endif; ?>
+
+                            <?php if ($support["data"]["status"] == "SOLVED") : ?>
+                                <span class="badge bg-success text-light">Solved</span>
+                            <?php endif; ?>
+                        </h6>
+
+                        <?php if ($support["data"]["answer"] !== null) : ?>
+
+                            <p class="card-text"><?= $support["data"]["answer"] ?></p>
+
+                        <?php else : ?>
+
+                            <p class="card-text">No answer yet</p>
+
+                        <?php endif; ?>
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
-
     </div>
+
 
     <!-- NAVIGATION | CAN IMPROVE WITH COMPONENT -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -196,6 +178,7 @@ if (isset($_POST['send_ticket'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
 
 </body>
 
