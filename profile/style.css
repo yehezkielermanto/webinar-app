@@ -440,13 +440,14 @@
     position: fixed;
     background-color: white;
     /*background: linear-gradient(0deg, rgba(182,163,232,1) 10%, #eaeaea 100%);*/
-    opacity: 90%;
+    opacity: 95%;
     height: 100%;
     width: 300px;
     top: 0%;
     right: 0;
     z-index: 0;
     filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.1));
+    overflow: scroll;
 }
 
 .user-table {
@@ -506,5 +507,10 @@
 
     .hamburg-menu {
         width: 70%;
+    }
+
+    .floating-menu {
+        right: 5%;
+        overflow: scroll;
     }
 }

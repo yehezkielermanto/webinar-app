@@ -95,7 +95,7 @@ if(!isset($_SESSION['email'])){
                 <div class="right-back">
                     <p class="accent-cf bold-f xl-f drops-f">RIWAYAT</p>
                     <div class="search-bar">
-                        <input class="text-inp" type="text" placeholder="Cari Webinar...">
+                        <input id="search" class="text-inp" type="text" placeholder="Cari Webinar...">
                         <div class="advanced-s" id="toggle-advs">
                             <i class="nf nf-md-text_box_search_outline"></i>
                         </div>
@@ -107,9 +107,9 @@ if(!isset($_SESSION['email'])){
                         <div class="inner-dialog">
                             <p class="m-f bold-f">Advanced Search</p>
                             <label class="bold-f" for="from">Sebelum:</label>
-                            <input type="date" placeholder="before">
+                            <input id="before" type="date" placeholder="before">
                             <label class="bold-f" for="from">Sesudah:</label>
-                            <input type="date" placeholder="after">
+                            <input id="after" type="date" placeholder="after">
                             <label class="bold-f" for="from">Sortir:</label>
                             <radio-group>
                                 <input type="radio" name="sort" value="asc" checked>abc
