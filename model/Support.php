@@ -6,7 +6,10 @@ class Supports
 {
     private $conn;
 
-    // Constructor to connect to the database
+    /**
+     * Supports constructor.
+     * Create a new connection to the database
+     */
     function __construct()
     {
         $this->conn = Connection::connect();
@@ -14,7 +17,11 @@ class Supports
 
     // CRUD operations
 
-    // Create a new support ticket
+    /**
+     * Create a new support ticket
+     * @param $req
+     * @return mixed (array|null)
+     */
     function create($req)
     {
         // SQL query to insert a new support ticket
@@ -65,13 +72,47 @@ class Supports
         }
     }
 
-    // Read all support tickets
+    /**
+     * Read all support tickets
+     * @return mixed (array|null)
+     */
     function read() 
     {
+        $sql = "
+            SELECT 
+                id, 
+                subject,
+                description,
+                reported_email,
+                type,
+                status,
+                created_by
+            FROM 
+                supports
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } else {
+
+            return null;
+        }
 
     }
 
-    // Read by user id
+    /**
+     * Read all support tickets by user id
+     * @param $userId
+     * @return mixed (array|null)
+     */
     function readByUserId($userId) 
     {
 
@@ -104,9 +145,87 @@ class Supports
 
     }
 
-    // Update a support ticket
-    function update() 
+
+    /**
+     * Read a support ticket by id
+     * @param $id
+     * @return mixed (array|null)
+     */
+    function readById($id) 
     {
+
+        $sql = "
+            SELECT 
+                id, 
+                subject,
+                description,
+                reported_email,
+                type,
+                status,
+                created_by
+            FROM 
+                supports 
+            WHERE 
+                id = :id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } else {
+
+            return null;
+        }
+
+    }
+
+    /**
+     * Update a support ticket
+     * @param $id
+     * @param $status
+     * @param $answer
+     * @return mixed (array|null)
+     */
+    function update($id, $status, $answer) 
+    {
+
+        $sql = "
+            UPDATE 
+                supports 
+            SET 
+                status = :status,
+                answer = :answer
+            WHERE 
+                id = :id
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->bindParam(':answer', $answer, PDO::PARAM_STR);
+
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            return [
+                "id" => $id,
+                "status" => $status,
+                "answer" => $answer
+            ];
+
+        } else {
+
+            return null;
+        }
 
     }
 

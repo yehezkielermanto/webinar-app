@@ -77,8 +77,6 @@ $supports = $supportController->list($userId);
                 <h1 class="text-center">My Ticket</h1>
             </div>
 
-
-
             <!-- CARD SECTION -->
             <div class="row">
                 <div class="col-12 d-flex flex-wrap justify-content-between">

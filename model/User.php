@@ -85,6 +85,7 @@ class User
     // Read all users
     function read() 
     {
+        
 
     }
 
