@@ -32,6 +32,15 @@ if (isset($_POST['ticket'])) {
 $supportController = new SupportController();
 $supports = $supportController->get();
 
+if (isset($_GET['status'])) {
+    $data = [
+        "status" => $_GET['status'] == "pending" ? "PENDING" : "SOLVED",
+        "user_id" => null
+    ];
+
+    $supports = $supportController->filter($data);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +55,13 @@ $supports = $supportController->get();
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
 
+    <style>
+        .card-hover:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            transition-timing-function: ease-in-out;
+        }
+    </style>
 
 </head>
 
@@ -70,15 +86,28 @@ $supports = $supportController->get();
         </div>
     </nav>
 
-    <div class="col-12">
-        <h1 class="text-center my-5">Ticket</h1>
-    </div>
-
-    <div class="container w-50 my-3">
+    <div class="container my-3">
 
         <!-- CARD SECTION -->
-        <div class="row mx-3">
-            <div class="col-12 d-flex flex-wrap justify-content-between">
+        <div class="row justify-content-center">
+
+            <h1 class="text-center my-5">Ticket</h1>
+
+            <div class="col-12 col-lg-6">
+
+                <!-- FILTER -->
+                <div class="w-100 d-flex flex-row-reverse">
+                    <div class="dropdown m-2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Filter
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="ticket.php">All</a></li>
+                            <li><a class="dropdown-item" href="?status=pending">Pending</a></li>
+                            <li><a class="dropdown-item" href="?status=solved">Solved</a></li>
+                        </ul>
+                    </div>
+                </div>
 
                 <!-- CHECK RESPONSE SUCCESSFULLY -->
                 <?php if ($supports["success"]): ?>
@@ -89,22 +118,45 @@ $supports = $supportController->get();
                         <!-- ITERATE TICKET -->
                         <?php foreach ($supports["data"] as $support) : ?>
 
-                            <div class="card m-2 w-100">
+                            <div class="card-hover card m-2">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?= "Ticket#" . $support["id"] ?></h5>
+                                    <p class="fw-bolder fs-4"><?= "Ticket#" . $support["id"] ?></p>
                                     <h6 class="card-subtitle mb-2 text-body-secondary"><?= $support["subject"] ?></h6>
 
-                                    <a href="ticket_detail.php?id=<?= $support["id"] ?>" class="card-link">See Detail</a>
+                                    <a href="ticket_detail.php?id=<?= $support["id"] ?>" class="text-decoration-none">Read more</a>
 
-                                    <div class="col mt-2">
+                                    <div class="col mt-2 d-flex justify-content-between align-items-center">
 
-                                        <?php if ($support["status"] == "PENDING") : ?>
-                                            <span class="badge bg-warning text-light">Pending</span>
-                                        <?php endif; ?>
+                                        <div class="">
+                                            <?php if ($support["status"] == "PENDING") : ?>
+                                                <span class="badge bg-warning text-light">Pending</span>
+                                            <?php endif; ?>
 
-                                        <?php if ($support["status"] == "SOLVED") : ?>
-                                            <span class="badge bg-success text-light">Solved</span>
-                                        <?php endif; ?>
+                                            <?php if ($support["status"] == "SOLVED") : ?>
+                                                <span class="badge bg-success text-light">Solved</span>
+                                            <?php endif; ?>
+
+                                            <span class="badge bg-secondary">
+                                                <?php if ($support["type"] === "QUESTION") : ?>
+                                                    Question
+                                                <?php else : ?>
+                                                    Support
+                                                <?php endif; ?>
+                                            </span>
+                                        </div>
+
+                                        <span class="fw-semibold">
+                                            <?php
+                                            $date = new DateTime();
+                                            $dateTicket = new DateTime($support["created_at"], new DateTimeZone('Asia/Jakarta'));
+
+                                            $interval = $date->diff($dateTicket);
+
+                                            $formatClock = $interval->d > 30 ? $dateTicket->format('d/m/y') : $dateTicket->format('d M');
+
+                                            echo $formatClock;
+                                            ?>
+                                        </span>
 
                                     </div>
 

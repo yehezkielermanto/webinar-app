@@ -68,20 +68,60 @@ if (isset($_GET['id'])) {
         </div>
     </nav>
 
-    <div class="col-12">
-        <h1 class="text-center my-5">Ticket <?= $_GET["id"] ?></h1>
-    </div>
+    <div class="container my-3">
 
-    <div class="container w-50 my-3">
+        <div class="row justify-content-center">
 
-        <div class="row mx-3">
+            <h1 class="text-center my-5">Ticket <?= $_GET["id"] ?></h1>
 
-            <div class="col-12">
+            <div class="col-12 col-lg-6">
 
                 <div class="card mx-auto">
                     <div class="card-body">
                         <!-- SUBJECT -->
-                        <h5 class="card-title"><?= $support["data"]["subject"] ?></h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p class="h5 fw-semibold">Subject: <?= $support["data"]["subject"] ?></p>
+
+                            <p class="text-muted">
+                                <?php
+                                $date = new DateTime();
+                                $dateTicket = new DateTime($support["data"]["created_at"], new DateTimeZone('Asia/Jakarta'));
+
+                                $interval = $date->diff($dateTicket);
+
+                                $formatClock = $interval->d > 1 ? $dateTicket->format('D, d M Y, h:i A') : $dateTicket->format('h:i A');
+
+                                switch ($interval) {
+                                    case $interval->m > 1:
+                                        echo $formatClock;
+                                        break;
+                                    case $interval->d > 1 && $interval->d < 7:
+                                        echo $formatClock . " " . $interval->format('(%d days ago)');
+                                        break;
+                                    case $interval->d == 1:
+                                        echo $formatClock . " " . $interval->format('(%d day ago)');
+                                        break;
+                                    case $interval->h > 1:
+                                        echo $formatClock . " " . $interval->format('(%h hours ago)');
+                                        break;
+                                    case $interval->h == 1:
+                                        echo $formatClock . " " . $interval->format('(%h hour ago)');
+                                        break;
+                                    default:
+                                        echo $formatClock . " " . $interval->format('(%d days %H hours ago)');
+                                        break;
+                                }
+                                ?>
+                            </p>
+                        </div>
+                        <!-- TYPE -->
+                        <p class="card-text">
+                            <?php if ($support["data"]["type"] === "SUPPORT") : ?>
+                                <span class="badge bg-secondary">Support</span>
+                            <?php else : ?>
+                                <span class="badge bg-secondary">Question</span>
+                            <?php endif; ?>
+                        </p>
                         <!-- DESCRIPTION -->
                         <p class="card-text"><?= $support["data"]["description"] ?></p>
                     </div>
@@ -92,7 +132,9 @@ if (isset($_GET['id'])) {
 
                         <h6 class="card-title">
                             Answer
+                        </h6>
 
+                        <div class="mb-3">
                             <?php if ($support["data"]["status"] == "PENDING") : ?>
                                 <span class="badge bg-warning text-light">Pending</span>
                             <?php endif; ?>
@@ -100,7 +142,7 @@ if (isset($_GET['id'])) {
                             <?php if ($support["data"]["status"] == "SOLVED") : ?>
                                 <span class="badge bg-success text-light">Solved</span>
                             <?php endif; ?>
-                        </h6>
+                        </div>
 
                         <?php if ($support["data"]["answer"] !== null) : ?>
 

@@ -28,10 +28,38 @@ if (isset($_POST['ticket'])) {
 if (isset($_POST['send_ticket'])) {
     $supportController = new SupportController();
 
+    // Check if attachment file is uploaded
+    // Set attachment to null if not uploaded
+    if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+
+        // Can change with specific file size
+        // Check if file size is larger than 2MB
+        if ($_FILES['attachment']['size'] > 2097152) {
+            echo "<script>alert('File size too large'); window.history.back();</script>";
+            exit;
+        }
+
+
+        // Can change with specific file type
+        // Check if file type is not allowed
+        $allowed_types = ['image/png', 'image/jpg', 'image/jpeg'];
+
+        if (!in_array($_FILES['attachment']['type'], $allowed_types)) {
+            echo "<script>alert('File type not allowed'); window.history.back();</script>";
+            exit;
+        }
+
+        $attachment = $_FILES['attachment'];
+    } else {
+
+        $attachment = null;
+    }
+
     $data = [
         "subject" => $_POST['subject'],
         "description" => $_POST['description'],
         "reported_email" => $_POST['reported_email'],
+        "attachment" => $attachment,
         "type" => $_POST['type'],
         "created_by" => $_POST['created_by'],
         "user_id" => $_SESSION['user']['id']
@@ -40,6 +68,11 @@ if (isset($_POST['send_ticket'])) {
     $result = $supportController->create($data);
 
     if ($result['success']) {
+
+        if ($attachment !== null) {
+
+            move_uploaded_file($result['data']['attachment']['tmp_name'], $result['data']['attachment']['target']);
+        }
 
         echo "<script>alert('Support ticket created successfully');</script>";
     } else {
@@ -86,15 +119,15 @@ if (isset($_POST['send_ticket'])) {
         </div>
     </nav>
 
-    <div class="col-12">
-        <h1 class="text-center my-5">Hello <?= $_SESSION["user"]["username"] ?>, what can we help ?</h1>
-    </div>
+    <div class="container my-3">
 
-    <div class="container w-50 my-3">
-        <div class="row mx-3">
-            <div class="col-12 ">
+        <div class="row justify-content-center mx-3">
+
+            <h1 class="text-center my-5">Hello <?= $_SESSION["user"]["username"] ?>, what can we help ?</h1>
+
+            <div class="col-12 col-lg-6">
                 <!-- FORM SECTION -->
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="subject" class="form-label">Subject</label>
                         <input type="text" class="form-control" id="subject" name="subject" required placeholder="Subject email">
@@ -111,6 +144,12 @@ if (isset($_POST['send_ticket'])) {
                     <div class="mb-3">
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" name="description" id="description" rows="3" placeholder="Description email"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="attachment" class="form-label">Attachment</label>
+                        <input class="form-control" type="file" id="attachment" name="attachment">
+                        <div id="emailHelp" class="form-text">Format file jpg / png and maximum size 2MB</div>
                     </div>
 
                     <div class="mb-3">
@@ -135,7 +174,6 @@ if (isset($_POST['send_ticket'])) {
                 </form>
             </div>
         </div>
-
 
     </div>
 

@@ -113,35 +113,70 @@ if (isset($_POST['submit'])) {
         </div>
     </nav>
 
-    <div class="col-12">
-        <h1 class="text-center my-5">Ticket <?= $_GET["id"] ?></h1>
-    </div>
+    <div class="container my-3">
 
-    <div class="container w-50 my-3">
+        <di class="row justify-content-center">
 
-        <div class="row mx-3">
+            <h1 class="text-center my-5">Ticket <?= $_GET["id"] ?></h1>
 
-            <div class="col-12">
+            <div class="col-12 col-lg-6">
 
                 <div class="card mx-auto">
                     <div class="card-body">
                         <!-- SUBJECT -->
-                        <h5 class="card-title"><?= $support["data"]["subject"] ?></h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 fw-semibold">Subject: <?= $support["data"]["subject"] ?></span>
+
+                            <span class="">
+                                <?php
+                                $date = new DateTime();
+                                $dateTicket = new DateTime($support["data"]["created_at"], new DateTimeZone('Asia/Jakarta'));
+
+                                $interval = $date->diff($dateTicket);
+
+                                $formatClock = $interval->d > 1 ? $dateTicket->format('D, d M Y, h:i A') : $dateTicket->format('h:i A');
+
+                                switch ($interval) {
+                                    case $interval->m > 1:
+                                        echo $formatClock;
+                                        break;
+                                    case $interval->d > 1 && $interval->d < 7:
+                                        echo $formatClock . " " . $interval->format('(%d days ago)');
+                                        break;
+                                    case $interval->d == 1:
+                                        echo $formatClock . " " . $interval->format('(%d day ago)');
+                                        break;
+                                    case $interval->h > 1:
+                                        echo $formatClock . " " . $interval->format('(%h hours ago)');
+                                        break;
+                                    case $interval->h == 1:
+                                        echo $formatClock . " " . $interval->format('(%h hour ago)');
+                                        break;
+                                    default:
+                                        echo $formatClock . " " . $interval->format('(%d days %H hours ago)');
+                                        break;
+                                }
+                                ?>
+                            </span>
+                        </div>
                         <!-- TYPE -->
-                        <p class="card-text"><?= $support["data"]["type"] ?></p>
+                        <p class="card-text">
+                            <?php if ($support["data"]["type"] === "SUPPORT") : ?>
+                                <span class="badge bg-secondary">Support</span>
+                            <?php else : ?>
+                                <span class="badge bg-secondary">Question</span>
+                            <?php endif; ?>
+                        </p>
                         <!-- DESCRIPTION -->
                         <p class="card-text"><?= $support["data"]["description"] ?></p>
                         <!-- FROM -->
-                        <p class="card-text"><?= $support["data"]["reported_email"] ?></p>
+                        <p class="card-text">
+                            <span class="h6">From: </span><?= $support["data"]["reported_email"] ?>
+                        </p>
                     </div>
                 </div>
 
-            </div>
-
-            <!-- CHANGE STATUS -->
-
-            <div class="col-12">
-
+                <!-- CHANGE STATUS -->
                 <div class="card mx-auto mt-3">
 
                     <div class="card-body">
@@ -186,12 +221,9 @@ if (isset($_POST['submit'])) {
                     </div>
 
                 </div>
-            </div>
 
-            <!-- FORM REPLY -->
 
-            <div class="col-12">
-
+                <!-- FORM REPLY -->
                 <div class="card mx-auto mt-3">
                     <div class="card-body">
                         <h5 class="card-title mb-3">Reply</h5>
@@ -204,7 +236,7 @@ if (isset($_POST['submit'])) {
 
                             <div class="mb-3">
                                 <label for="description" class="form-label">Answer</label>
-                                <textarea class="form-control" id="reply" name="description" rows="3" required placeholder="Description email"></textarea>
+                                <textarea class="form-control" id="reply" name="description" rows="3" required placeholder="Description"></textarea>
                             </div>
 
                             <div class="d-flex flex-row-reverse">
@@ -214,9 +246,13 @@ if (isset($_POST['submit'])) {
                         </form>
                     </div>
                 </div>
+
+
             </div>
 
-        </div>
+    </div>
+
+    </div>
 
     </div>
 
