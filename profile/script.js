@@ -3,7 +3,7 @@ var editableData = [];
 var current_sort = "title";
 var current_sby = "DESC";
 var page = 1;
-var display = 1;
+var display = 2;
 
 document.addEventListener("DOMContentLoaded", function () {
     async function fetchCard() {
@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = 0; i < data.length; i++) {
             const card = data[i];
             cContainer.innerHTML += `
+                <a class="card-link" href="/webinar/index.php?event_id=${card.event_id}">
                 <div class="card">
                 <div class="card-upper">
                 <div class="wimg-container">
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 </div>
                 </div>
+                </a>
                 `;
         }
 

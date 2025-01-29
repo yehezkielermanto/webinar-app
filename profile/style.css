@@ -186,6 +186,11 @@
     color: rgb(182,163,232);
 }
 
+.card-link {
+    font-style: normal;
+    text-decoration: none;
+}
+
 .card-container {
     display: flex;
     flex-direction: row;
