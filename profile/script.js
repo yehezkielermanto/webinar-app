@@ -2,6 +2,8 @@ var jsonData = [];
 var editableData = [];
 var current_sort = "title";
 var current_sby = "DESC";
+var page = 1;
+var display = 1;
 
 document.addEventListener("DOMContentLoaded", function () {
     async function fetchCard() {
@@ -53,9 +55,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
+        page = 1;
+        const currentPage = document.getElementById("current-page");
+        const totalPages = Math.ceil(editableData.length / display);
+        currentPage.innerText = `${page}/${totalPages}`;
         const cContainer = document.getElementById("c-container");
         cContainer.innerHTML = "";
-        renderCard(editableData);
+        renderCard(editableData.slice(0, display));
     }
 
 
@@ -121,7 +127,11 @@ document.addEventListener("DOMContentLoaded", function () {
     async function createCard() {
         jsonData = await fetchCard();
         if (jsonData) {
-            renderCard(jsonData);
+            editableData = jsonData;
+            const newData = editableData.slice(0, display);
+            renderCard(newData);
+            const totalPages = Math.ceil(editableData.length / display);
+            currentPage.innerText = `${page}/${totalPages}`;
         } else {
             console.log("No data fetched or an error occurred.");
         }
@@ -161,14 +171,28 @@ document.addEventListener("DOMContentLoaded", function () {
         filter_event(filter);
     });
     const prevBut = document.getElementById("prev-but");
-    // TODO add pagination support.
     const currentPage = document.getElementById("current-page");
     const nextBut = document.getElementById("next-but");
     prevBut.addEventListener("click", function () {
-        console.log("prev page");
+        if (page > 1) {
+            page -= 1;
+            const totalPages = Math.ceil(editableData.length / display);
+            currentPage.innerText = `${page}/${totalPages}`;
+            const cContainer = document.getElementById("c-container");
+            cContainer.innerHTML = "";
+            renderCard(editableData.slice((page - 1) * display, page * display));
+        }
     });
+
     nextBut.addEventListener("click", function () {
-        console.log("next page");
+        if (page * display < editableData.length) {
+            page += 1;
+            const totalPages = Math.ceil(editableData.length / display);
+            currentPage.innerText = `${page}/${totalPages}`;
+            const cContainer = document.getElementById("c-container");
+            cContainer.innerHTML = "";
+            renderCard(editableData.slice((page - 1) * display, page * display));
+        }
     });
 
     // modify profile button
