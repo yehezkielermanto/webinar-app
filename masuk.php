@@ -1,4 +1,6 @@
 <?php
+// TEMPORARY EDIT - CAN BE DISCARDED ON MERGE
+
 $error = null;
 
 session_start();
@@ -9,19 +11,20 @@ if (isset($_POST['masuklogin'])) {
     //echo "$emailpass + $password";
 
     $sql =
-        "SELECT * from master_peserta where email='" .
+        "SELECT * from users WHERE email='" .
         $emailpass .
-        "' and password='" .
+        "' AND password='" .
         $password .
         "' limit 1";
     $hasil = mysqli_query($koneksi, $sql);
     $jumlah = mysqli_num_rows($hasil);
+
     if ($jumlah > 0) {
         $row = mysqli_fetch_assoc($hasil);
-        $_SESSION['id_peserta'] = $row['id_peserta'];
-        $_SESSION['nama_lengkap'] = $row['nama_lengkap'];
+        $_SESSION['user_id'] = $row['user_id'];
+        $_SESSION['fullname'] = $row['fullname'];
         $_SESSION['email'] = $row['email'];
-        if ($row['verifikasi'] == 1) {
+        if ($row['status_verification'] == 1) {
             header('location:beranda.php');
         } else {
             $error = '<div class="alert alert-danger text-center" role="alert">

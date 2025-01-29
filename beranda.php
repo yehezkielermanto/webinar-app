@@ -1,4 +1,6 @@
 <?php
+// TEMPORARY EDIT - CAN BE DISCARDED ON MERGE
+
 session_start();
 date_default_timezone_set('Asia/Jakarta'); //define local time
 include "koneksi.php";
@@ -23,31 +25,31 @@ Belum Ada Materi
             header("Location:session.php");
            exit;
        }
-      $nama_lengkap = $_SESSION["nama_lengkap"];
-      $id_peserta = $_SESSION["id_peserta"];
+      $nama_lengkap = $_SESSION["fullname"];
+      $id_peserta = $_SESSION["user_id"];
       //result event yang akan datang
-      $result_event_feature = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE a.id_peserta ='$id_peserta' AND b.status=1 AND a.id_event = b.id_event AND '$tanggal_sekarang' <= b.tanggal ORDER BY b.tanggal LIMIT 1");
+      $result_event_feature = $koneksi->query("SELECT a.* , b.* FROM event_participants a, events b WHERE a.user_id ='$id_peserta' AND b.status=1 AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ORDER BY b.date LIMIT 1");
       // result event
-      $result_event = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE a.id_peserta ='$id_peserta' AND a.id_event = b.id_event AND '$tanggal_sekarang' <= b.tanggal ");
+      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ");
 
 
       //result materi
-      $result_materi = $koneksi->query("SELECT * FROM materi WHERE status_materi = 1");
+      $result_materi = $koneksi->query("SELECT * FROM event_materials WHERE status = 1");
 
       //feed and seertifikat and absen
 
         if (isset($_GET['id-event']) & isset($_GET['feed'])) {
-            $nama_lengkap = $_SESSION["nama_lengkap"];
-            $id_peserta = $_SESSION["id_peserta"];
+            $nama_lengkap = $_SESSION["fullname"];
+            $id_peserta = $_SESSION["user_id"];
             $id_event=$_GET['id-event'];
             $link_feed = $_GET['feed'];
             // result event
-            $result_event_absensi = $koneksi->query("SELECT * FROM peserta_event WHERE id_event ='$id_event' and id_peserta ='$id_peserta'");
+            $result_event_absensi = $koneksi->query("SELECT * FROM event_participants WHERE event_id ='$id_event' and user_id ='$id_peserta'");
             $result_absensi=mysqli_fetch_array($result_event_absensi);
             // $resul_sertifikat = $koneksi->query("SELECT * FROM master_event WHERE id_event ='$id_event' ");
             // $result_sertifikat=mysqli_fetch_array($resul_sertifikat);
             if ($result_absensi['absen']==0) {
-                mysqli_query($koneksi , "UPDATE peserta_event SET absen=1 WHERE id_event ='$id_event' and id_peserta ='$id_peserta'");
+                mysqli_query($koneksi , "UPDATE event_participants SET absen=1 WHERE event_id ='$id_event' and user_id ='$id_peserta'");
             //     header('content-type:image/jpeg');
             //     $font='C:\Windows\Fonts\georgia.ttf';
             //     $font_no = 'C:\Windows\Fonts\arial.ttf';
