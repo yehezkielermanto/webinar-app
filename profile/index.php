@@ -112,12 +112,12 @@ if(!isset($_SESSION['email'])){
                             <input id="after" type="date" placeholder="after">
                             <label class="bold-f" for="from">Sortir:</label>
                             <radio-group>
-                                <input type="radio" name="sort" value="asc" checked>abc
-                                <input type="radio" name="sort" value="desc">zyx
+                                <input type="radio" name="sort" value="DESC" checked>abc
+                                <input type="radio" name="sort" value="ASC">zyx
                             </radio-group>
                             <label class="bold-f" for="from">Sortir dengan:</label>
                             <radio-group>
-                                <input type="radio" name="sortby" value="name" checked>nama
+                                <input type="radio" name="sortby" value="title" checked>nama
                                 <input type="radio" name="sortby" value="date">tanggal
                             </radio-group>
                         </div>

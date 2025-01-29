@@ -1,10 +1,12 @@
 var jsonData = [];
 var editableData = [];
+var current_sort = "title";
+var current_sby = "DESC";
 
 document.addEventListener("DOMContentLoaded", function () {
     async function fetchCard() {
         try {
-            const response = await fetch("/profile/get-particaped-event.php");
+            const response = await fetch(`/profile/get-particaped-event.php?sortwith=${current_sby}&sortby=${current_sort}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -15,39 +17,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return null;
         }
     }
-
-    //function filter_event(filter) {
-    //    editableData = [];
-    //    for (let i = 0; i < jsonData.length; i++) {
-    //        const current = jsonData[i];
-    //        const fStartTime = parseInt(filter.before.replace(/-/g, ""), 10);
-    //        const fEndTime = parseInt(filter.after.replace(/-/g, ""), 10);
-    //        if (current.title.toLowerCase().includes(filter.query.toLowerCase()) ||
-    //            current.speaker.toLowerCase().includes(filter.query.toLowerCase()) ||
-    //            current.description.toLowerCase().includes(filter.query.toLowerCase())
-    //        ) {
-    //            const eventDate = parseInt(current.date.replace(/-/g, ""), 10);
-    //            let addCurrentEvent = false;
-    //
-    //            if (!isNaN(fStartTime) && fStartTime <= eventDate) {
-    //                addCurrentEvent = true;
-    //            }
-    //            if (!isNaN(fEndTime) && fEndTime >= eventDate) {
-    //                addCurrentEvent = true;
-    //            }
-    //
-    //
-    //            if (addCurrentEvent) {
-    //                editableData.push(current);
-    //            }
-    //        }
-    //    }
-    //    const cContainer = document.getElementById("c-container");
-    //    cContainer.innerHTML = "";
-    //    renderCard(editableData);
-    //}
-    function filter_event(filter) {
+    async function filter_event(filter) {
         editableData = [];
+        if (filter.length <= 0) {
+            const cContainer = document.getElementById("c-container");
+            cContainer.innerHTML = "";
+            renderCard(jsonData);
+            return;
+        }
+
+        if (filter.sortwith !== current_sort ||
+            filter.sortby !== current_sby) {
+            current_sby = filter.sortwith;
+            current_sort = filter.sortby;
+            jsonData = await fetchCard();
+        }
         for (let i = 0; i < jsonData.length; i++) {
             const current = jsonData[i];
             const fStartTime = parseInt(filter.before?.replace(/-/g, ""), 10);

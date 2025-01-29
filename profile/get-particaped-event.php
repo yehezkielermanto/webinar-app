@@ -8,6 +8,22 @@ if (!isset($_SESSION["email"])) {
     exit();
 }
 
+$sortwith = "title";
+$sortby = "DESC";
+
+if (isset($_GET["sortwith"])) {
+    if ($_GET["sortwith"] == "ASC") {
+        $sortby = "ASC";
+    }
+}
+
+if (isset($_GET["sortby"])) {
+    if ($_GET["sortby"] == "date") {
+        $sortwith = "date";
+    }
+}
+$sortwith = "e.$sortwith";
+
 $user_id = $_SESSION["id_peserta"];
 $particapated = array();
 
@@ -44,7 +60,8 @@ JOIN
 ON 
     ep.event_id = e.event_id
 WHERE 
-    ep.user_id =".$user_id;
+    ep.user_id =".$user_id."
+ORDER by $sortwith $sortby";
 
 $result = mysqli_query($koneksi, $query);
 $result_len = mysqli_num_rows($result);
