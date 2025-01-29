@@ -2,13 +2,13 @@
 session_start();
 
 if(!isset($_SESSION["email"])){
-    header("Location: masuk.php");
+    header("Location: /masuk.php");
     exit(); 
 }
 
 $user_id = $_SESSION["id_peserta"];
 $koneksi = null;
-include 'koneksi.php';
+include '../koneksi.php';
 
 
 $particapated = array();

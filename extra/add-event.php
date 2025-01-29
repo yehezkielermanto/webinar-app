@@ -1,10 +1,10 @@
 <!-- Header -->
-<?php include "header.php"; ?>
+<?php include "../admin/header.php"; ?>
 <!-- Penomoran Otomatis -->
 <?php
 // hubungkan ke database
 $koneksi = null;
-include 'koneksi.php';
+include '../koneksi.php';
 
 // mengambil data ID event yang tertinggi 
 $query = mysqli_query($koneksi, "SELECT max(event_id) as IDTerbesar FROM events");
@@ -20,7 +20,7 @@ $IDTerbesar = $huruf . sprintf("%03s", $urutan);
 ?>
 <a href="/logout.php" class="btn btn-danger"><i class="fa fa-sign-out-alt"></i>Logout</a><br>
 <div class="head text-white text-center">
-    <img src="assets/img/logo_IF.png" alt="" width="100">
+    <img src="/assets/img/logo_IF.png" alt="" width="100">
     <h2 class="text-center">Web Pendaftaran Prodi Ilmu Informatika <br>WebIF</h2>
 </div>
 <div>
@@ -53,4 +53,4 @@ $IDTerbesar = $huruf . sprintf("%03s", $urutan);
     </form>
 </div>
 
-<?php include "footer.php"; ?>
+<?php include "../admin/footer.php"; ?>

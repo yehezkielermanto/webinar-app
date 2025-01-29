@@ -1,17 +1,16 @@
 <?php
 session_start();
 $koneksi = null;
-include "../koneksi.php";
+include "../../koneksi.php";
 
 if(!isset($_SESSION['email'])){
-    header("Location:/session.php");
+    header("Location: /index.php");
     exit;
 }
 
 if (!isset($_GET["event_id"])) {
     header("Location: /index.php");
 }
-
 
 $event_id = $_GET["event_id"];
 $query = "select * from events where event_id = $event_id limit 1";
@@ -29,8 +28,8 @@ while ($row = $result->fetch_assoc()) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Webinar Page</title>
-        <link href="../profile/style.css" rel="stylesheet">
-        <script src="../profile/script.js"></script>
+        <link href="../../css/profile.css" rel="stylesheet">
+        <script src="../../js/profile.js"></script>
     </head>
     <body>
         <div class="floating-menu">

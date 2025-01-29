@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = 0; i < data.length; i++) {
             const card = data[i];
             cContainer.innerHTML += `
-                <a class="card-link" href="/webinar/index.php?event_id=${card.event_id}">
+                <a class="card-link" href="/extra/webinar/index.php?event_id=${card.event_id}">
                 <div class="card">
                 <div class="card-upper">
                 <div class="wimg-container">

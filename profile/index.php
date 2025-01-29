@@ -12,8 +12,8 @@ if(!isset($_SESSION['email'])){
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Profile</title>
-        <link href="style.css" rel="stylesheet">
-        <script src="script.js"></script>
+        <link href="/css/profile.css" rel="stylesheet">
+        <script src="/js/profile.js"></script>
     </head>
     <body>
         <div class="floating-menu">
@@ -123,21 +123,6 @@ if(!isset($_SESSION['email'])){
                         </div>
                     </div>
                     <div class="card-container" id="c-container">
-                        <!--<div class="card">-->
-                        <!--    <div class="card-upper">-->
-                        <!--        <div class="wimg-container">-->
-                        <!--            <img class="responsive-image2" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmikrocentrum.nl%2Fassets%2FUploads%2FALG_Webinars-min-v2.jpg&f=1&nofb=1&ipt=1067cd4cae67259b4c613752d1b1cecf932f0e5d111a6c527eec068a3eb9d1e3&ipo=images"/>-->
-                        <!--        </div>-->
-                        <!--    </div>-->
-                        <!--    <div class="card-bottom">-->
-                        <!--        <p class="m-f bold-f mb-5 mb-0">Webinar A</p>-->
-                        <!--        <p class="s-f mb-0">1/1/1111</p>-->
-                        <!--        <p class="s-f mb-0">Manusia</p>-->
-                        <!--        <div class="card-status">-->
-                        <!--            <p class="xs-f">Panitia</p>-->
-                        <!--        </div>-->
-                        <!--    </div>-->
-                        <!--</div>-->
                     </div>
                     <div class="more-card-btn">
                         <div class="white-grad inner-footer">
