@@ -41,7 +41,7 @@ if(!isset($_SESSION['email'])){
                 <div class="left-back">
                     <div class="left-upper">
                         <div class="img-container">
-                            <img class="responsive-image" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpreview.redd.it%2Fy7o9g85gp2q51.jpg%3Fwidth%3D960%26crop%3Dsmart%26auto%3Dwebp%26s%3D831fd62b4deffa1908a3807c5920b5f80e88e35c&f=1&nofb=1&ipt=c50e28045007b7979226d1202f05e370c467da1710a2c530d88c1e2e7d2512c0&ipo=images"/>
+                            <img class="responsive-image" src="profile_placeholder.png"/>
                         </div>
                     </div>
                     <div class="left-bottom">

@@ -1,2 +1,0 @@
-- [ ] `Tampilkan Lebih` will create or edit right to fit the entire screen
-- [x] Make it mobile friendly
