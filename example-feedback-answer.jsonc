@@ -1,0 +1,14 @@
+{
+    // all keys are taken from html_name of the question. all values are answers by the form filler
+    "webinar_rating": 4,
+    "material_relevance": 5,
+    "speaker_knowledge": 5,
+    "speaker_clarity": 4,
+    "moderator_competency": 4,
+    "speaker_satisfaction": 4,
+    "recommend_others": "Ya",
+    "likeliness_attending": 4,
+    "usefulness_rating": 5,
+    "audience_feedback": "Webinar bagus dan bermanfaat.",
+    "future_topics": "Model seperti DeepSeek."
+}

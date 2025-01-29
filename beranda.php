@@ -226,17 +226,16 @@ Belum Ada Materi
                             }
                             else {
                             while ($row = $result_event_feature->fetch_assoc()){
-                                $id_event = $row['id_event'];
-                                $judul = $row['judul'];
-                                $tanggal = $row['tanggal'];
-                                $jam_mulai = $row['jam_mulai'];
-                                $jam_selesai = $row['jam_selesai'];
+                                $id_event = $row['event_id'];
+                                $judul = $row['title'];
+                                $tanggal = $row['date'];
+                                $jam_mulai = $row['start_time'];
+                                $jam_selesai = $row['end_time'];
                                 $link = $row['link'];
                                 $date_format = date("d F Y",strtotime($tanggal));
                                 $time_format_mulai = date("h:i",strtotime($jam_mulai));
                                 $time_format_selesai = date("h:i",strtotime($jam_selesai));
-                                $background = $row['temp_background'];
-                                $feedback = $row['feedback'];
+                                $background = $row['background_online_url'];
                                 // echo $feedback;
                                 echo '
                                 <div  class="col-md-11 text-center">
@@ -251,7 +250,7 @@ Belum Ada Materi
                                     <p class ="mb-3 mt-3">Klik Link diatas untuk absen dan masuk Webinar</p>
                                     <a href="donwload-background.php?down-back='.$background.'" style="color: white;" class="login-form-btn">Donwload Background</a>
                                     <p class =" mt-3 mb-3">Klik Donwload Background datas untuk background Webinar</p>
-                                    <a href="beranda.php?feed='.$feedback.'&id-event='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a>
+                                    <a href="feedback.php?event_id='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a>
                                     <p class =" mt-3">Klik Untuk mengisi feedback, <br> feeedback akan ditutup tengah malam</p>
                                     </div>
                                 </div>
@@ -277,10 +276,10 @@ Belum Ada Materi
 
                             else {
                                 while ($row = $result_event->fetch_assoc()){
-                                $id_event = $row['id_event'];
-                                $judul = $row['judul'];
-                                $avatar_event = $row['avatar_event'];
-                                $tanggal = $row['tanggal'];
+                                $id_event = $row['event_id'];
+                                $judul = $row['title'];
+                                $avatar_event = $row['poster_url'];
+                                $tanggal = $row['date'];
                                 $date_format = date("d F Y",strtotime($tanggal));
 
                                 // echo "$id_event";
@@ -322,8 +321,8 @@ Belum Ada Materi
              }
              else {
                 while ($row = $result_materi->fetch_assoc()){
-                    $judul_materi = $row['judul_materi'];
-                    $lokasi_materi = $row['lokasi_materi'];
+                    $judul_materi = $row['name'];
+                    $lokasi_materi = $row['attachment'];
         
                 echo '<div class="card mb-3" style="width: 18rem; background-color: aliceblue;  border-radius: 15px; box-shadow: 0 5px 20px 0px rgb(126, 128, 127);" >
                 <div class="card-body">
