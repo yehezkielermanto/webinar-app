@@ -31,6 +31,7 @@ class Supports
             subject,
             description,
             reported_email,
+            attachment,
             type,
             status,
             created_by,
@@ -40,6 +41,7 @@ class Supports
             :subject,
             :description,
             :reported_email,
+            :attachment,
             :type,
             :status,
             :created_by,
@@ -51,6 +53,7 @@ class Supports
         $stmt->bindParam(':subject', $req['subject'], PDO::PARAM_STR);
         $stmt->bindParam(':description', $req['description'], PDO::PARAM_STR);
         $stmt->bindParam(':reported_email', $req['reported_email'], PDO::PARAM_STR);
+        $stmt->bindParam(':attachment', $req['attachment']['path'], PDO::PARAM_STR);
         $stmt->bindParam(':type', $req['type'], PDO::PARAM_STR);
         $stmt->bindParam(':status', $req['status'], PDO::PARAM_STR);
         $stmt->bindParam(':created_by', $req['created_by'], PDO::PARAM_STR);
@@ -86,14 +89,76 @@ class Supports
                 reported_email,
                 type,
                 status,
-                created_by
+                created_by,
+                created_at
             FROM 
                 supports
             ORDER BY 
-                status DESC
+                status DESC,
+                created_at DESC
         ";
 
         $stmt = $this->conn->prepare($sql);
+
+        $success = $stmt->execute();
+
+        if ($success) {
+
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $result;
+
+        } else {
+
+            return null;
+        }
+
+    }
+
+    /**
+     * Read all support tickets by status
+     * @param $status
+     * @return mixed (array|null)
+     */
+    function readFiltered($req) 
+    {
+        $filter = "";
+
+        if ($req['status']) {
+            $filter = "status = :status";
+        }
+
+        if ($req['user_id'] && $req['status']) {
+            $filter = "user_id = :user_id AND status = :status";
+        }
+
+        $sql = "
+            SELECT 
+                id, 
+                subject,
+                description,
+                reported_email,
+                type,
+                status,
+                created_by,
+                created_at
+            FROM 
+                supports
+            WHERE 
+                {$filter}
+            ORDER BY 
+                created_at DESC
+        ";
+
+        $stmt = $this->conn->prepare($sql);
+        
+        if ($req['status']) {
+            $stmt->bindParam(':status', $req['status'], PDO::PARAM_STR);
+        }
+
+        if ($req['user_id'] && $req['status']) {
+            $stmt->bindParam(':user_id', $req['user_id'], PDO::PARAM_INT);
+        }
 
         $success = $stmt->execute();
 
@@ -122,13 +187,15 @@ class Supports
             SELECT 
                 id, 
                 subject,
-                status  
+                status,
+                type,
+                created_at  
             FROM 
                 supports 
             WHERE 
                 user_id = :user_id
             ORDER BY 
-                status DESC
+                status ASC
         ";
 
         $stmt = $this->conn->prepare($sql);
@@ -167,7 +234,8 @@ class Supports
                 answer,
                 type,
                 status,
-                created_by
+                created_by,
+                created_at
             FROM 
                 supports 
             WHERE 

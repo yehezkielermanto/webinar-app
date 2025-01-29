@@ -9,6 +9,33 @@ require_once __DIR__ . "/../model/Support.php";
 
 class SupportService
 {
+    /**
+     * Process image file
+     * @param $image
+     * @return array
+     */
+    function proccessImageFile($image) 
+    {
+        $filename = time() . "_" . uniqid() . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        $upload_dir = $upload_dir = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, realpath(__DIR__ . '/../uploads')) . DIRECTORY_SEPARATOR;
+
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        $target_file = $upload_dir . basename($filename);
+
+        $path = $upload_dir . $filename;
+
+        return [
+            "path" => $path,
+            "target" => $target_file,
+            "tmp_name" => $image['tmp_name'],
+            "filename" => $filename
+        ];
+    }
+
     // CRUD operations
 
     /**
@@ -22,6 +49,24 @@ class SupportService
 
         $req['status'] = "PENDING";
 
+        if ($req['attachment'] !== null) {
+            $image = $this->proccessImageFile($req['attachment']);
+
+            $req['attachment'] = [
+                "path" => $image['path'],
+                "target" => $image['target'],
+                "tmp_name" => $image['tmp_name'],
+                "filename" => $image['filename']
+            ];
+
+            if (!$image) {
+                throw new ResponseError("Failed to process image file");
+            }
+            
+        } else {
+            $req['attachment'] = null;
+        }
+
         return $support->create($req);
     }
 
@@ -34,6 +79,18 @@ class SupportService
         $support = new Supports();
 
         return $support->read();
+    }
+
+    /**
+     * Get all support ticket
+     * @param $req
+     * @return mixed (array|null)
+     */
+    function filterTickets($req)
+    {
+        $support = new Supports();
+
+        return $support->readFiltered($req);
     }
 
     /**
@@ -55,11 +112,12 @@ class SupportService
      * @param $description
      * @param $from
      */
-    function sendSupportTicketEmail($to, $subject, $description, $from): void
+    function sendSupportTicketEmail($to, $subject, $description, $from, $attachment = null): void
     {
         $mail = new PHPMailer(true);
 
         // Set mailer to use SMTP
+        // Can be changed with support email
         $mail->isSMTP();
         $mail->Host = "smtp.gmail.com";
         $mail->SMTPAuth = true;
@@ -71,6 +129,10 @@ class SupportService
         $mail->setFrom($from);
         $mail->addAddress($to);
         $mail->addReplyTo($from);
+
+        if (!$attachment) {
+            $mail->addAttachment($attachment['tmp_name'], $attachment['filename']);
+        }
 
         $mail->isHTML(true);
         $mail->Subject = $subject;

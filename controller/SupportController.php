@@ -8,7 +8,9 @@ class SupportController
     /**
      * Create a new support ticket
      * @param $req
-     * @return mixed (array|null)
+     * @return array
+     * @throws PDOException
+     * @throws ResponseError
      */
     function create($req)
     {
@@ -24,7 +26,8 @@ class SupportController
                 "nekoowaves@gmail.com",
                 $req['subject'],
                 $req['description'],
-                $req['reported_email']
+                $req['reported_email'],
+                $result['attachment'] ?? null
             );
 
             return [
@@ -58,8 +61,9 @@ class SupportController
 
     /**
      * Get all support tickets
-     * @return mixed (array|null)
+     * @return array
      * @throws PDOException
+     * @throws ResponseError
      */
     function get()
     {
@@ -87,10 +91,44 @@ class SupportController
         }
     }
 
+
+    /**
+     * Filter support tickets
+     * @param $req
+     * @return array
+     * @throws PDOException
+     */
+    function filter($req)
+    {
+        $supportService = new SupportService();
+
+        try {
+
+            $result = $supportService->filterTickets($req);
+
+            return [
+                "success" => true,
+                "message" => "Support ticket retrieved successfully",
+                "data" => $result
+            ];
+
+        } catch (PDOException $e) {
+
+            error_log("(CONTROLLER) Error retrieving support ticket: " . $e->getMessage());
+
+            return [
+                "success" => false,
+                "message" => $e->getMessage()
+            ];
+
+        }
+    }
+
     /**
      * Get support ticket by ID
      * @param $id
-     * @return mixed (array|null)
+     * @return array
+     * @throws PDOException
      */
     function getbyId($id)
     {
@@ -121,7 +159,8 @@ class SupportController
     /**
      * Get all support tickets by user ID
      * @param $userId
-     * @return mixed (array|null)
+     * @return array
+     * @throws PDOException
      */
     function list($userId)
     {
@@ -152,7 +191,9 @@ class SupportController
     /**
      * Update support ticket status
      * @param $req
-     * @return mixed (array|null)
+     * @return array
+     * @throws PDOException
+     * @throws ResponseError
      */
     function update($req)
     {
@@ -203,7 +244,9 @@ class SupportController
     /**
      * Update support ticket status
      * @param $req
-     * @return mixed (array|null)
+     * @return array
+     * @throws PDOException
+     * @throws ResponseError
      */
     function updateStatus($req)
     {
