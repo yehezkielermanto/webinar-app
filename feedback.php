@@ -28,6 +28,14 @@ $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 $feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
+// Find if event_feedback answer exists, then redirect to feedback_finished.php
+$resEventFeedback = $koneksi->query("SELECT * FROM event_feedback WHERE feedback_template_id = '$feedbackTemplateID' AND event_participant_id = '$eventParticipantID'");
+
+if (mysqli_num_rows($resEventFeedback) > 0) {
+    header("Location:feedback_finished.php?event_id=$eventID");
+    exit;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,18 +44,49 @@ $feedback = json_decode($eventFeedbackTemplate["field"]);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/feedback.css">
     <title>Pengisian Feedback</title>
 </head>
-<body>
+<body style="position: relative;">
     <div
         style="background-color: #F6F6F6; padding-inline: 1rem; padding-block: 0.5rem;
         margin-inline: 2rem; margin-block: 1rem; border-radius: 1rem;"
     >
-        <h1 style="color: #A987FF;">FORM PENGISIAN FEEDBACK - <?= $event['title']; ?></h1>
-        <p>Informasi akun anda akan disimpan dengan jawaban Anda.</p>
+        <div style="display: flex;">
+            <div>
+                <a href="beranda.php">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width: 64px; height: 64px; fill: #A987FF;">
+                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                        <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+                    </svg>
+                </a>
+            </div>
+            <div>
+                <h1 style="color: #A987FF;">FORM PENGISIAN FEEDBACK - <?= $event['title']; ?></h1>
+                <p>Informasi akun anda akan disimpan dengan jawaban Anda.</p>
+            </div>
+        </div>
         <hr style="border-color: #EAEAEA; margin-block: 1rem;" />
 
-        <form>
+        <form method="post" action="feedback_finished.php">
+            <input
+                type="hidden"
+                id="event_id"
+                name="event_id"
+                value="<?= $eventID; ?>" />
+
+            <input
+                type="hidden"
+                id="feedback_template_id"
+                name="feedback_template_id"
+                value="<?= $feedbackTemplateID; ?>" />
+            
+            <input
+                type="hidden"
+                id="event_participant_id"
+                name="event_participant_id"
+                value="<?= $eventParticipantID; ?>" />
+        
         <?php
         foreach ($feedback as $c) { // feedback categories
             ?>
@@ -76,7 +115,7 @@ $feedback = json_decode($eventFeedbackTemplate["field"]);
                             name="<?= $q->html_name; ?>"
                             class="fs-16"
                             style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
-                            border: 1px solid; border-radius: 0.5rem; width: 50%; margin-bottom: 0.5rem;
+                            border: 1px solid; border-radius: 0.5rem; width: 50%; margin-bottom: 0.75rem;
                             display: block;"
                             <?php echo $q->required ? "required" : ""; ?>>
                     <?php
@@ -88,55 +127,83 @@ $feedback = json_decode($eventFeedbackTemplate["field"]);
                             rows="3"
                             class="fs-16"
                             style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
-                            border: 1px solid; border-radius: 0.5rem; width: 50%; margin-bottom: 0.5rem;
+                            border: 1px solid; border-radius: 0.5rem; width: 50%; margin-bottom: 0.75rem;
                             display: block;"
                             <?php echo $q->required ? "required" : ""; ?>></textarea>
                     <?php
                     } else if ($q->input_type == "checkbox") {
+                    ?>
+                        <div style="width: 50%; margin-bottom: 0.75rem;">
+                        <?php
                         foreach ($q->check_choices as $option) {
                         ?>
-                            <div class="fs-16">
+                            <div style="margin-bottom: 0.25rem;">
                                 <input
                                     type="checkbox"
                                     id="<?= $q->html_name; ?>_<?= $option; ?>"
                                     name="<?= $q->html_name; ?>"
                                     value="<?= $option; ?>"
-                                    style="margin-bottom: 0.125rem;">
-                                <label for="<?= $q->html_name; ?>_<?= $option; ?>">
+                                    style="margin-bottom: 0.125rem;"
+                                    <?php echo $q->required ? "required" : ""; ?>>
+                                <label
+                                    for="<?= $q->html_name; ?>_<?= $option; ?>"
+                                    style="margin-left: 0.125rem; margin-right: 0.5rem;">
                                     <?= $option; ?>
                                 </label>
                             </div>
                         <?php
                         }
+                        ?>
+                        </div>
+                    <?php
                     } else if ($q->input_type == "radio") {
+                    ?>
+                        <div style="width: 50%; margin-bottom: 0.75rem;">
+                        <?php
                         foreach ($q->radio_choices as $option) {
                         ?>
-                            <div class="fs-16">
+                            <div style="margin-bottom: 0.25rem;">
                                 <input
                                     type="radio"
                                     id="<?= $q->html_name; ?>_<?= $option; ?>"
                                     name="<?= $q->html_name; ?>"
                                     value="<?= $option; ?>"
-                                    style="margin-bottom: 0.125rem;">
-                                <label for="<?= $q->html_name; ?>_<?= $option; ?>">
+                                    style="margin-bottom: 0.125rem;"
+                                    <?php echo $q->required ? "required" : ""; ?>>
+                                <label
+                                    for="<?= $q->html_name; ?>_<?= $option; ?>"
+                                    style="margin-left: 0.125rem; margin-right: 0.5rem;">
                                     <?= $option; ?>
                                 </label>
                             </div>
                         <?php
                         }
+                        ?>
+                        </div>
+                    <?php
                     } else if ($q->input_type == "radio_scale") {
                     ?>
-                        <div class="fs-16" style="width: 50%; display: flex; justify-content: center; align-items: flex-end;">
+                        <div
+                            class="fs-16"
+                            style="width: 50%; display: flex; justify-content: center; align-items: flex-end;
+                            margin-bottom: 0.75rem;">
                             <p class="fs-16" style="padding-inline: 0.25rem;"><?= $q->radio_text_low; ?></p>
                             <table class="text-center">
                                 <tr>
                                 <?php
                                     for ($i = $q->radio_range_low; $i <= $q->radio_range_high; $i++) {
                                     ?>
-                                    <td style="border-bottom: 1px solid black; padding-inline: 0.5rem;"><label for="<?= $q->html_name; ?>_<?= $i; ?>"><?= $i; ?></label></td>
+                                    <td style="padding-inline: 0.5rem;">
+                                        <label for="<?= $q->html_name; ?>_<?= $i; ?>">
+                                            <?= $i; ?>
+                                        </label>
+                                    </td>
                                     <?php
                                     }
                                 ?>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"><hr /></td>
                                 </tr>
                                 <tr>
                                 <?php
@@ -148,7 +215,8 @@ $feedback = json_decode($eventFeedbackTemplate["field"]);
                                             id="<?= $q->html_name; ?>_<?= $i; ?>"
                                             name="<?= $q->html_name; ?>"
                                             value="<?= $i; ?>"
-                                            style="margin-bottom: 0.125rem; padding-inline: 0.5rem;">
+                                            style="margin-bottom: 0.125rem; padding-inline: 0.5rem;"
+                                            <?php echo $q->required ? "required" : ""; ?>>
                                     </td>
                                     <?php
                                     }
@@ -160,15 +228,20 @@ $feedback = json_decode($eventFeedbackTemplate["field"]);
                     <?php
                     }
                     //var_dump($q);
-                    echo "<br>";
                 }
                 ?>
             </div>
             <?php
         }
         ?>
-            <button type="submit">submit</button>
+            <button
+                type="submit"
+                class="feedback-submit"
+                onclick="return confirm('Jawaban feedback TIDAK AKAN bisa diubah lagi! Apakah yakin menyimpan jawaban feedback Anda?')">
+                SIMPAN
+            </button>
         </form>
     </div>
+    <div style="height:1rem;"></div>
 </body>
 </html>
