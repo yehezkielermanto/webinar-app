@@ -40,7 +40,7 @@ if(!isset($_SESSION['email'])){
             <div class="sidebar-left">
                 <div class="left-back">
                     <div class="left-upper">
-                        <div class="img-container">
+                        <div class="img-container" id="change-profile">
                             <img class="responsive-image" src="profile_placeholder.png"/>
                         </div>
                     </div>
@@ -106,19 +106,19 @@ if(!isset($_SESSION['email'])){
                     <div id="as-dialog" style="display: none;">
                         <div class="inner-dialog">
                             <p class="m-f bold-f">Advanced Search</p>
-                            <label class="bold-f" for="from">Sesudah:</label>
+                            <label for="from">Sesudah:</label>
                             <input id="before" type="date" placeholder="before">
-                            <label class="bold-f" for="from">Sebelum:</label>
+                            <label for="from">Sebelum:</label>
                             <input id="after" type="date" placeholder="after">
-                            <label class="bold-f" for="from">Sortir:</label>
+                            <label for="from">Sortir:</label>
                             <radio-group>
-                                <input type="radio" name="sort" value="DESC" checked>abc
-                                <input type="radio" name="sort" value="ASC">zyx
+                                <input type="radio" name="sort" value="DESC" checked><i class="nf nf-md-sort_alphabetical_ascending"></i>
+                                <input type="radio" name="sort" value="ASC"><i class="nf nf-md-sort_alphabetical_descending"></i>
                             </radio-group>
-                            <label class="bold-f" for="from">Sortir dengan:</label>
+                            <label for="from">Sortir dengan:</label>
                             <radio-group>
-                                <input type="radio" name="sortby" value="title" checked>nama
-                                <input type="radio" name="sortby" value="date">tanggal
+                                <input type="radio" name="sortby" value="title" checked>Nama
+                                <input type="radio" name="sortby" value="date">Tanggal
                             </radio-group>
                         </div>
                     </div>

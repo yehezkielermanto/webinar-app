@@ -121,7 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     function () {
                         newEl.remove();
                         document.removeEventListener("mousemove", moveHandler);
-                        console.log("removing");
                     },
                     { once: true },
                 );
@@ -155,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             advS.style.display = "none";
         }
-        console.log("toggle the advanced search");
     });
 
     // search button
@@ -288,8 +286,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const hamburgBtn = document.getElementById("toggle-menu");
     const sidebar = document.getElementById("hmenu");
     hamburgBtn.addEventListener("click", function() {
-        console.log("hello");
         sidebar.hidden = !sidebar.hidden;
+    });
+
+    // profile change
+    const profile = document.getElementById("change-profile");
+    profile.addEventListener("click", function() {
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = e => { 
+            let file = e.target.files[0]; 
+            let reader = new FileReader();
+            reader.readAsText(file,'UTF-8');
+            reader.onload = readerEvent => {
+                let content = readerEvent.target.result;
+                console.log(content);
+            }
+        }
+        input.click();
     });
     createCard();
 });

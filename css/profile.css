@@ -472,6 +472,15 @@
     padding: 2px;
 }
 
+#change-profile {
+    cursor: pointer;
+}
+
+#change-profile:hover {
+    border: 3px solid white;
+    filter: drop-shadow(0px 5px 5px rgba(255, 255, 255, 1));
+}
+
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
