@@ -130,7 +130,7 @@ class SupportService
         $mail->addAddress($to);
         $mail->addReplyTo($from);
 
-        if (!$attachment) {
+        if (is_array($attachment) && isset($attachment['tmp_name']) && isset($attachment['filename'])) {
             $mail->addAttachment($attachment['tmp_name'], $attachment['filename']);
         }
 

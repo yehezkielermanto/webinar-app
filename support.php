@@ -81,7 +81,6 @@ if (isset($_POST['send_ticket'])) {
     }
 }
 
-
 ?>
 
 <!DOCTYPE html>
@@ -138,7 +137,7 @@ if (isset($_POST['send_ticket'])) {
                     </div>
                     <div class="mb-3">
                         <label for="reported_email" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="reported_email" aria-describedby="emailHelp" name="reported_email" required placeholder="Johndoe@domain.address">
+                        <input type="email" class="form-control" id="reported_email" aria-describedby="emailHelp" name="reported_email" value="<?= $_SESSION['user']['email'] ?>" readonly>
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">

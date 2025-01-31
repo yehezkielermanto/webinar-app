@@ -42,10 +42,10 @@
               </div>
             </form>
         </div>
-      	<!-- tombol bantuan -->
+      	<!-- tombol bantuan
         <div style="position:fixed; bottom:0; right:0;color:black;background-color:white;margin:10px;padding:4px;border-radius:5px;">
           <a href="https://wa.me/6289529633429" target="_blank" style="text-decoration:underline;">Klik untuk bantuan</a>
-        </div>
+        </div> -->
     </div>
   	
   

@@ -195,12 +195,6 @@ if (isset($_POST['submit'])) {
                                             <div class="mb-3">
 
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="status" id="status" value="PENDING" required>
-                                                    <label class="form-check-label" for="status">
-                                                        Pending
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="status" id="status" value="Solved" required>
                                                     <label class="form-check-label" for="status">
                                                         Solved

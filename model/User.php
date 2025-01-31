@@ -94,7 +94,7 @@ class User
     {
         $sql = 
         "
-            SELECT id, username, password, role 
+            SELECT id, username, password, role, email 
             FROM users 
             WHERE username = :username
         ";
