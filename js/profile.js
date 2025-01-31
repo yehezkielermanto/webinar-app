@@ -61,6 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
         currentPage.innerText = `${page}/${totalPages}`;
         const cContainer = document.getElementById("c-container");
         cContainer.innerHTML = "";
+        if (editableData.length <= 0) {
+            cContainer.innerHTML = "<p>Tidak ada event yang sesuai.</p>";
+        }
         renderCard(editableData.slice(0, display));
     }
 
