@@ -189,6 +189,10 @@
 .card-link {
     font-style: normal;
     text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .card-container {

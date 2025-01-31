@@ -301,7 +301,28 @@ document.addEventListener("DOMContentLoaded", function () {
             reader.readAsText(file,'UTF-8');
             reader.onload = readerEvent => {
                 let content = readerEvent.target.result;
-                console.log(content);
+                fetch('/profile/save_profile.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        image: content,
+                        filename: file.name
+                    })
+                }).then(response => response.json())
+                  .then(data => {
+                        if(data.success) {
+                            alert('Profile image uploaded successfully!');
+                            // You can add code here to update the profile image on the page
+                        } else {
+                            alert('Error uploading profile image: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error uploading profile image');
+                    });
             }
         }
         input.click();
