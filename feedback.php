@@ -42,9 +42,29 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/icons/" />
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/feedback.css">
+    <style>
+        .responsive-answer {
+            width: 100%;
+        }
+
+        .icon-responsive {
+            width: 32px; height: 32px;
+        }
+
+        @media (min-width: 1024px) {
+            .responsive-answer {
+                width: 50%;
+            }
+
+            .icon-responsive {
+                width: 64px; height: 64px;
+            }
+        }
+    </style>
     <title>Pengisian Feedback</title>
 </head>
 <body style="position: relative;">
@@ -55,7 +75,7 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
         <div style="display: flex;">
             <div>
                 <a href="beranda.php">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="width: 64px; height: 64px; fill: #A987FF;">
+                    <svg class="icon-responsive" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill: #A987FF;">
                         <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                         <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
                     </svg>
@@ -113,9 +133,9 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                             type="text"
                             id="<?= $q->html_name; ?>"
                             name="<?= $q->html_name; ?>"
-                            class="fs-16"
+                            class="fs-16 responsive-answer"
                             style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
-                            border: 1px solid; border-radius: 0.5rem; width: 50%; margin-bottom: 0.75rem;
+                            border: 1px solid; border-radius: 0.5rem; margin-bottom: 0.75rem;
                             display: block;"
                             <?php echo $q->required ? "required" : ""; ?>>
                     <?php
@@ -125,15 +145,15 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                             id="<?= $q->html_name; ?>"
                             name="<?= $q->html_name; ?>"
                             rows="3"
-                            class="fs-16"
+                            class="fs-16 responsive-answer"
                             style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
-                            border: 1px solid; border-radius: 0.5rem; width: 50%; margin-bottom: 0.75rem;
+                            border: 1px solid; border-radius: 0.5rem; margin-bottom: 0.75rem;
                             display: block;"
                             <?php echo $q->required ? "required" : ""; ?>></textarea>
                     <?php
                     } else if ($q->input_type == "checkbox") {
                     ?>
-                        <div style="width: 50%; margin-bottom: 0.75rem;">
+                        <div class="responsive-answer" style="margin-bottom: 0.75rem;">
                         <?php
                         foreach ($q->check_choices as $option) {
                         ?>
@@ -158,7 +178,7 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                     <?php
                     } else if ($q->input_type == "radio") {
                     ?>
-                        <div style="width: 50%; margin-bottom: 0.75rem;">
+                        <div class="responsive-answer" style="margin-bottom: 0.75rem;">
                         <?php
                         foreach ($q->radio_choices as $option) {
                         ?>
@@ -184,8 +204,8 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                     } else if ($q->input_type == "radio_scale") {
                     ?>
                         <div
-                            class="fs-16"
-                            style="width: 50%; display: flex; justify-content: center; align-items: flex-end;
+                            class="fs-16 responsive-answer"
+                            style="display: flex; justify-content: center; align-items: flex-end;
                             margin-bottom: 0.75rem;">
                             <p class="fs-16" style="padding-inline: 0.25rem;"><?= $q->radio_text_low; ?></p>
                             <table class="text-center">
@@ -234,12 +254,14 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
             <?php
         }
         ?>
+            <div style="display:flex; justify-content: flex-end;">
             <button
                 type="submit"
                 class="feedback-submit"
                 onclick="return confirm('Jawaban feedback TIDAK AKAN bisa diubah lagi! Apakah yakin menyimpan jawaban feedback Anda?')">
                 SIMPAN
             </button>
+            </div>
         </form>
     </div>
     <div style="height:1rem;"></div>

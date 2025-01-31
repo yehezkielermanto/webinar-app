@@ -73,9 +73,21 @@ if (isset($_GET['event_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="images/icons/" />
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/feedback.css">
+    <style>
+        .responsive-alignment {
+            text-align: left;
+        }
+
+        @media (min-width: 1024px) {
+            .responsive-alignment {
+                text-align: center;
+            }
+        }
+    </style>
     <title>Feedback</title>
 </head>
 <body>
@@ -87,12 +99,12 @@ if (isset($_GET['event_id'])) {
         <p>Informasi akun anda akan disimpan dengan jawaban Anda.</p>
         <hr style="border-color: #EAEAEA; margin-block: 1rem;" />
 
-        <p class="text-black text-center fs-16">
+        <p class="text-black responsive-alignment fs-16" style="padding-bottom: 1rem;">
             Terima kasih untuk menjawab form feedback <?= $event['type']; ?> yang berjudul
             <b><?= $event['title']; ?>!</b>
         </p>
 
-        <p class="text-black text-center fs-16">
+        <p class="text-black responsive-alignment fs-16">
             Kami berharap Anda dapat mengikuti webinar berikutnya!
         </p>
 

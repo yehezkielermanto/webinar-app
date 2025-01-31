@@ -8,6 +8,7 @@ include 'koneksi.php';
 if (isset($_POST['masuklogin'])) {
     $emailpass = $_POST['emailpass'];
     $password = md5($_POST['password']);
+    echo $password;
     //echo "$emailpass + $password";
 
     $sql =
