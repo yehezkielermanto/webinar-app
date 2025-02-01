@@ -1,4 +1,6 @@
 <?php
+// TEMPORARY EDIT - CAN BE DISCARDED ON MERGE
+
 session_start();
 date_default_timezone_set('Asia/Jakarta'); //define local time
 $koneksi = null;
@@ -24,16 +26,19 @@ Belum Ada Materi
             header("Location:session.php");
            exit;
        }
-      $nama_lengkap = $_SESSION["nama_lengkap"];
-      $id_peserta = $_SESSION["id_peserta"];
+      $nama_lengkap = $_SESSION["fullname"];
+      $id_peserta = $_SESSION["user_id"];
       //result event yang akan datang
-$result_event_feature = $koneksi->query(
-    "SELECT a.* , b.* FROM event_participants a, events b
-    WHERE a.user_id ='$id_peserta' AND b.status=1
-    AND a.event_id = b.event_id AND '$tanggal_sekarang'
-    <= b.date ORDER BY b.date LIMIT 1");
+      $result_event_feature = $koneksi->query("SELECT a.* , b.* FROM event_participants a, events b WHERE a.user_id ='$id_peserta' AND b.status=1 AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ORDER BY b.date LIMIT 1");
       // result event
-      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
+      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ");
+// $result_event_feature = $koneksi->query(
+//     "SELECT a.* , b.* FROM event_participants a, events b
+//     WHERE a.user_id ='$id_peserta' AND b.status=1
+//     AND a.event_id = b.event_id AND '$tanggal_sekarang'
+//     <= b.date ORDER BY b.date LIMIT 1");
+//       // result event
+//       $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
 
 
       //result materi
@@ -42,17 +47,17 @@ $result_event_feature = $koneksi->query(
       //feed and seertifikat and absen
 
         if (isset($_GET['id-event']) & isset($_GET['feed'])) {
-            $nama_lengkap = $_SESSION["nama_lengkap"];
-            $id_peserta = $_SESSION["id_peserta"];
+            $nama_lengkap = $_SESSION["fullname"];
+            $id_peserta = $_SESSION["user_id"];
             $id_event=$_GET['id-event'];
             $link_feed = $_GET['feed'];
             // result event
-            $result_event_absensi = $koneksi->query("SELECT * FROM peserta_event WHERE id_event ='$id_event' and id_peserta ='$id_peserta'");
+            $result_event_absensi = $koneksi->query("SELECT * FROM event_participants WHERE event_id ='$id_event' and user_id ='$id_peserta'");
             $result_absensi=mysqli_fetch_array($result_event_absensi);
             // $resul_sertifikat = $koneksi->query("SELECT * FROM master_event WHERE id_event ='$id_event' ");
             // $result_sertifikat=mysqli_fetch_array($resul_sertifikat);
             if ($result_absensi['absen']==0) {
-                mysqli_query($koneksi , "UPDATE peserta_event SET absen=1 WHERE id_event ='$id_event' and id_peserta ='$id_peserta'");
+                mysqli_query($koneksi , "UPDATE event_participants SET absen=1 WHERE event_id ='$id_event' and user_id ='$id_peserta'");
             //     header('content-type:image/jpeg');
             //     $font='C:\Windows\Fonts\georgia.ttf';
             //     $font_no = 'C:\Windows\Fonts\arial.ttf';
@@ -239,7 +244,7 @@ $result_event_feature = $koneksi->query(
                                 $date_format = date("d F Y",strtotime($tanggal));
                                 $time_format_mulai = date("h:i",strtotime($jam_mulai));
                                 $time_format_selesai = date("h:i",strtotime($jam_selesai));
-                                $background = $row['poster_url'];
+                                $background = $row['background_online_url'];
                                 $feedback = "";
                                 // $feedback = $row['feedback'];
                                 // echo $feedback;
@@ -256,7 +261,7 @@ $result_event_feature = $koneksi->query(
                                     <p class ="mb-3 mt-3">Klik Link diatas untuk absen dan masuk Webinar</p>
                                     <a href="donwload-background.php?down-back='.$background.'" style="color: white;" class="login-form-btn">Donwload Background</a>
                                     <p class =" mt-3 mb-3">Klik Donwload Background datas untuk background Webinar</p>
-                                    <!-- <a href="beranda.php?feed='.$feedback.'&id-event='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a> -->
+                                    <a href="feedback.php?event_id='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a>
                                     <p class =" mt-3">Klik Untuk mengisi feedback, <br> feeedback akan ditutup tengah malam</p>
                                     </div>
                                 </div>
@@ -284,8 +289,9 @@ $result_event_feature = $koneksi->query(
                                 while ($row = $result_event->fetch_assoc()){
                                 $id_event = $row['event_id'];
                                 $judul = $row['title'];
+                                $avatar_event = $row['poster_url'];
                                 // $avatar_event = $row['avatar_event'];
-                                $avatar_event = "";
+//                                 $avatar_event = "";
                                 $tanggal = $row['date'];
                                 $date_format = date("d F Y",strtotime($tanggal));
 
@@ -328,8 +334,8 @@ $result_event_feature = $koneksi->query(
              }
              else {
                 while ($row = $result_materi->fetch_assoc()){
-                    $judul_materi = $row['judul_materi'];
-                    $lokasi_materi = $row['lokasi_materi'];
+                    $judul_materi = $row['name'];
+                    $lokasi_materi = $row['attachment'];
         
                 echo '<div class="card mb-3" style="width: 18rem; background-color: aliceblue;  border-radius: 15px; box-shadow: 0 5px 20px 0px rgb(126, 128, 127);" >
                 <div class="card-body">

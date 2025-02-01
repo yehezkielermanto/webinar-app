@@ -1,4 +1,6 @@
 <?php
+// TEMPORARY EDIT - CAN BE DISCARDED ON MERGE
+
 $error = null;
 
 session_start();
@@ -7,18 +9,23 @@ include 'koneksi.php';
 if (isset($_POST['masuklogin'])) {
     $emailpass = $_POST['emailpass'];
     $password = md5($_POST['password']);
+    echo $password;
     //echo "$emailpass + $password";
 
     $sql =
-        "SELECT * from users where email='" .
+        "SELECT * from users WHERE email='" .
         $emailpass .
-        "' and password='" .
+        "' AND password='" .
         $password .
         "' limit 1";
     $hasil = mysqli_query($koneksi, $sql);
     $jumlah = mysqli_num_rows($hasil);
+
     if ($jumlah > 0) {
         $row = mysqli_fetch_assoc($hasil);
+        $_SESSION['user_id'] = $row['user_id'];
+        $_SESSION['fullname'] = $row['fullname'];
+        $_SESSION['email'] = $row['email'];
         $_SESSION['id_peserta'] = $row['user_id'];
         $_SESSION['nama_lengkap'] = $row['fullname'];
         $_SESSION['email'] = $row['email'];

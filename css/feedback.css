@@ -1,0 +1,13 @@
+.feedback-submit {
+    background-color: #B6A3E8;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.feedback-submit:hover {
+    background-color: #6B4ABE;
+    color: white;
+}

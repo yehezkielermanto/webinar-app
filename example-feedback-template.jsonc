@@ -1,0 +1,121 @@
+[
+    {
+        "category": "Konten", // name of a category (leave blank to make it unnavigatable)
+        "entries": [
+            {
+                "html_name": "webinar_rating",                                          // name or id of this input field in the form
+                "required": true,                                                       // sets the input field to be required
+                "question": "Berikan nilai 1-5 dari webinar yang anda ikuti barusan.",  // displayed question on top of the choices/textboxes
+                "input_type": "radio_scale",                                            // input types - based on HTML input type - subtypes start with "_"
+                "radio_range_low": 1,                                                   // radio_scale only: lowest option in range
+                "radio_range_high": 5,                                                  // radio_scale only: highest option in range
+                "radio_text_low": "Sangat Buruk",                                       // radio_scale only: lowest option text
+                "radio_text_high": "Sangat Baik"                                        // radio_scale only: highest option text
+            },
+            {
+                "html_name": "material_relevance",
+                "required": true,
+                "question": "Apakah materi yang disampaikan sesuai dengan topik webinar?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            }
+        ]
+    },
+    {
+        "category": "Pembicara",
+        "entries": [
+            {
+                "html_name": "speaker_knowledge",
+                "required": true,
+                "question": "Bagaimana penilaian Anda tentang pengetahuan pembicara mengenai topik tersebut?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            },
+            {
+                "html_name": "speaker_clarity",
+                "required": true,
+                "question": "Bagaimana penilaian Anda tentang kejelasan dan kecepatan pembicara dalam menyampaikan materi webinar?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            }
+        ]
+    },
+    {
+        "category": "Moderator",
+        "entries": [
+            {
+                "html_name": "moderator_competency",
+                "required": true,
+                "question": "Bagaimana penilaian Anda terhadap kemampuan moderator dalam membimbing jalannya diskusi?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            }
+        ]
+    },
+    {
+        "category": "Pengalaman & Kepuasan",
+        "entries": [
+            {
+                "html_name": "speaker_satisfaction",
+                "required": true,
+                "question": "Seberapa puaskah Anda dengan materi-materi yang disampaikan oleh pembicara?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            },
+            {
+                "html_name": "recommend_others",
+                "required": true,
+                "question": "Apakah Anda akan merekomendasikan webinar seperti ini kepada orang lain?",
+                "input_type": "radio",
+                "radio_choices": ["Ya", "Tidak"]                                        // radio only: selectable choices
+            },
+            {
+                "html_name": "likeliness_attending",
+                "required": true,
+                "question": "Seberapa besar kemungkinan Anda akan menghadiri webinar seperti ini lagi?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            },
+            {
+                "html_name": "usefulness_rating",
+                "required": true,
+                "question": "Apakah webinar ini bermanfaat bagi Anda?",
+                "input_type": "radio_scale",
+                "radio_range_low": 1,
+                "radio_range_high": 5,
+                "radio_text_low": "Sangat Buruk",
+                "radio_text_high": "Sangat Baik"
+            },
+            {
+                "html_name": "audience_feedback",
+                "required": true,
+                "question": "Berikan saran dan kritik Anda terkait webinar yang sudah Anda ikuti.",
+                "input_type": "textarea"
+            },
+            {
+                "html_name": "future_topics",
+                "required": false,
+                "question": "Topik apa yang ingin dibahas pada Webinar berikutnya?",
+                "input_type": "text"
+            }
+        ]
+    }
+]

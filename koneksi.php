@@ -25,5 +25,4 @@ $server = "localhost";
 $username = "yehezkiel";
 $password = "123";
 $database = "db_webinar";
-
 $koneksi = mysqli_connect($server, $username, $password, $database);
