@@ -59,7 +59,6 @@ class UserController
             ];
     
         } catch (PDOException $e) {
-            
             return [
                 "success" => false,
                 "message" => "Error logging in"

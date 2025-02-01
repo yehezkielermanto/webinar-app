@@ -1,6 +1,4 @@
 <?php
-// TEMPORARY EDIT - CAN BE DISCARDED ON MERGE
-
 session_start();
 date_default_timezone_set('Asia/Jakarta'); //define local time
 $koneksi = null;
@@ -17,28 +15,28 @@ Event masih kosong silahkan daftar event terlebih dahulu
 </p>' ;
 
 $materi_empty = ' <p class="text-center">
-Belum Ada Materi 
+
 </p>' ;
+$currentdate = date("Y-m-d"); 
+$query = "SELECT * FROM events WHERE date >= '$currentdate'";
+$result = mysqli_query($koneksi, $query);
 
-
-       if (!isset($_SESSION["email"])) {
+       if (!isset($_SESSION["user"])) {
         //    echo "Anda harus masuk dulu <br><a href='masuk.php'>Klik disini</a>";
-            header("Location:session.php");
+            header("Location:login.php");
            exit;
        }
-      $nama_lengkap = $_SESSION["fullname"];
-      $id_peserta = $_SESSION["user_id"];
+       
+      $nama_lengkap = $_SESSION["nama_lengkap"];
+      $id_peserta = $_SESSION["id_peserta"];
       //result event yang akan datang
-      $result_event_feature = $koneksi->query("SELECT a.* , b.* FROM event_participants a, events b WHERE a.user_id ='$id_peserta' AND b.status=1 AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ORDER BY b.date LIMIT 1");
+$result_event_feature = $koneksi->query(
+    "SELECT a.* , b.* FROM event_participants a, events b
+    WHERE a.user_id ='$id_peserta' AND b.status=1
+    AND a.event_id = b.event_id AND '$tanggal_sekarang'
+    <= b.date ORDER BY b.date LIMIT 1");
       // result event
-      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ");
-// $result_event_feature = $koneksi->query(
-//     "SELECT a.* , b.* FROM event_participants a, events b
-//     WHERE a.user_id ='$id_peserta' AND b.status=1
-//     AND a.event_id = b.event_id AND '$tanggal_sekarang'
-//     <= b.date ORDER BY b.date LIMIT 1");
-//       // result event
-//       $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
+      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
 
 
       //result materi
@@ -47,17 +45,17 @@ Belum Ada Materi
       //feed and seertifikat and absen
 
         if (isset($_GET['id-event']) & isset($_GET['feed'])) {
-            $nama_lengkap = $_SESSION["fullname"];
-            $id_peserta = $_SESSION["user_id"];
+            $nama_lengkap = $_SESSION["nama_lengkap"];
+            $id_peserta = $_SESSION["id_peserta"];
             $id_event=$_GET['id-event'];
             $link_feed = $_GET['feed'];
             // result event
-            $result_event_absensi = $koneksi->query("SELECT * FROM event_participants WHERE event_id ='$id_event' and user_id ='$id_peserta'");
+            $result_event_absensi = $koneksi->query("SELECT * FROM peserta_event WHERE id_event ='$id_event' and id_peserta ='$id_peserta'");
             $result_absensi=mysqli_fetch_array($result_event_absensi);
             // $resul_sertifikat = $koneksi->query("SELECT * FROM master_event WHERE id_event ='$id_event' ");
             // $result_sertifikat=mysqli_fetch_array($resul_sertifikat);
             if ($result_absensi['absen']==0) {
-                mysqli_query($koneksi , "UPDATE event_participants SET absen=1 WHERE event_id ='$id_event' and user_id ='$id_peserta'");
+                mysqli_query($koneksi , "UPDATE peserta_event SET absen=1 WHERE id_event ='$id_event' and id_peserta ='$id_peserta'");
             //     header('content-type:image/jpeg');
             //     $font='C:\Windows\Fonts\georgia.ttf';
             //     $font_no = 'C:\Windows\Fonts\arial.ttf';
@@ -185,6 +183,8 @@ Belum Ada Materi
 <html>
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <meta charset="utf-8">
     <title>DC-EVENT | Beranda</title>
     <meta charset="UTF-8">
@@ -201,10 +201,15 @@ Belum Ada Materi
 
 </head>
 
-<body>
-
+<!-- <body>
+    
     <div class="container-login" style="background-image: url('images/bg05.jpg');">
         <div class="wrap-login p-l-55 p-r-55 p-t-20 p-b-20" style="min-height:95vh;">
+            
+ 
+
+        <a href="notif.php" style="font-size:24px" class="fa">&#xf0f3;</a>
+
             <div id="mySidenav" class="sidenav">
                 <div id="kanan"><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></div>
                 <!--<div id="navpro">
@@ -213,12 +218,14 @@ Belum Ada Materi
 						<p><img src="#" style="width: 190px; height: 230px;"></p>
 					</ul>
 				</div>-->
-                <a href="beranda.php">Home</a>
+                <!-- <a href="beranda.php">Home</a>
                 <a href="event.php">Webinar</a>
                 <a href="sertifikat.php">Certificate</a>
                 <a href="ganti-password.php">Ganti Password</a>
-                <a href="profile/index.php">Profile</a>
-                <a href="logout.php">Keluar</a>
+                <a href="profile/index.php">Profile</a> -->
+                <!-- <a href="">Notifikasi</a> -->
+                
+                <!-- <a href="logout.php">Keluar</a>
             </div>
             <span style="font-size:25px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
             <span class="title p-t-8" style="float:left; font-size:20px;"><?php echo $nama_lengkap;?></span>
@@ -227,7 +234,7 @@ Belum Ada Materi
             <p class="txt2 mb-3">Webinar yang akan datang </p>
 
             <div class="row justify-content-center ">
-                <?php
+                <!-- <?php
                         $rowcount=mysqli_num_rows($result_event_feature);
                             if ($rowcount <=0)
                             {
@@ -244,7 +251,7 @@ Belum Ada Materi
                                 $date_format = date("d F Y",strtotime($tanggal));
                                 $time_format_mulai = date("h:i",strtotime($jam_mulai));
                                 $time_format_selesai = date("h:i",strtotime($jam_selesai));
-                                $background = $row['background_online_url'];
+                                $background = $row['poster_url'];
                                 $feedback = "";
                                 // $feedback = $row['feedback'];
                                 // echo $feedback;
@@ -261,7 +268,7 @@ Belum Ada Materi
                                     <p class ="mb-3 mt-3">Klik Link diatas untuk absen dan masuk Webinar</p>
                                     <a href="donwload-background.php?down-back='.$background.'" style="color: white;" class="login-form-btn">Donwload Background</a>
                                     <p class =" mt-3 mb-3">Klik Donwload Background datas untuk background Webinar</p>
-                                    <a href="feedback.php?event_id='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a>
+                                    <!-- <a href="beranda.php?feed='.$feedback.'&id-event='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a> -->
                                     <p class =" mt-3">Klik Untuk mengisi feedback, <br> feeedback akan ditutup tengah malam</p>
                                     </div>
                                 </div>
@@ -289,9 +296,8 @@ Belum Ada Materi
                                 while ($row = $result_event->fetch_assoc()){
                                 $id_event = $row['event_id'];
                                 $judul = $row['title'];
-                                $avatar_event = $row['poster_url'];
                                 // $avatar_event = $row['avatar_event'];
-//                                 $avatar_event = "";
+                                $avatar_event = "";
                                 $tanggal = $row['date'];
                                 $date_format = date("d F Y",strtotime($tanggal));
 
@@ -309,12 +315,12 @@ Belum Ada Materi
                                 </div>';
                                 }
                             };
-                ?>
+                ?> -->
 
 
 
             <!-- <span class="txt2">untuk dafar dan melihat event silahkan tekan lihat</span> -->
-            <div class="container-login-form-btn p-t-20 p-b-10">
+            <!-- <div class="container-login-form-btn p-t-20 p-b-10">
                 <a href="event.php" style="color: white;" class="login-form-btn">Lihat</a>
 
             </div>
@@ -322,7 +328,7 @@ Belum Ada Materi
 
 
 
-            <p class="txt2 mb-3">Materi Webinar </p>
+            <p class="txt2 mb-3">Materi Webinar </p> -->
 
             <!-- materi -->
             <?php
@@ -334,8 +340,8 @@ Belum Ada Materi
              }
              else {
                 while ($row = $result_materi->fetch_assoc()){
-                    $judul_materi = $row['name'];
-                    $lokasi_materi = $row['attachment'];
+                    $judul_materi = $row['judul_materi'];
+                    $lokasi_materi = $row['lokasi_materi'];
         
                 echo '<div class="card mb-3" style="width: 18rem; background-color: aliceblue;  border-radius: 15px; box-shadow: 0 5px 20px 0px rgb(126, 128, 127);" >
                 <div class="card-body">
@@ -375,6 +381,257 @@ Belum Ada Materi
             document.getElementById("kanan").style.marginRight = "0";
         }
         </script>
+</body> 
+
+</html> 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DC-Webinar</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <style>
+        .navbar {
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-social {
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn-social:hover {
+            transform: scale(1.1);
+            background-color: #444;
+        }
+
+        .badge {
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                background-color: rgba(0, 0, 0, 0.9);
+            }
+
+            .card img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>DC-Webinar</h2>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <!-- <a href="beranda.php">Home</a>
+                <a href="event.php">Webinar</a>
+                <a href="sertifikat.php">Certificate</a>
+                <a href="ganti-password.php">Ganti Password</a>
+                <a href="profile/index.php">Profile</a> -->
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="beranda.php">
+                <i class="fas fa-home me-2"></i> DC-Webinar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="event.php">
+                            <i class="fas fa-video me-1"></i> Webinar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="sertifikat.php">
+                            <i class="fas fa-certificate me-1"></i> Certificate
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="ganti-password.php">
+                            <i class="fas fa-key me-1"></i> Ganti Password
+                        </a>
+                    </li>
+                    <!-- Dropdown Profile -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i> Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile/index.php">Lihat Profil</a></li>
+                            <li><a class="dropdown-item" href="logout.php"><i class="fas fa-sign-out-alt me-1"></i> Keluar</a></li>
+                        </ul>
+                    </li>
+                    <!-- Notifikasi -->
+                    <li class="nav-item">
+                        <a class="nav-link position-relative text-white" href="notif.php">
+                            <i class="fas fa-bell fa-lg"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                3 <!-- Gantilah dengan jumlah notifikasi dinamis -->
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-xxl py-5 category">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Webinar</h6>
+                <h1 class="mb-5">Webinar yang akan datang</h1>
+            </div>
+            <div class="row g-3">
+                
+                <?php  while ($row = mysqli_fetch_assoc($result)) : ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card mb-4 wow zoomIn" data-wow-delay="0.1s">
+                            <img src="images/download.jpeg" class="card-img-top" alt="webinar image">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($row['title']); ?></h5>
+                                <p class="card-text"><?= htmlspecialchars($row['description']); ?></p>
+                                <small class="text-muted"><?= date('d M Y, H:i', strtotime($row['start_time'])); ?></small>
+                                <a href="detail_webinar.php?id=<?= $row['event_id']; ?>" class="btn btn-primary mt-3">Lihat Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Quick Link</h4>
+                    <a class="btn btn-link" href="">About Us</a>
+                    <a class="btn btn-link" href="">Contact Us</a>
+                    <a class="btn btn-link" href="">Privacy Policy</a>
+                    <a class="btn btn-link" href="">Terms & Condition</a>
+                    <a class="btn btn-link" href="">FAQs & Help</a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="text-white mb-3">Contact</h4>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>JL. IR.H. Soekarno no.201, Surabaya</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+62 888888888</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>ukdc@gmail.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Custom Javascript -->
+    <script>
+        // Navbar Scroll Effect
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('.navbar').addClass('scrolled');
+            } else {
+                $('.navbar').removeClass('scrolled');
+            }
+        });
+
+        // Initialize WOW.js
+        new WOW().init();
+    </script>
 </body>
 
 </html>
