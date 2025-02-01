@@ -1,0 +1,116 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Navigation link styling */
+a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #B6A3E8;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 20px;
+    font-weight: bold;
+}
+
+a:hover {
+    background-color: #B6A3E8;
+}
+
+/* Title and header styling */
+h1, h2 {
+    color: #B6A3E8;
+    text-align: center;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #B6A3E8;
+    color: #fff;
+}
+
+td {
+    background-color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+tr:hover {
+    background-color: #e8e8e8;
+}
+
+/* Box styling */
+.boks {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #B6A3E8;
+}
+
+input[type="file"],
+input[type="number"],
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+input[type="file"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline-color: #B6A3E8;
+}
+
+button[type="submit"] {
+    background-color: #B6A3E8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #B6A3E8;
+}
+
+.table-container {
+    margin-bottom: 20px;
+}
