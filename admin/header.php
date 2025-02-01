@@ -2,7 +2,7 @@
 session_start();
 
 if (empty($_SESSION['user']) or empty($_SESSION['pass'])) {
-    header('location:login.php');
+    header('location: /admin/login.php');
 }
 ?>
 <!DOCTYPE html>

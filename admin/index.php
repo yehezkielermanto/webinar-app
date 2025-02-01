@@ -3,10 +3,11 @@
 <!-- Penomoran Otomatis -->
 <?php
 // hubungkan ke database
+$koneksi = null;
 include 'koneksi.php';
 
 // mengambil data ID event yang tertinggi 
-$query = mysqli_query($koneksi, "SELECT max(id_event) as IDTerbesar FROM master_event");
+$query = mysqli_query($koneksi, "SELECT max(event_id) as IDTerbesar FROM events");
 $data = mysqli_fetch_array($query);
 $IDTerbesar = $data['IDTerbesar'];
 
@@ -17,7 +18,7 @@ $urutan++;
 $huruf = "EVN";
 $IDTerbesar = $huruf . sprintf("%03s", $urutan);
 ?>
-<a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out-alt"></i>Logout</a><br>
+<a href="/logout.php" class="btn btn-danger"><i class="fa fa-sign-out-alt"></i>Logout</a><br>
 <div class="head text-white text-center">
     <img src="assets/img/logo_IF.png" alt="" width="100">
     <h2 class="text-center">Web Pendaftaran Prodi Ilmu Informatika <br>WebIF</h2>

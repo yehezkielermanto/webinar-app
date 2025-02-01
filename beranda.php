@@ -3,6 +3,7 @@
 
 session_start();
 date_default_timezone_set('Asia/Jakarta'); //define local time
+$koneksi = null;
 include "koneksi.php";
 
 $tanggal_sekarang = date("Y-m-d ");
@@ -31,6 +32,13 @@ Belum Ada Materi
       $result_event_feature = $koneksi->query("SELECT a.* , b.* FROM event_participants a, events b WHERE a.user_id ='$id_peserta' AND b.status=1 AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ORDER BY b.date LIMIT 1");
       // result event
       $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date ");
+// $result_event_feature = $koneksi->query(
+//     "SELECT a.* , b.* FROM event_participants a, events b
+//     WHERE a.user_id ='$id_peserta' AND b.status=1
+//     AND a.event_id = b.event_id AND '$tanggal_sekarang'
+//     <= b.date ORDER BY b.date LIMIT 1");
+//       // result event
+//       $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
 
 
       //result materi
@@ -209,6 +217,7 @@ Belum Ada Materi
                 <a href="event.php">Webinar</a>
                 <a href="sertifikat.php">Certificate</a>
                 <a href="ganti-password.php">Ganti Password</a>
+                <a href="profile/index.php">Profile</a>
                 <a href="logout.php">Keluar</a>
             </div>
             <span style="font-size:25px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
@@ -236,6 +245,8 @@ Belum Ada Materi
                                 $time_format_mulai = date("h:i",strtotime($jam_mulai));
                                 $time_format_selesai = date("h:i",strtotime($jam_selesai));
                                 $background = $row['background_online_url'];
+                                $feedback = "";
+                                // $feedback = $row['feedback'];
                                 // echo $feedback;
                                 echo '
                                 <div  class="col-md-11 text-center">
@@ -279,6 +290,8 @@ Belum Ada Materi
                                 $id_event = $row['event_id'];
                                 $judul = $row['title'];
                                 $avatar_event = $row['poster_url'];
+                                // $avatar_event = $row['avatar_event'];
+//                                 $avatar_event = "";
                                 $tanggal = $row['date'];
                                 $date_format = date("d F Y",strtotime($tanggal));
 
