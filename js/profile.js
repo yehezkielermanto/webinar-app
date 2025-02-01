@@ -72,37 +72,44 @@ document.addEventListener("DOMContentLoaded", function () {
         const cContainer = document.getElementById("c-container");
         for (let i = 0; i < data.length; i++) {
             const card = data[i];
-            cContainer.innerHTML += `
-                <a class="card-link" href="/extra/webinar/index.php?event_id=${card.event_id}">
-                <div class="card">
+            let cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+            cardDiv.innerHTML = `
                 <div class="card-upper">
-                <div class="wimg-container">
-                <img class="responsive-image2" src="${card.poster_url}"/>
-                </div>
+                    <div class="wimg-container">
+                        <img class="responsive-image2" src="${card.poster_url}"/>
+                    </div>
                 </div>
                 <div class="card-bottom">
-                <p class="m-f bold-f mb-5 mb-0">${card.title}</p>
-                <p class="s-f mb-0">${card.date}</p>
-                <p class="s-f mb-0">${card.speaker}</p>
-                <div class="card-status">
-                <p class="xs-f">${card.event_role}</p>
+                    <p class="m-f bold-f mb-5 mb-0">${card.title}</p>
+                    <p class="s-f mb-0">${card.date}</p>
+                    <p class="s-f mb-0">${card.speaker}</p>
+                    <div class="card-status">
+                        <p class="xs-f">${card.event_role}</p>
+                    </div>
                 </div>
-                </div>
-                </div>
-                </a>
-                `;
-        }
+            `;
+            cContainer.appendChild(cardDiv);
 
-        // card hover effect
-        const hoverEls = document.querySelectorAll(".card");
-        hoverEls.forEach((hoverEl) => {
-            hoverEl.addEventListener("mouseover", function () {
+            // card hover effect
+            cardDiv.addEventListener("mouseover", function () {
                 if (isMobile()) {
                     return;
                 }
                 const newEl = document.createElement("div");
-                //newEl.textContent = hoverEl.textContent;
-                newEl.innerHTML = hoverEl.innerHTML;
+                newEl.innerHTML = `
+                    <div class="card-upper">
+                        <div class="wimg-container">
+                            <img class="responsive-image2" src="${card.poster_url}"/>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <p class="m-f bold-f mb-5 mb-0">${card.title}</p>
+                        <p class="s-f mb-0">${card.date}</p>
+                        <p class="s-f mb-0">${card.speaker}</p>
+                        <p class="s-f mb-0">${card.description}</p>
+                    </div>
+                `;
                 newEl.style.position = "absolute";
                 newEl.style.background = "rgba(255, 255, 255, 1)";
                 newEl.style.padding = "5px";
@@ -116,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     newEl.style.top = `${event.pageY + 10}px`;
                 };
                 document.addEventListener("mousemove", moveHandler);
-                hoverEl.addEventListener(
+                cardDiv.addEventListener(
                     "mouseout",
                     function () {
                         newEl.remove();
@@ -125,7 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     { once: true },
                 );
             });
-        });
+        }
+
+        //const hoverEls = document.querySelectorAll(".card");
+        //hoverEls.forEach((hoverEl) => function(){});
     }
 
     async function createCard() {
@@ -290,6 +300,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // profile change
+    // IDEA: how about adding uploading indicator?
     const profile = document.getElementById("change-profile");
     profile.addEventListener("click", function() {
         let input = document.createElement('input');
@@ -314,7 +325,6 @@ document.addEventListener("DOMContentLoaded", function () {
                   .then(data => {
                         if(data.success) {
                             alert('Profile image uploaded successfully!');
-                            // You can add code here to update the profile image on the page
                         } else {
                             alert('Error uploading profile image: ' + data.message);
                         }

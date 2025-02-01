@@ -1,5 +1,15 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["email"])) {
+    header("Location: /index.php");
+}
+
+$user_id = $_SESSION["id_pengguna"];
+
 header('Content-Type: application/json');
+define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
+define('ALLOWED_TYPES', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
 try {
     $jsonData = file_get_contents('php://input');
@@ -19,6 +29,18 @@ try {
         throw new Exception('Invalid base64 data');
     }
 
+    if (strlen($image_data) > MAX_FILE_SIZE) {
+        throw new Exception('File too large');
+    }
+
+    $finfo = finfo_open();
+    $mime_type = finfo_buffer($finfo, $image_data, FILEINFO_MIME_TYPE);
+    finfo_close($finfo);
+
+    if (!in_array($mime_type, ALLOWED_TYPES)) {
+        throw new Exception('Invalid file type');
+    }
+
     $upload_dir = 'uploads/';
     
     // Create directory if it doesn't exist
@@ -26,7 +48,10 @@ try {
         mkdir($upload_dir, 0777, true);
     }
 
-    $filename = uniqid() . '_' . basename($data->filename);
+    $path_info = pathinfo($data->filename);
+    $extension = $path_info['extension'];
+    /*$filename = uniqid() . '_' . basename($data->filename);*/
+    $filename = $user_id . '_pfp.' . $extension;
     $file_path = $upload_dir . $filename;
 
     if (file_put_contents($file_path, $image_data)) {
