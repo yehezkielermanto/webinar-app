@@ -1,6 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set('Asia/Jakarta'); //define local time
+$koneksi = null;
 include "koneksi.php";
 
 $tanggal_sekarang = date("Y-m-d ");
@@ -26,13 +27,17 @@ Belum Ada Materi
       $nama_lengkap = $_SESSION["nama_lengkap"];
       $id_peserta = $_SESSION["id_peserta"];
       //result event yang akan datang
-      $result_event_feature = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE a.id_peserta ='$id_peserta' AND b.status=1 AND a.id_event = b.id_event AND '$tanggal_sekarang' <= b.tanggal ORDER BY b.tanggal LIMIT 1");
+$result_event_feature = $koneksi->query(
+    "SELECT a.* , b.* FROM event_participants a, events b
+    WHERE a.user_id ='$id_peserta' AND b.status=1
+    AND a.event_id = b.event_id AND '$tanggal_sekarang'
+    <= b.date ORDER BY b.date LIMIT 1");
       // result event
-      $result_event = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE a.id_peserta ='$id_peserta' AND a.id_event = b.id_event AND '$tanggal_sekarang' <= b.tanggal ");
+      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
 
 
       //result materi
-      $result_materi = $koneksi->query("SELECT * FROM materi WHERE status_materi = 1");
+      $result_materi = $koneksi->query("SELECT * FROM event_materials WHERE status = 1");
 
       //feed and seertifikat and absen
 
@@ -207,6 +212,7 @@ Belum Ada Materi
                 <a href="event.php">Webinar</a>
                 <a href="sertifikat.php">Certificate</a>
                 <a href="ganti-password.php">Ganti Password</a>
+                <a href="profile/index.php">Profile</a>
                 <a href="logout.php">Keluar</a>
             </div>
             <span style="font-size:25px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
@@ -224,17 +230,18 @@ Belum Ada Materi
                             }
                             else {
                             while ($row = $result_event_feature->fetch_assoc()){
-                                $id_event = $row['id_event'];
-                                $judul = $row['judul'];
-                                $tanggal = $row['tanggal'];
-                                $jam_mulai = $row['jam_mulai'];
-                                $jam_selesai = $row['jam_selesai'];
+                                $id_event = $row['event_id'];
+                                $judul = $row['title'];
+                                $tanggal = $row['date'];
+                                $jam_mulai = $row['start_time'];
+                                $jam_selesai = $row['end_time'];
                                 $link = $row['link'];
                                 $date_format = date("d F Y",strtotime($tanggal));
                                 $time_format_mulai = date("h:i",strtotime($jam_mulai));
                                 $time_format_selesai = date("h:i",strtotime($jam_selesai));
-                                $background = $row['temp_background'];
-                                $feedback = $row['feedback'];
+                                $background = $row['poster_url'];
+                                $feedback = "";
+                                // $feedback = $row['feedback'];
                                 // echo $feedback;
                                 echo '
                                 <div  class="col-md-11 text-center">
@@ -249,7 +256,7 @@ Belum Ada Materi
                                     <p class ="mb-3 mt-3">Klik Link diatas untuk absen dan masuk Webinar</p>
                                     <a href="donwload-background.php?down-back='.$background.'" style="color: white;" class="login-form-btn">Donwload Background</a>
                                     <p class =" mt-3 mb-3">Klik Donwload Background datas untuk background Webinar</p>
-                                    <a href="beranda.php?feed='.$feedback.'&id-event='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a>
+                                    <!-- <a href="beranda.php?feed='.$feedback.'&id-event='.$id_event.'" target="_blank" style="color: white;" class="login-form-btn">Isi Feedback</a> -->
                                     <p class =" mt-3">Klik Untuk mengisi feedback, <br> feeedback akan ditutup tengah malam</p>
                                     </div>
                                 </div>
@@ -275,10 +282,11 @@ Belum Ada Materi
 
                             else {
                                 while ($row = $result_event->fetch_assoc()){
-                                $id_event = $row['id_event'];
-                                $judul = $row['judul'];
-                                $avatar_event = $row['avatar_event'];
-                                $tanggal = $row['tanggal'];
+                                $id_event = $row['event_id'];
+                                $judul = $row['title'];
+                                // $avatar_event = $row['avatar_event'];
+                                $avatar_event = "";
+                                $tanggal = $row['date'];
                                 $date_format = date("d F Y",strtotime($tanggal));
 
                                 // echo "$id_event";

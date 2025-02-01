@@ -2,6 +2,7 @@
 $error = null;
 
 session_start();
+$koneksi = null;
 include 'koneksi.php';
 if (isset($_POST['masuklogin'])) {
     $emailpass = $_POST['emailpass'];
@@ -9,7 +10,7 @@ if (isset($_POST['masuklogin'])) {
     //echo "$emailpass + $password";
 
     $sql =
-        "SELECT * from master_peserta where email='" .
+        "SELECT * from users where email='" .
         $emailpass .
         "' and password='" .
         $password .
@@ -18,10 +19,14 @@ if (isset($_POST['masuklogin'])) {
     $jumlah = mysqli_num_rows($hasil);
     if ($jumlah > 0) {
         $row = mysqli_fetch_assoc($hasil);
-        $_SESSION['id_peserta'] = $row['id_peserta'];
-        $_SESSION['nama_lengkap'] = $row['nama_lengkap'];
+        $_SESSION['id_peserta'] = $row['user_id'];
+        $_SESSION['nama_lengkap'] = $row['fullname'];
         $_SESSION['email'] = $row['email'];
-        if ($row['verifikasi'] == 1) {
+        $_SESSION['phone'] = $row['phone'];
+        $_SESSION['gender'] = $row['gender'];
+        $_SESSION['address'] = $row['address'];
+        $_SESSION['institution'] = $row['institution'];
+        if ($row['status_verification'] == 1) {
             header('location:beranda.php');
         } else {
             $error = '<div class="alert alert-danger text-center" role="alert">
