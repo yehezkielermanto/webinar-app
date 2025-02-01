@@ -1,0 +1,101 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Header styling */
+h1 {
+    text-align: center;
+    color: #B6A3E8;
+    margin-top: 20px;
+}
+
+/* Navigation link styling */
+a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #B6A3E8;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 20px;
+    font-weight: bold;
+}
+
+a:hover {
+    background-color: #B6A3E8;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #B6A3E8;
+    color: #fff;
+    text-align: center;
+}
+
+td {
+    background-color: #fff;
+}
+
+tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+tr:hover {
+    background-color: #e8e8e8;
+}
+
+/* Action column styling */
+td a {
+    color: #B6A3E8;
+    text-decoration: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s;
+}
+
+td a:hover {
+    background-color: #B6A3E8;
+    color: #fff;
+}
+
+/* Responsive table styling */
+@media (max-width: 768px) {
+    table, th, td {
+        display: block;
+        width: 100%;
+        text-align: right;
+    }
+    th {
+        background-color: #B6A3E8;
+    }
+    th, td {
+        padding: 10px;
+    }
+    td {
+        text-align: left;
+    }
+    td a {
+        margin-top: 10px;
+        display: block;
+    }
+}
