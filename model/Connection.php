@@ -12,11 +12,20 @@ class Connection
     // Method to connect to the database with PDO
     public static function connect(): PDO
     {
+        foreach (file('.env') as $line) {
+            list($key, $value) = explode('=', trim($line), 2);
+            putenv("$key=$value");
+        }
+        
+        $host = getenv('DB_HOST');
+        $database = getenv('DB_DATABASE');
+        $username = getenv('DB_USERNAME');
+        $password = getenv('DB_PASSWORD');
 
-        $dsn = "mysql:host=" . self::$host . ";dbname=" . self::$database;
+        $dsn = "mysql:host=" . $host . ";dbname=" . $database;
 
         try {
-            $connection = new PDO($dsn, self::$username, self::$password);
+            $connection = new PDO($dsn, $username, $password);
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);

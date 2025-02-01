@@ -4,7 +4,7 @@ session_start();
 require_once __DIR__ . "/controller/UserController.php";
 
 if (isset($_SESSION['user'])) {
-    header('Location: homepage.php');
+    header('Location: beranda.php');
 }
 
 
@@ -16,13 +16,14 @@ if (isset($_POST['login'])) {
         'username' => $_POST['username'],
         'password' => $_POST['password']
     ];
+    var_dump($data);
 
     $result = $userController->login($data);
 
     if ($result['success']) {
 
         $_SESSION['user'] = $result['data'];
-        header('Location: homepage.php');
+        header('Location: beranda.php');
     } else {
 
         echo "<script>alert('" . $result['message'] . "');</script>";

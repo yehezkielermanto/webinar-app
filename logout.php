@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$location = "masuk.php";
+$location = "login.php";
 unset($_SESSION["nama_lengkap"]);
 unset($_SESSION["email"]);
 unset($_SESSION['id_peserta'] );
