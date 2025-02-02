@@ -5,6 +5,10 @@ if(!isset($_SESSION['email'])){
     exit;
 }
 
+if ($_SESSION['pfp'] == null) {
+    $_SESSION['pfp'] = "profile_placeholder.png";
+} 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +45,7 @@ if(!isset($_SESSION['email'])){
                 <div class="left-back">
                     <div class="left-upper">
                         <div class="img-container" id="change-profile">
-                            <img class="responsive-image" src="profile_placeholder.png"/>
+                            <img class="responsive-image" src="<?= $_SESSION['pfp'] ?>"/>
                         </div>
                     </div>
                     <div class="left-bottom">

@@ -3,13 +3,16 @@ session_start();
 
 if (!isset($_SESSION["email"])) {
     header("Location: /index.php");
+    exit();
 }
 
-$user_id = $_SESSION["id_pengguna"];
+$koneksi = null;
+include "../koneksi.php";
+
+$user_id = $_SESSION["id_peserta"];
 
 header('Content-Type: application/json');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB
-define('ALLOWED_TYPES', ['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
 try {
     $jsonData = file_get_contents('php://input');
@@ -21,9 +24,15 @@ try {
 
     $base64_string = $data->image;
     
+    if (!preg_match('/^data:image\/(\w+);base64,/', $base64_string, $type)) {
+        throw new Exception('Invalid image format');
+    }
+    
+    $image_type = strtolower($type[1]);
+    
     $base64_string = preg_replace('/^data:image\/\w+;base64,/', '', $base64_string);
     
-    $image_data = base64_decode($base64_string);
+    $image_data = base64_decode($base64_string, true);
     
     if ($image_data === false) {
         throw new Exception('Invalid base64 data');
@@ -33,33 +42,44 @@ try {
         throw new Exception('File too large');
     }
 
-    $finfo = finfo_open();
-    $mime_type = finfo_buffer($finfo, $image_data, FILEINFO_MIME_TYPE);
-    finfo_close($finfo);
-
-    if (!in_array($mime_type, ALLOWED_TYPES)) {
-        throw new Exception('Invalid file type');
+    $image_info = @getimagesizefromstring($image_data);
+    if ($image_info === false) {
+        throw new Exception('Invalid image data');
     }
 
     $upload_dir = 'uploads/';
-    
-    // Create directory if it doesn't exist
     if (!file_exists($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
 
-    $path_info = pathinfo($data->filename);
-    $extension = $path_info['extension'];
-    /*$filename = uniqid() . '_' . basename($data->filename);*/
-    $filename = $user_id . '_pfp.' . $extension;
+    $filename = $user_id . '_pfp.' . $image_type;
     $file_path = $upload_dir . $filename;
 
-    if (file_put_contents($file_path, $image_data)) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'File uploaded successfully',
-            'filename' => $filename
-        ]);
+    if (file_put_contents($file_path, $image_data) !== false) {
+        if ($_SESSION['pfp'] != "profile_placeholder.png" || $_SESSION['pfp'] != null){
+            unlink($_SESSION['pfp']);
+        }
+        $_SESSION['pfp'] = $file_path;
+        
+        if (!@getimagesize($file_path)) {
+            unlink($file_path); // Delete the invalid file
+            throw new Exception('Saved file is not a valid image');
+        }
+        
+        $query = "UPDATE `users` SET `pfp_path` = ? WHERE `users`.`user_id` = ?";
+        $stmt = mysqli_prepare($koneksi, $query);
+        mysqli_stmt_bind_param($stmt, "si", $file_path, $user_id);
+        
+        if (mysqli_stmt_execute($stmt)) {
+            echo json_encode([
+                'success' => true,
+                'message' => 'File uploaded successfully',
+                'filename' => $filename
+            ]);
+            exit();
+        } else {
+            throw new Exception('Failed to update database');
+        }
     } else {
         throw new Exception('Failed to save file');
     }

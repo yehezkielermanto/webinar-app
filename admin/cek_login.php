@@ -25,6 +25,7 @@ if ($data) {
     $_SESSION['institution'] = $data['institution'];
     $_SESSION['address'] = $data['address'];
     $_SESSION['is_admin'] = $data['role'];
+    $_SESSION['pfp'] = $data['pfp_path'];
     // arahkan ke halaman admin
     header('location:index.php');
 } else {
