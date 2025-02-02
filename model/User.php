@@ -69,6 +69,8 @@ class User
         $stmt->bindParam(':status', $req['status'], PDO::PARAM_STR);
         $stmt->bindParam(':pfp_path', $req['pfp_path'], PDO::PARAM_STR);
 
+        // addeed pfp_path to store user profile picture.
+
         $success = $stmt->execute();
 
         // If the query is successful, return the last inserted ID

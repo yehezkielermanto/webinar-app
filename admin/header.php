@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+// use email because it used everywhere and unified it.
 if (empty($_SESSION['email'])) {
     header('location: /admin/login.php');
 }
