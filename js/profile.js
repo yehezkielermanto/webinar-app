@@ -140,6 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 newEl.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
                 newEl.style.pointerEvents = "none";
                 newEl.style.width = "200px";
+                newEl.style.maxHeight = "300px";
+                newEl.style.overflow = "hidden";
                 document.body.appendChild(newEl);
                 const moveHandler = (event) => {
                     newEl.style.left = `${event.pageX + 10}px`;
