@@ -9,8 +9,8 @@
                 "input_type": "radio_scale",                                            // input types - based on HTML input type - subtypes start with "_"
                 "radio_range_low": 1,                                                   // radio_scale only: lowest option in range
                 "radio_range_high": 5,                                                  // radio_scale only: highest option in range
-                "radio_text_low": "Sangat Buruk",                                       // radio_scale only: lowest option text
-                "radio_text_high": "Sangat Baik"                                        // radio_scale only: highest option text
+                "radio_label_low": "Sangat Buruk",                                       // radio_scale only: lowest option text
+                "radio_label_high": "Sangat Baik"                                        // radio_scale only: highest option text
             },
             {
                 "html_name": "material_relevance",
@@ -19,8 +19,8 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             }
         ]
     },
@@ -34,8 +34,8 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             },
             {
                 "html_name": "speaker_clarity",
@@ -44,8 +44,8 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             }
         ]
     },
@@ -59,8 +59,8 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             }
         ]
     },
@@ -74,15 +74,15 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             },
             {
                 "html_name": "recommend_others",
                 "required": true,
                 "question": "Apakah Anda akan merekomendasikan webinar seperti ini kepada orang lain?",
                 "input_type": "radio",
-                "radio_choices": ["Ya", "Tidak"]                                        // radio only: selectable choices
+                "radio_options": ["Ya", "Tidak"]                                        // radio only: selectable choices
             },
             {
                 "html_name": "likeliness_attending",
@@ -91,8 +91,8 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             },
             {
                 "html_name": "usefulness_rating",
@@ -101,8 +101,8 @@
                 "input_type": "radio_scale",
                 "radio_range_low": 1,
                 "radio_range_high": 5,
-                "radio_text_low": "Sangat Buruk",
-                "radio_text_high": "Sangat Baik"
+                "radio_label_low": "Sangat Buruk",
+                "radio_label_high": "Sangat Baik"
             },
             {
                 "html_name": "audience_feedback",

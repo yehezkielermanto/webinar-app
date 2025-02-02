@@ -1,6 +1,6 @@
 <?php
 
-foreach (file('.env') as $line) {
+foreach (file('../.env') as $line) {
     list($key, $value) = explode('=', trim($line), 2);
     putenv("$key=$value");
 }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["email"])) {
+if (!isset($_SESSION["user"])) {
     header("Location:session.php");
     exit;
 }
@@ -8,7 +8,7 @@ if (!isset($_SESSION["email"])) {
 include 'koneksi.php';
 
 $eventID = $_GET["event_id"];
-$userID = $_SESSION["user_id"];
+$userID = $_SESSION["user"]["user_id"];
 
 $resEvent = $koneksi->query("SELECT * FROM events WHERE event_id = '$eventID'");
 $event = mysqli_fetch_assoc($resEvent);
@@ -155,7 +155,7 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                     ?>
                         <div class="responsive-answer" style="margin-bottom: 0.75rem;">
                         <?php
-                        foreach ($q->check_choices as $option) {
+                        foreach ($q->check_options as $option) {
                         ?>
                             <div style="margin-bottom: 0.25rem;">
                                 <input
@@ -180,7 +180,7 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                     ?>
                         <div class="responsive-answer" style="margin-bottom: 0.75rem;">
                         <?php
-                        foreach ($q->radio_choices as $option) {
+                        foreach ($q->radio_options as $option) {
                         ?>
                             <div style="margin-bottom: 0.25rem;">
                                 <input
@@ -207,7 +207,7 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                             class="fs-16 responsive-answer"
                             style="display: flex; justify-content: center; align-items: flex-end;
                             margin-bottom: 0.75rem;">
-                            <p class="fs-16" style="padding-inline: 0.25rem;"><?= $q->radio_text_low; ?></p>
+                            <p class="fs-16" style="padding-inline: 0.25rem;"><?= $q->radio_label_low; ?></p>
                             <table class="text-center">
                                 <tr>
                                 <?php
@@ -243,7 +243,7 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                                 ?>
                                 </tr>
                             </table>
-                            <p class="fs-16" style="padding-inline: 0.25rem;"><?= $q->radio_text_high; ?></p>
+                            <p class="fs-16" style="padding-inline: 0.25rem;"><?= $q->radio_label_high; ?></p>
                         </div>
                     <?php
                     }
