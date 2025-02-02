@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (empty($_SESSION['user']) or empty($_SESSION['pass'])) {
+if (empty($_SESSION['email'])) {
     header('location: /admin/login.php');
 }
 ?>

@@ -18,7 +18,8 @@ if (isset($_POST['registration'])) {
         'gender' => $_POST['gender'],
         'phone' => $_POST['phone'],
         'institution' => $_POST['institution'],
-        'address' => $_POST['address']
+        'address' => $_POST['address'],
+        'pfp_path' => null
     ];
 
     // Call the register function from the controller

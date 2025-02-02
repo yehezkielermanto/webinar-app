@@ -1,7 +1,7 @@
 <?php
 session_start();
 $koneksi = null;
-include "../koneksi.php";
+include __DIR__ . "/../koneksi.php";
 
 if (!isset($_SESSION["email"])) {
     header("Location: /index.php");
@@ -24,7 +24,7 @@ if (isset($_GET["sortby"])) {
 }
 $sortwith = "e.$sortwith";
 
-$user_id = $_SESSION["id_peserta"];
+$user_id = $_SESSION["user_id"];
 $particapated = array();
 $query = "";
 
@@ -32,34 +32,13 @@ header('Content-Type: application/json');
 if (isset($_GET["inc-feedback"])) {
     $query = "
         SELECT 
-            e.event_id, 
-            e.poster_url, 
-            e.event_name, 
-            e.background_online_url, 
-            e.title, 
-            e.description, 
-            e.date, 
-            e.start_time, 
-            e.end_time, 
-            e.type, 
-            e.link, 
-            e.speaker, 
-            e.published, 
-            e.is_internal, 
-            e.status AS event_status, 
-            e.attendance_type, 
-            e.slug, 
-            e.remark, 
-            ep.event_participant_id, 
-            ep.user_id, 
-            ep.status AS participant_status, 
-            ep.event_role, 
-            ep.certificate_url,
+            e.*, 
+            ep.*, 
             CASE 
                 WHEN (
                     SELECT COUNT(*) 
-                    FROM event_feedback ef 
-                    WHERE ef.event_participant_id = ep.event_participant_id
+                    FROM event_feedbacks ef 
+                    WHERE ef.event_participant_id = ep.user_id
                 ) > 0 THEN 1 
                 ELSE 0 
             END AS feedback_given
@@ -67,7 +46,7 @@ if (isset($_GET["inc-feedback"])) {
             event_participants ep
         JOIN 
             events e 
-            ON ep.event_id = e.event_id
+            ON ep.id = e.id
         WHERE 
             ep.user_id = " . $user_id;
 } else {

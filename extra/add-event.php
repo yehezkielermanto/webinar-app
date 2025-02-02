@@ -7,7 +7,7 @@ $koneksi = null;
 include '../koneksi.php';
 
 // mengambil data ID event yang tertinggi 
-$query = mysqli_query($koneksi, "SELECT max(event_id) as IDTerbesar FROM events");
+$query = mysqli_query($koneksi, "SELECT max(id) as IDTerbesar FROM events");
 $data = mysqli_fetch_array($query);
 $IDTerbesar = $data['IDTerbesar'];
 

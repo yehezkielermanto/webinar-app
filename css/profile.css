@@ -209,8 +209,8 @@
 }
 
 .card {
-    /*width: 200px;*/
-    /*height: 220px;*/
+    width: 200px;
+    height: 220px;
     background: rgb(182,163,232);
     border-radius: 12px;
     /*margin: 10px;*/
@@ -529,6 +529,10 @@
     .card-link {
         margin: 0;
         width: 300px;
+    }
+
+    .card {
+        width: 100%;
     }
     .left-bottom {
         align-items: center;
