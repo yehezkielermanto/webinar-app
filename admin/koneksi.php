@@ -1,7 +1,13 @@
 <?php
-$server = "localhost";
-$username = "ifukdcco_webinar";
-$password = "hhR2I2n2k2";
-$database = "ifukdcco_webinar";
 
-$koneksi = mysqli_connect($server, $username, $password, $database) or die(mysqli_error($koneksi));
+foreach (file('../.env') as $line) {
+    list($key, $value) = explode('=', trim($line), 2);
+    putenv("$key=$value");
+}
+
+$server = getenv('DB_HOST');
+$username = getenv('DB_USERNAME');
+$password = getenv('DB_PASSWORD');
+$database = getenv('DB_DATABASE');
+
+$koneksi = mysqli_connect($server, $username, $password, $database);

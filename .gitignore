@@ -1,0 +1,4 @@
+.idea/
+*.sql
+vendor/
+.env

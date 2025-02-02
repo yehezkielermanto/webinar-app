@@ -4,6 +4,7 @@
 $error = null;
 
 session_start();
+$koneksi = null;
 include 'koneksi.php';
 if (isset($_POST['masuklogin'])) {
     $emailpass = $_POST['emailpass'];
@@ -25,6 +26,13 @@ if (isset($_POST['masuklogin'])) {
         $_SESSION['user_id'] = $row['user_id'];
         $_SESSION['fullname'] = $row['fullname'];
         $_SESSION['email'] = $row['email'];
+        $_SESSION['id_peserta'] = $row['user_id'];
+        $_SESSION['nama_lengkap'] = $row['fullname'];
+        $_SESSION['email'] = $row['email'];
+        $_SESSION['phone'] = $row['phone'];
+        $_SESSION['gender'] = $row['gender'];
+        $_SESSION['address'] = $row['address'];
+        $_SESSION['institution'] = $row['institution'];
         if ($row['status_verification'] == 1) {
             header('location:beranda.php');
         } else {

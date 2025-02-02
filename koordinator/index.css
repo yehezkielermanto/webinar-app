@@ -1,0 +1,103 @@
+/* Reset margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set background and text colors */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    padding: 20px;
+}
+
+/* Center the content on the page */
+h1 {
+    text-align: center;
+    color: #B6A3E8;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+/* Style the form container */
+form {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the input fields */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="url"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Style the textarea */
+textarea {
+    height: 120px;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+    background-color: #B6A3E8;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button[type="submit"]:hover {
+    background-color: #B6A3E8;
+}
+
+/* Style the checkbox */
+label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Style the links */
+a {
+    color: #B6A3E8;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.1rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Make the form responsive */
+@media (max-width: 768px) {
+    form {
+        padding: 15px;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+}

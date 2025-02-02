@@ -17,9 +17,17 @@ date_default_timezone_set('Asia/Jakarta'); //define local time
  
 // }
 // mysqli_close($koneksi);
-$server = "localhost";
-$username = "root";
-$password = "";
-$database = "ukdc_webinar";
+/*$server = "localhost";*/
+/*$username = "ifukdcco_webinar";*/
+/*$password = "";*/
+/*$database = "ifukdcco_webinar";*/
+foreach (file('.env') as $line) {
+    list($key, $value) = explode('=', trim($line), 2);
+    putenv("$key=$value");
+}
 
-$koneksi = mysqli_connect($server, $username, $password, $database) or die(mysqli_error($koneksi));
+$server = getenv('DB_HOST');
+$username = getenv('DB_USERNAME');
+$password = getenv('DB_PASSWORD');
+$database = getenv('DB_DATABASE');
+$koneksi = mysqli_connect($server, $username, $password, $database);
