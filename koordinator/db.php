@@ -1,8 +1,14 @@
 <?php
-$host = "localhost"; 
-$user = "yehezkiel"; 
-$pass = "123"; 
-$dbname = "db_webinar"; 
+
+foreach (file('../.env') as $line) {
+    list($key, $value) = explode('=', trim($line), 2);
+    putenv("$key=$value");
+}
+
+$host = getenv('DB_HOST'); 
+$user = getenv('DB_USERNAME'); 
+$pass = getenv('DB_PASSWORD'); 
+$dbname = getenv('DB_DATABASE'); 
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
