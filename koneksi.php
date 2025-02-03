@@ -21,7 +21,9 @@ date_default_timezone_set('Asia/Jakarta'); //define local time
 /*$username = "ifukdcco_webinar";*/
 /*$password = "";*/
 /*$database = "ifukdcco_webinar";*/
-foreach (file('.env') as $line) {
+
+// get the env from the current div (usefull for other php script that include this script)
+foreach (file(__DIR__ . '/.env') as $line) {
     list($key, $value) = explode('=', trim($line), 2);
     putenv("$key=$value");
 }

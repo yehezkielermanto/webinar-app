@@ -8,7 +8,7 @@ var display = 2;
 document.addEventListener("DOMContentLoaded", function () {
     async function fetchCard() {
         try {
-            const response = await fetch(`/profile/get-particaped-event.php?sortwith=${current_sby}&sortby=${current_sort}`);
+            const response = await fetch(`/profile/get-particaped-event.php?sortwith=${current_sby}&sortby=${current_sort}&inc-feedback=0`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -72,6 +72,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const cContainer = document.getElementById("c-container");
         for (let i = 0; i < data.length; i++) {
             const card = data[i];
+            // outer card
+            let outterDiv = document.createElement("div");
+            outterDiv.classList.add("outter-card");
+
+            // setup card anchor
+            let cardAnchor = document.createElement("a");
+
+            //=========================================================================//
+            // TODO: still didnt have the page so it still going to the placeholder page.
+            // waiting for the others group to finish this page.
+            //=========================================================================//
+            cardAnchor.href = `/extra/webinar/index.php?event_id=${card.event_id}`;
+
+            // setup card div
+            cardAnchor.classList.add("card-link");
             let cardDiv = document.createElement("div");
             cardDiv.classList.add("card");
             cardDiv.innerHTML = `
@@ -89,7 +104,24 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             `;
-            cContainer.appendChild(cardDiv);
+            
+            cardAnchor.appendChild(cardDiv);
+            outterDiv.appendChild(cardAnchor);
+
+            // setup feedback btn
+            console.log(card.feedback_given);
+            if (card.feedback_given == "0") {
+                let feedbackBtn = document.createElement("form");
+                feedbackBtn.method = "GET";
+                feedbackBtn.action = "/feedback.php";
+                feedbackBtn.classList.add("feedback-btn");
+                feedbackBtn.innerHTML = `
+                    <input type="text" name="event_id" value="${card.id}" hidden> 
+                    <button class="feedback-btn-btn">Berikan Feedback</button>
+                `;
+                outterDiv.appendChild(feedbackBtn);
+            }
+            cContainer.appendChild(outterDiv);
 
             // card hover effect
             cardDiv.addEventListener("mouseover", function () {
@@ -117,6 +149,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 newEl.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
                 newEl.style.pointerEvents = "none";
                 newEl.style.width = "200px";
+                newEl.style.maxHeight = "300px";
+                newEl.style.overflow = "hidden";
                 document.body.appendChild(newEl);
                 const moveHandler = (event) => {
                     newEl.style.left = `${event.pageX + 10}px`;
@@ -308,32 +342,48 @@ document.addEventListener("DOMContentLoaded", function () {
         input.accept = 'image/*';
         input.onchange = e => { 
             let file = e.target.files[0]; 
-            let reader = new FileReader();
-            reader.readAsText(file,'UTF-8');
-            reader.onload = readerEvent => {
-                let content = readerEvent.target.result;
-                fetch('/profile/save_profile.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        image: content,
-                        filename: file.name
-                    })
-                }).then(response => response.json())
-                  .then(data => {
-                        if(data.success) {
-                            alert('Profile image uploaded successfully!');
-                        } else {
-                            alert('Error uploading profile image: ' + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Error uploading profile image');
-                    });
+
+            // Add file type validation
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
             }
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function() {
+                // Ensure we have complete data
+                if (reader.result) {
+                    fetch('/profile/save_profile.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            image: reader.result,  // This will be the complete base64 data URL
+                            filename: file.name
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.success) {
+                                alert('Profile image uploaded successfully!');
+                                location.reload();
+                            } else {
+                                alert('Error uploading profile image: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error uploading profile image');
+                        });
+                }
+            };
+
+            reader.onerror = function() {
+                console.error('File reading error:', reader.error);
+                alert('Error reading file');
+            };
         }
         input.click();
     });

@@ -32,7 +32,8 @@ class User
             status_verification,
             vkey,
             type,
-            status
+            status,
+            pfp_path
         ) VALUES 
         (
             :fullname,
@@ -47,7 +48,8 @@ class User
             :status_verification,
             :vkey,
             :type,
-            :status
+            :status,
+            :pfp_path
         )";
         
         $stmt = $this->conn->prepare($sql);
@@ -65,6 +67,9 @@ class User
         $stmt->bindParam(':vkey', $req['vkey'], PDO::PARAM_STR);
         $stmt->bindParam(':type', $req['type'], PDO::PARAM_STR);
         $stmt->bindParam(':status', $req['status'], PDO::PARAM_STR);
+        $stmt->bindParam(':pfp_path', $req['pfp_path'], PDO::PARAM_STR);
+
+        // addeed pfp_path to store user profile picture.
 
         $success = $stmt->execute();
 
@@ -92,13 +97,22 @@ class User
     // Read a user
     function readUnique($username) 
     {
-        $sql = 
+        // original from eka.
+        /* $sql = 
         "
             SELECT user_id, username, password, role, email 
             FROM users 
             WHERE username = :username
+        "; */
+        // need to fetch all of the data for profile
+        // so we dont need to fetch it again (less db read)
+        $sql = 
+        "
+            SELECT *
+            FROM users 
+            WHERE username = :username
         ";
-        
+
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);

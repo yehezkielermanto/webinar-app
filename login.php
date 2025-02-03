@@ -16,13 +16,26 @@ if (isset($_POST['login'])) {
         'username' => $_POST['username'],
         'password' => $_POST['password']
     ];
-    var_dump($data);
 
     $result = $userController->login($data);
 
     if ($result['success']) {
 
         $_SESSION['user'] = $result['data'];
+
+        // we need this because the old component need this
+        // session to function.
+        $_SESSION['user_id'] = $_SESSION['user']['id'];
+        $_SESSION['fullname'] = $_SESSION['user']['fullname'];
+        $_SESSION['email'] = $_SESSION['user']['email'];
+        $_SESSION['nama_lengkap'] = $_SESSION['user']['fullname'];
+        $_SESSION['email'] = $_SESSION['user']['email'];
+        $_SESSION['phone'] = $_SESSION['user']['phone'];
+        $_SESSION['gender'] = $_SESSION['user']['gender'];
+        $_SESSION['address'] = $_SESSION['user']['address'];
+        $_SESSION['institution'] = $_SESSION['user']['institution'];
+        $_SESSION['pfp'] = $_SESSION['user']['pfp_path'];
+        $_SESSION['is_admin'] = $_SESSION['user']['role'] == 'ADMIN' ? true : false;
         header('Location: beranda.php');
     } else {
 

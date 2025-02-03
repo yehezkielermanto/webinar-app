@@ -193,6 +193,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 200px;
+    height: 220px;
+    margin: 10px;
 }
 
 .card-container {
@@ -200,6 +203,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     overflow: scroll;
+    overflow: hidden;
     padding-bottom: 20px;
     /*justify-content: center;*/
 }
@@ -209,7 +213,7 @@
     height: 220px;
     background: rgb(182,163,232);
     border-radius: 12px;
-    margin: 10px;
+    /*margin: 10px;*/
     color: white;
     display: flex;
     flex-direction: column;
@@ -316,6 +320,12 @@
 .advanced-s:hover {
     background: white;
     color: rgb(182,163,232);
+}
+
+.feedback-btn-btn {
+    padding: 5px;
+    border: none;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.4));
 }
 
 #as-dialog {
@@ -485,6 +495,13 @@
     filter: drop-shadow(0px 5px 5px rgba(255, 255, 255, 1));
 }
 
+.feedback-btn {
+    position: sticky;
+    z-index: 9999;
+    text-align: right;
+    transform: translateX(-10px) translateY(-210px);
+}
+
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -505,10 +522,17 @@
         text-align: center;
     }
     .card-container {
+        overflow: scroll;
         justify-content: center;
+        width: 100%;
     }
+    .card-link {
+        margin: 0;
+        width: 300px;
+    }
+
     .card {
-        width: 90%;
+        width: 100%;
     }
     .left-bottom {
         align-items: center;
@@ -530,5 +554,11 @@
     .floating-menu {
         right: 5%;
         overflow: scroll;
+    }
+
+    .feedback-btn {
+        position: sticky;
+        z-index: 9999;
+        transform: translateY(-200px);
     }
 }

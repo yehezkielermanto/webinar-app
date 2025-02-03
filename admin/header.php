@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-if (empty($_SESSION['user']) or empty($_SESSION['pass'])) {
+// use email because it used everywhere and unified it.
+if (empty($_SESSION['email'])) {
     header('location: /admin/login.php');
 }
 ?>
