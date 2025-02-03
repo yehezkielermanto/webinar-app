@@ -29,7 +29,7 @@ $eventParticipantID = $eventParticipant["id"];
 $resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_template WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
-$feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
+$feedbackTemplateID = $eventFeedbackTemplate["id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
 // Find if event_feedback answer exists, then redirect to feedback_finished.php

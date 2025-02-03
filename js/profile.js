@@ -78,6 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // setup card anchor
             let cardAnchor = document.createElement("a");
+
+            //=========================================================================//
+            // TODO: still didnt have the page so it still going to the placeholder page.
+            // waiting for the others group to finish this page.
+            //=========================================================================//
             cardAnchor.href = `/extra/webinar/index.php?event_id=${card.event_id}`;
 
             // setup card div
