@@ -56,7 +56,7 @@ try {
     $file_path = $upload_dir . $filename;
 
     if (file_put_contents($file_path, $image_data) !== false) {
-        if ($_SESSION['pfp'] != "profile_placeholder.png" || $_SESSION['pfp'] != null){
+        if ($_SESSION['pfp'] != "profile_placeholder.png" || $_SESSION['pfp'] != null && file_exists($_SESSION['pfp'])){
             unlink($_SESSION['pfp']);
         }
         $_SESSION['pfp'] = $file_path;
@@ -66,7 +66,7 @@ try {
             throw new Exception('Saved file is not a valid image');
         }
         
-        $query = "UPDATE `users` SET `pfp_path` = ? WHERE `users`.`user_id` = ?";
+        $query = "UPDATE `users` SET `pfp_path` = ? WHERE `users`.`id` = ?";
         $stmt = mysqli_prepare($koneksi, $query);
         mysqli_stmt_bind_param($stmt, "si", $file_path, $user_id);
         
