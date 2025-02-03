@@ -25,6 +25,11 @@ if (isset($_POST['ticket'])) {
     header('Location: ticket.php');
 }
 
+if (isset($_POST['event_cordinator'])) {
+    header('Location: koordinator/event_list.php');
+}
+
+
 if (isset($_POST['send_ticket'])) {
     $supportController = new SupportController();
 
@@ -213,6 +218,16 @@ if (isset($_POST['send_ticket'])) {
                         <button type="submit" name="ticket" class="nav-link">
                             <h5>
                                 Ticket
+                            </h5>
+                        </button>
+                    <?php endif; ?>
+                </div>
+
+                <div class="mb-3">
+                    <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
+                        <button type="submit" name="event_cordinator" class="nav-link">
+                            <h5>
+                                Event Cordinator
                             </h5>
                         </button>
                     <?php endif; ?>
