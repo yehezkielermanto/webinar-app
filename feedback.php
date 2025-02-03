@@ -201,6 +201,25 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                         ?>
                         </div>
                     <?php
+                    } else if ($q->input_type == "select") {
+                    ?>
+                        <select
+                            id="<?= $q->html_name; ?>"
+                            name="<?= $q->html_name; ?>"
+                            class="fs-16 responsive-answer"
+                            style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
+                            border: 1px solid; border-radius: 0.5rem; margin-bottom: 0.75rem;
+                            display: block;"
+                            <?php echo $q->required ? "required" : ""; ?>>
+                        <?php
+                        foreach ($q->select_options as $option) {
+                        ?>
+                            <option value="<?= $option; ?>"><?= $option; ?></option>
+                        <?php
+                        }
+                        ?>
+                        </select>
+                    <?php
                     } else if ($q->input_type == "radio_scale") {
                     ?>
                         <div
