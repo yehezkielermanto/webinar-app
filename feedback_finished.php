@@ -1,13 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION["email"])) {
+if (!isset($_SESSION["user"])) {
     header("Location:session.php");
     exit;
 }
 
 include 'koneksi.php';
 
-$userID = $_SESSION["user_id"];
+$userID = $_SESSION["user"]["user_id"];
 
 if (isset($_POST["feedback_template_id"])) {
     $feedbackTemplateID = $_POST["feedback_template_id"];
