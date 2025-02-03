@@ -33,10 +33,10 @@ $result = mysqli_query($koneksi, $query);
 $result_event_feature = $koneksi->query(
     "SELECT a.* , b.* FROM event_participants a, events b
     WHERE a.user_id ='$id_peserta' AND b.status=1
-    AND a.event_id = b.event_id AND '$tanggal_sekarang'
+    AND a.event_id = b.id AND '$tanggal_sekarang'
     <= b.date ORDER BY b.date LIMIT 1");
       // result event
-      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.event_id AND '$tanggal_sekarang' <= b.date");
+      $result_event = $koneksi->query("SELECT a.* , b.* FROM event_participants a,events b WHERE a.user_id ='$id_peserta' AND a.event_id = b.id AND '$tanggal_sekarang' <= b.date");
 
 
       //result materi
