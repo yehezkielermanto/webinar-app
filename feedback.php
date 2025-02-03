@@ -5,27 +5,31 @@ if (!isset($_SESSION["email"])) {
     exit;
 }
 
+$koneksi = null;
 include 'koneksi.php';
 
+// add check so it wont render on empty GET
+if (!isset($_GET["event_id"])) {
+    header("Location:session.php");
+    exit();
+}
 $eventID = $_GET["event_id"];
 $userID = $_SESSION["user_id"];
 
-$resEvent = $koneksi->query("SELECT * FROM events WHERE event_id = '$eventID'");
+$resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
 $event = mysqli_fetch_assoc($resEvent);
-
-//var_dump($event);
 
 // Get user's event participant ID
 $resEventParticipant = $koneksi->query("SELECT * FROM event_participants WHERE event_id = '$eventID' AND user_id = '$userID'");
 $eventParticipant = mysqli_fetch_assoc($resEventParticipant);
 
-$eventParticipantID = $eventParticipant["event_participant_id"];
+$eventParticipantID = $eventParticipant["id"];
 
 // Get the feedback template of the webinar
 $resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_template WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
-$feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
+$feedbackTemplateID = $eventFeedbackTemplate["id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
 // Find if event_feedback answer exists, then redirect to feedback_finished.php

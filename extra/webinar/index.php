@@ -13,7 +13,7 @@ if (!isset($_GET["event_id"])) {
 }
 
 $event_id = $_GET["event_id"];
-$query = "select * from events where event_id = $event_id limit 1";
+$query = "select * from events where id = $event_id limit 1";
 $result = mysqli_query($koneksi, $query);
 $result_len = mysqli_num_rows($result);
 $obj = [];

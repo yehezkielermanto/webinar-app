@@ -33,6 +33,7 @@ if (isset($_POST['masuklogin'])) {
         $_SESSION['gender'] = $row['gender'];
         $_SESSION['address'] = $row['address'];
         $_SESSION['institution'] = $row['institution'];
+        $_SESSION['pfp'] = $row['pfp_path'];
         if ($row['status_verification'] == 1) {
             header('location:beranda.php');
         } else {

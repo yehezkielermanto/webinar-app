@@ -19,9 +19,9 @@ if (isset($_POST['email']) &&
     $name = $_POST['name'];
     $instansi = $_POST['instansi'];
     $address = $_POST['alamat'];
-    $id = $_SESSION['id_peserta'];
+    $id = $_SESSION['user']['id'];
 
-    $hasil = $koneksi->query("UPDATE users SET phone='$phone', fullname='$name', institution='$instansi', address='$address' WHERE user_id=$id");
+    $hasil = $koneksi->query("UPDATE users SET phone='$phone', fullname='$name', institution='$instansi', address='$address' WHERE id=$id");
     if (!$hasil) {
         echo "Gagal mengubah data";
         exit;

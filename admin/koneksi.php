@@ -1,6 +1,7 @@
 <?php
 
-foreach (file('.env') as $line) {
+// take the env from the parent dir.
+foreach (file(__DIR__ . '/../.env') as $line) {
     list($key, $value) = explode('=', trim($line), 2);
     putenv("$key=$value");
 }
