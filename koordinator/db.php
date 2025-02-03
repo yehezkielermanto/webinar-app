@@ -1,8 +1,8 @@
 <?php
 $host = "localhost"; 
-$user = "root"; 
-$pass = ""; 
-$dbname = "db_rpl"; 
+$user = "yehezkiel"; 
+$pass = "123"; 
+$dbname = "db_webinar"; 
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
