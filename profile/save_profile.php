@@ -9,7 +9,7 @@ if (!isset($_SESSION["email"])) {
 $koneksi = null;
 include "../koneksi.php";
 
-$user_id = $_SESSION["id_peserta"];
+$user_id = $_SESSION["user"]["id"];
 
 header('Content-Type: application/json');
 define('MAX_FILE_SIZE', 5 * 1024 * 1024); // 5MB

@@ -104,10 +104,14 @@ document.addEventListener("DOMContentLoaded", function () {
             outterDiv.appendChild(cardAnchor);
 
             // setup feedback btn
-            if (card.feedback_given == 0) {
-                let feedbackBtn = document.createElement("div");
+            console.log(card.feedback_given);
+            if (card.feedback_given == "0") {
+                let feedbackBtn = document.createElement("form");
+                feedbackBtn.method = "GET";
+                feedbackBtn.action = "/feedback.php";
                 feedbackBtn.classList.add("feedback-btn");
                 feedbackBtn.innerHTML = `
+                    <input type="text" name="event_id" value="${card.id}" hidden> 
                     <button class="feedback-btn-btn">Berikan Feedback</button>
                 `;
                 outterDiv.appendChild(feedbackBtn);
