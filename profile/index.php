@@ -16,20 +16,20 @@ if ($_SESSION['pfp'] == null) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Profile</title>
-        <link href="/css/profile.css" rel="stylesheet">
-        <script src="/js/profile.js"></script>
+        <link href="../css/profile.css" rel="stylesheet">
+        <script src="../js/profile.js"></script>
     </head>
     <body>
         <div class="floating-menu">
             <div class="hamburg-menu" id="hmenu" hidden>
                 <div class="hamburg-inner m-f">
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/beranda.php">Home</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/webinar-app/beranda.php">Home</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-lightning_bolt"></i> <a href="/event.php">Webinar</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-lightning_bolt"></i> <a href="/webinar-app/event.php">Webinar</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-certificate"></i> <a href="/sertifikat.php">Certificate</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-certificate"></i> <a href="/webinar-app/sertifikat.php">Certificate</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/ganti-password.php">Ganti Password</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
                     <hr>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="">Profile</a></div>
                 </div>

@@ -38,6 +38,6 @@ if (isset($_POST['email']) &&
     /*    $_SESSION['phone'] = $row['phone'];*/
     /*}*/
 }
-header("Location:/profile/index.php");
+header("Location:/webinar-app/profile/index.php");
 exit;
 ?>

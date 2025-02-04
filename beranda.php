@@ -28,7 +28,7 @@ $result = mysqli_query($koneksi, $query);
        }
        
       $nama_lengkap = $_SESSION["nama_lengkap"];
-      $id_peserta = $_SESSION["id_peserta"];
+      $id_peserta = $_SESSION["user"]["id"];
       //result event yang akan datang
 $result_event_feature = $koneksi->query(
     "SELECT a.* , b.* FROM event_participants a, events b

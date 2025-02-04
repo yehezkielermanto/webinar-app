@@ -1,7 +1,7 @@
 <?php
 session_start();
 $koneksi = null;
-include "../../koneksi.php";
+include "koneksi.php";
 
 if(!isset($_SESSION['email'])){
     header("Location: /index.php");
@@ -28,20 +28,20 @@ while ($row = $result->fetch_assoc()) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Webinar Page</title>
-        <link href="../../css/profile.css" rel="stylesheet">
-        <script src="../../js/profile.js"></script>
+        <link href="css/profile.css" rel="stylesheet">
+        <script src="js/webinar_info.js"></script>
     </head>
     <body>
         <div class="floating-menu">
             <div class="hamburg-menu" id="hmenu" hidden>
                 <div class="hamburg-inner m-f">
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/webinar-app/beranda.php">Home</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/beranda.php">Home</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-lightning_bolt"></i> <a href="/webinar-app/event.php">Webinar</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-lightning_bolt"></i> <a href="/event.php">Webinar</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-certificate"></i> <a href="/webinar-app/sertifikat.php">Certificate</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-certificate"></i> <a href="/sertifikat.php">Certificate</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/ganti-password.php">Ganti Password</a></div>
                     <hr>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="">Profile</a></div>
                 </div>
@@ -59,7 +59,7 @@ while ($row = $result->fetch_assoc()) {
                 echo "<img src=".$obj[0]["poster_url"] . " style='height: 200px; max-width: 300px'/>";
                 echo "<div style='margin-top: 10px'></div>";
                 echo "<h2>". $obj[0]["speaker"] ."</h2>";
-                echo "<h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</h4>";
+                echo "<h4>". $obj[0]["description"] ."</h4>";
                 ?>
             </div>
         </div>

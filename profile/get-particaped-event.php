@@ -4,7 +4,7 @@ $koneksi = null;
 include __DIR__ . "/../koneksi.php";
 
 if (!isset($_SESSION["email"])) {
-    header("Location: /index.php");
+    header("Location: /webinar-app/index.php");
     exit();
 }
 
