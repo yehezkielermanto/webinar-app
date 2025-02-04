@@ -8,7 +8,7 @@ var display = 2;
 document.addEventListener("DOMContentLoaded", function () {
     async function fetchCard() {
         try {
-            const response = await fetch(`/profile/get-particaped-event.php?sortwith=${current_sby}&sortby=${current_sort}&inc-feedback=0`);
+            const response = await fetch(`/webinar-app/profile/get-particaped-event.php?sortwith=${current_sby}&sortby=${current_sort}&inc-feedback=0`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (card.feedback_given == "0") {
                 let feedbackBtn = document.createElement("form");
                 feedbackBtn.method = "GET";
-                feedbackBtn.action = "/feedback.php";
+                feedbackBtn.action = "/webinar-app/feedback.php";
                 feedbackBtn.classList.add("feedback-btn");
                 feedbackBtn.innerHTML = `
                     <input type="text" name="event_id" value="${card.id}" hidden> 
@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Create a form dynamically
         const form = document.createElement("form");
         form.method = "POST";
-        form.action = "/profile/ubah-profile.php";
+        form.action = "/webinar-app/profile/ubah-profile.php";
 
         // Add input fields to the form
         const emailInput = document.createElement("input");
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // logout
     const logoutBut = document.getElementById("logoutbtn");
     logoutBut.addEventListener("click", function () {
-        window.location.href = "/logout.php";
+        window.location.href = "/webinar-app/logout.php";
     });
 
     // hamburg menu
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", function () {
             reader.onloadend = function() {
                 // Ensure we have complete data
                 if (reader.result) {
-                    fetch('/profile/save_profile.php', {
+                    fetch('/webinar-app/profile/save_profile.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
