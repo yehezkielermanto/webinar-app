@@ -14,7 +14,8 @@ $feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
 // Get every feedback response
-$resEventFeedback = $koneksi->query("SELECT * FROM event_feedback WHERE feedback_template_id = '$feedbackTemplateID'");
+// old: SELECT * FROM event_feedback WHERE feedback_template_id = '$feedbackTemplateID'
+$resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.event_participant_id, u.fullname, f.answer, f.created_at, f.status FROM event_feedback f JOIN event_participants p ON f.event_participant_id = p.event_participant_id JOIN users u ON p.user_id = u.user_id WHERE f.feedback_template_id = '$feedbackTemplateID' ORDER BY f.event_participant_id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +73,7 @@ $resEventFeedback = $koneksi->query("SELECT * FROM event_feedback WHERE feedback
                 $answer = json_decode($row["answer"]);
                 ?>
                 <div>
-                    <h2 style="color: #A987FF;">Feedback dari Partisipan ID <?= $row["event_participant_id"]; ?></h2>
+                    <h2 style="color: #A987FF;">Feedback dari <?= $row["fullname"]; ?></h2>
                 </div>
                 <div>
                     <form method="post" action="feedback_finished.php" id="form_<?php echo $row["event_participant_id"]; ?>">
