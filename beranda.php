@@ -532,6 +532,11 @@ $result_event_feature = $koneksi->query(
                             <i class="fas fa-key me-1"></i> Support 
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/webinar-app/koordinator/event_list.php">
+                            <i class="fas fa-key me-1"></i> Event Kordinator 
+                        </a>
+                    </li>
                     <!-- Dropdown Profile -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
