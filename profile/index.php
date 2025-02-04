@@ -16,8 +16,8 @@ if ($_SESSION['pfp'] == null) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Profile</title>
-        <link href="/css/profile.css" rel="stylesheet">
-        <script src="/js/profile.js"></script>
+        <link href="../css/profile.css" rel="stylesheet">
+        <script src="../js/profile.js"></script>
     </head>
     <body>
         <div class="floating-menu">
