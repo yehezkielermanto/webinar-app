@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // setup card anchor
             let cardAnchor = document.createElement("a");
 
-            cardAnchor.href = `/webinar_info.php?event_id=${card.event_id}`;
+            cardAnchor.href = `/webinar-app/webinar_info.php?event_id=${card.event_id}`;
 
             // setup card div
             cardAnchor.classList.add("card-link");
