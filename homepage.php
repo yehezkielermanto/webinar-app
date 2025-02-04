@@ -12,7 +12,7 @@ if (isset($_POST['support'])) {
 }
 
 if (isset($_POST['home'])) {
-    header('Location: homepage.php');
+    header('Location: /webinar-app/beranda.php');
 }
 
 if (isset($_POST['my_ticket'])) {
