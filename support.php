@@ -138,7 +138,7 @@ if (isset($_POST['send_ticket'])) {
                     </div>
                     <div class="mb-3">
                         <label for="created_by" class="form-label">Fullname</label>
-                        <input type="text" class="form-control" id="created_by" name="created_by" required placeholder="John Doe">
+                        <input type="text" class="form-control" id="created_by" name="created_by" value="<?= $_SESSION['user']['fullname'] ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="reported_email" class="form-label">Email address</label>
