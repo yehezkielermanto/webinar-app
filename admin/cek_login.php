@@ -31,6 +31,6 @@ if ($data && password_verify($password, $data['password'])) {
 } else {
     echo "<script>
         alert('Maaf, Login Gagal. Pastika Username dan Password anda benar!!!');
-        document.location = 'login.php';
+        document.location = './login.php';
         </script>";
 }
