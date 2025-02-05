@@ -1,8 +1,17 @@
 <?php
-$host = "localhost"; 
-$user = "root"; 
-$pass = ""; 
-$dbname = "db_rpl_1"; 
+// $host = "localhost"; 
+// $user = "root"; 
+// $pass = ""; 
+// $dbname = "db_rpl_1"; 
+
+foreach (file('../.env') as $line) {
+    list($key, $value) = explode('=', trim($line), 2);
+    putenv("$key=$value");
+}
+$host = getenv('DB_HOST'); 
+$user = getenv('DB_USERNAME'); 
+$pass = getenv('DB_PASSWORD'); 
+$dbname = getenv('DB_DATABASE'); 
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 
