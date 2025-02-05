@@ -6,6 +6,7 @@
            exit; 
        }    
       $nama_lengkap = $_SESSION["nama_lengkap"];
+        $koneksi = null;
       include "koneksi.php";
 ?>
 <!DOCTYPE html>
@@ -76,14 +77,14 @@
                 <?php
                         $message = null;
                         $info = null;
-                                $result = $koneksi->query("SELECT * FROM master_event WHERE status=1 ORDER BY tanggal ASC");
+                                $result = $koneksi->query("SELECT * FROM events WHERE status=1 ORDER BY date ASC");
                                 $rowcount=mysqli_num_rows($result);
                                 if ($rowcount <=0 ){
                                     $message =  "Belum ada Event untuk saat ini";
                                 }else{
                                     while ($row = $result->fetch_assoc()) {
-                                        $id = $row['id_event'];      
-                                        $Date =  $row['tanggal'];
+                                        $id = $row['id'];      
+                                        $Date =  $row['date'];
                                         $newdate= date("j", strtotime($Date));
                                         $newdate2= date("F", strtotime($Date));
                                         echo '<style>.event-item {display: inline-block;background: skyblue;min-height: 100px;min-width: 100px;margin:10px;font-size:30px;border-radius:20px;text-align:center;  background-color: #00FA9A;
@@ -138,13 +139,13 @@
                         if(isset($_GET['id_event'])){
                             $id_event = $_GET['id_event'];
                            
-                            $result = $koneksi->query("SELECT * FROM master_event WHERE id_event='$id_event'");
+                            $result = $koneksi->query("SELECT * FROM events WHERE id=$id_event");
                             while ($row = $result->fetch_assoc()) {
-                                echo '<h4 style="margin-top:20px;">'.$row["judul"].'</h4>';
-                                echo "Pembicara: ".$row["pembicara"].'<br>';
-                                echo "Tanggal: ".date("j F Y", strtotime($row["tanggal"])).'<br>'; 
-                                echo "Pukul: ".$row["jam_mulai"].'<br>';
-                              	echo "<small>".$row["deskripsi"].'</small><br>';
+                                echo '<h4 style="margin-top:20px;">'.$row["title"].'</h4>';
+                                echo "Pembicara: ".$row["speaker"].'<br>';
+                                echo "Tanggal: ".date("j F Y", strtotime($row["date"])).'<br>'; 
+                                echo "Pukul: ".$row["start_time"].'<br>';
+                              	echo "<small>".$row["description"].'</small><br>';
                                 echo '<form method="POST">';
                                 echo '  <div class="container-login-form-btn p-t-20 p-b-10"><input type="submit" class="login-form-btn" style="color: white;cursor:pointer;" name="daftar" value="Daftar" > </div>';
                                 echo '</form>';
@@ -152,15 +153,15 @@
                         }
                         if(isset($_POST['daftar'])){
                             $email = $_SESSION['email'];
-                            $id_peserta = $_SESSION["id_peserta"];
+                            $id_peserta = $_SESSION["user"]["id"];
                             $id_peserta_event = "$id_peserta$id_event";
-                            $result = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE a.id_peserta ='$id_peserta' AND a.id_event = '$id_event'");
+                            $result = $koneksi->query("SELECT a.* , b.* FROM event_participants a ,events b WHERE a.user_id = $id_peserta AND a.event_id = $id_event");
                             $rowcount2 = mysqli_num_rows($result);
                             if($rowcount2 > 0){
                                 $info =  "<div class='alert alert-danger text-center'>Anda sudah terdaftar di webinar ini</div>";
                             }else{
                                 // echo "Anda belum terdaftar di event ini";
-                                $insert = $koneksi -> query("INSERT INTO peserta_event (id_peserta_event,id_peserta,id_event) VALUES('$id_peserta_event','$id_peserta','$id_event')"); 
+                                $insert = $koneksi -> query("INSERT INTO event_participants (user_id ,event_id) VALUES('$id_peserta','$id_event')"); 
                                 if($insert){
                                     $info =  "<div class='alert alert-danger'>Anda berhasil terdaftar di webinar ini</div>";
                                 }else{

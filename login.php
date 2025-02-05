@@ -17,8 +17,6 @@ if (isset($_POST['login'])) {
         'password' => $_POST['password']
     ];
 
-    echo password_hash($data['password'], PASSWORD_DEFAULT);
-
     $result = $userController->login($data);
 
     if ($result['success']) {
