@@ -29,7 +29,7 @@ $eventParticipantID = $eventParticipant["id"];
 $resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
-$feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
+$feedbackTemplateID = $eventFeedbackTemplate["id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
 // Find if event_feedback answer exists, then redirect to feedback_finished.php
@@ -143,6 +143,21 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                             display: block;"
                             <?php echo $q->required ? "required" : ""; ?>>
                     <?php
+                    } else if ($q->input_type == "number") {
+                    ?>
+                        <input
+                            type="number"
+                            id="<?= $q->html_name; ?>"
+                            name="<?= $q->html_name; ?>"
+                            class="fs-16 responsive-answer"
+                            class="fs-16 responsive-answer"
+                            style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
+                            border: 1px solid; border-radius: 0.5rem; margin-bottom: 0.75rem;
+                            display: block;"
+                            min="<?= $q->num_range_low; ?>"
+                            max="<?= $q->num_range_high; ?>"
+                            <?php echo $q->required ? "required" : ""; ?>>
+                    <?php
                     } else if ($q->input_type == "textarea") {
                     ?>
                         <textarea
@@ -159,16 +174,15 @@ if (mysqli_num_rows($resEventFeedback) > 0) {
                     ?>
                         <div class="responsive-answer" style="margin-bottom: 0.75rem;">
                         <?php
-                        foreach ($q->check_options as $option) {
+                        foreach ($q->checkbox_options as $option) {
                         ?>
                             <div style="margin-bottom: 0.25rem;">
                                 <input
                                     type="checkbox"
                                     id="<?= $q->html_name; ?>_<?= $option; ?>"
-                                    name="<?= $q->html_name; ?>"
+                                    name="<?= $q->html_name; ?>_<?= $option; ?>"
                                     value="<?= $option; ?>"
-                                    style="margin-bottom: 0.125rem;"
-                                    <?php echo $q->required ? "required" : ""; ?>>
+                                    style="margin-bottom: 0.125rem;">
                                 <label
                                     for="<?= $q->html_name; ?>_<?= $option; ?>"
                                     style="margin-left: 0.125rem; margin-right: 0.5rem;">

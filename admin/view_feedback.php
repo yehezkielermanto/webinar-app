@@ -3,19 +3,19 @@ include 'koneksi.php';
 
 $eventID = $_GET["event_id"];
 
-$resEvent = $koneksi->query("SELECT * FROM events WHERE event_id = '$eventID'");
+$resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
 $event = mysqli_fetch_assoc($resEvent);
 
 // Get the feedback template of the webinar
-$resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_template WHERE event_id = '$eventID'");
+$resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
-$feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
+$feedbackTemplateID = $eventFeedbackTemplate["id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
 // Get every feedback response
 // old: SELECT * FROM event_feedback WHERE feedback_template_id = '$feedbackTemplateID'
-$resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.event_participant_id, u.fullname, f.answer, f.created_at, f.status FROM event_feedback f JOIN event_participants p ON f.event_participant_id = p.event_participant_id JOIN users u ON p.user_id = u.user_id WHERE f.feedback_template_id = '$feedbackTemplateID' ORDER BY f.event_participant_id");
+$resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.event_participant_id, u.fullname, f.answer, f.created_at, f.status FROM event_feedbacks f JOIN event_participants p ON f.event_participant_id = p.id JOIN users u ON p.user_id = u.id WHERE f.feedback_template_id = '$feedbackTemplateID' ORDER BY f.event_participant_id");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,6 +71,8 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
         if ($resEventFeedback->num_rows > 0) {
             while ($row = mysqli_fetch_assoc($resEventFeedback)) {
                 $answer = json_decode($row["answer"]);
+
+                //var_dump($answer);
                 ?>
                 <div>
                     <h2 style="color: #A987FF;">Feedback dari <?= $row["fullname"]; ?></h2>
@@ -129,6 +131,23 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
                                         disabled
                                         <?php echo $q->required ? "required" : ""; ?>>
                                 <?php
+                                } else if ($q->input_type == "number") {
+                                ?>
+                                    <input
+                                        type="number"
+                                        id="<?= $q->html_name; ?>"
+                                        name="<?= $q->html_name; ?>"
+                                        class="fs-16 responsive-answer"
+                                        class="fs-16 responsive-answer"
+                                        style="padding-block: 0.5rem; padding-inline: 0.5rem; border-color: #000000;
+                                        border: 1px solid; border-radius: 0.5rem; margin-bottom: 0.75rem;
+                                        display: block;"
+                                        min="<?= $q->num_range_low; ?>"
+                                        max="<?= $q->num_range_high; ?>"
+                                        value="<?= $answer->{$q->html_name}; ?>"
+                                        disabled
+                                        <?php echo $q->required ? "required" : ""; ?>>
+                                <?php
                                 } else if ($q->input_type == "textarea") {
                                 ?>
                                     <textarea
@@ -143,21 +162,20 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
                                         <?php echo $q->required ? "required" : ""; ?>><?= $answer->{$q->html_name}; ?></textarea>
                                 <?php
                                 } else if ($q->input_type == "checkbox") {
-                                ?>
+                                    ?>
                                     <div class="responsive-answer" style="margin-bottom: 0.75rem;">
                                     <?php
-                                    foreach ($q->check_options as $option) {
+                                    foreach ($q->checkbox_options as $option) {
                                     ?>
                                         <div style="margin-bottom: 0.25rem;">
                                             <input
                                                 type="checkbox"
                                                 id="<?= $q->html_name; ?>_<?= $option; ?>"
-                                                name="<?= $q->html_name; ?>"
+                                                name="<?= $q->html_name; ?>_<?= $option; ?>"
                                                 value="<?= $option; ?>"
+                                                <?php echo (isset($answer->{$q->html_name . "_" . $option}) ? ($option == $answer->{$q->html_name . "_" . $option} ? "checked" : "") : ""); ?>
                                                 style="margin-bottom: 0.125rem;"
-                                                <?php echo ($option == $answer->{$q->html_name} ? "checked" : ""); ?>
-                                                disabled
-                                                <?php echo $q->required ? "required" : ""; ?>>
+                                                disabled>
                                             <label
                                                 for="<?= $q->html_name; ?>_<?= $option; ?>"
                                                 style="margin-left: 0.125rem; margin-right: 0.5rem;">

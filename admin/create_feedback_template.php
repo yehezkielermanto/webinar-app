@@ -3,16 +3,23 @@ include 'koneksi.php';
 
 $eventID = $_GET["event_id"];
 
-$resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_template WHERE event_id = '$eventID'");
+$resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
-$feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
+if ($eventFeedbackTemplate != null) {
+    $feedbackTemplateID = $eventFeedbackTemplate["id"];
+}
+
 // echo $eventFeedbackTemplate["field"];
 
 if (isset($_POST["json"])) {
     $json = $_POST["json"];
 
-    $koneksi->query("UPDATE event_feedback_template SET field = '$json' WHERE event_id = '$eventID'");
+    if ($eventFeedbackTemplate == null) {
+        $koneksi->query("INSERT INTO event_feedback_templates (field, event_id, `status`) VALUES ('$json', '$eventID', 1)");
+    } else {
+        $koneksi->query("UPDATE event_feedback_templates SET field = '$json' WHERE event_id = '$eventID'");
+    }
 }
 ?>
 
@@ -164,7 +171,9 @@ if (isset($_POST["json"])) {
         const form = document.getElementById('new_entry');
         const addDiv = document.getElementById('add_div');
 
-        jsonData = JSON.parse('<?php echo (isset($_POST['json'])) ? $_POST["json"] : $eventFeedbackTemplate["field"]; ?>');
+        jsonData = JSON.parse('<?php echo (isset($_POST['json'])) ? $_POST["json"] : ($eventFeedbackTemplate != null ? $eventFeedbackTemplate["field"] : "[]"); ?>');
+
+        console.log(jsonData);
 
         const table = document.getElementById('table');
         const extraForm = document.getElementById('extraForm');
@@ -407,10 +416,12 @@ if (isset($_POST["json"])) {
             }
 
             // check if html_name is a duplicate
-            if (jsonData.find(element => element.category == f['category'].value) != undefined) {
-                if (jsonData.find(element => element.category == f['category'].value).entries.find(element => element.html_name == obj.html_name) != undefined) {
-                    alert("HTML Name is already used in this category. Please use another name.");
-                    return false;
+            if (!isEditing) {
+                if (jsonData.find(element => element.category == f['category'].value) != undefined) {
+                    if (jsonData.find(element => element.category == f['category'].value).entries.find(element => element.html_name == obj.html_name) != undefined) {
+                        alert("HTML Name is already used in this category. Please use another name.");
+                        return false;
+                    }
                 }
             }
 
