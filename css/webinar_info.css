@@ -43,14 +43,34 @@
 .info-container {
     display: flex;
     flex-direction: row;
-    flex-wrap: column;
+    flex-wrap: wrap;
     max-width: 70%;
 }
 
+.bottom {
+    display: flex;
+    margin-top: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.bottom-btn {
+    padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin: 5px;
+    border-radius: 12px;
+    border: 2px solid rgb(182,163,232);
+    background-color: white;
+    filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.1));
+    color: rgb(182,163,232); 
+    font-weight: bold;
+}
 @media screen and (max-width: 768px) {
     .webinar-speaker, .webinar-date, .webinar-time {
-    margin: 5px;
+        margin: 5px;
     }
+
     .diag-box {
         max-width: 70%;
         overflow: scroll;
@@ -58,5 +78,10 @@
 
     .webinar-poster {
         max-width: 70%;
+    }
+
+    .bottom-btn {
+        font-size: 14px;
+        width: 80%;
     }
 }

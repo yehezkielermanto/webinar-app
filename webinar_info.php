@@ -66,6 +66,11 @@ while ($row = $result->fetch_assoc()) {
                 <div class="diag-box">
                     <p class="m-f"><?= $obj[0]["description"] ?></p>
                 </div>
+                <div class="bottom">
+                    <button class="bottom-btn">Daftar Webinar</button>
+                    <button class="bottom-btn">Unduh Sertifikat</button>
+                    <button class="bottom-btn">Isi Feedback</button>
+                </div>
             </div>
         </div>
     </body>
