@@ -577,7 +577,7 @@ $result_event_feature = $koneksi->query(
                                 <h5 class="card-title"><?= htmlspecialchars($row['title']); ?></h5>
                                 <p class="card-text"><?= htmlspecialchars($row['description']); ?></p>
                                 <small class="text-muted"><?= date('d M Y, H:i', strtotime($row['start_time'])); ?></small>
-                                <a href="detail_webinar.php?id=<?= $row['event_id']; ?>" class="btn btn-primary mt-3">Lihat Detail</a>
+                                <a href="detail_webinar.php?id=<?= $row['id']; ?>" class="btn btn-primary mt-3">Lihat Detail</a>
                             </div>
                         </div>
                     </div>
