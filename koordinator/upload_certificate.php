@@ -1,75 +1,67 @@
 <?php
 include 'db.php';
 
-// Validasi event_id
-if (!isset($_POST['event_id']) || !is_numeric($_POST['event_id'])) {
-    die("Event ID tidak valid.");
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $event_id = intval($_POST["event_id"]);
+    $fullname = trim($_POST["fullname"]);
+    $event_role = $_POST["event_role"] ?? "PARTICIPANT"; // Default: participant
 
-$event_id = intval($_POST['event_id']);
-$upload_dir = "uploads/";
+    // Debugging: Cek nilai event_role
+    var_dump($event_role); // Tambahkan ini untuk melihat nilai event_role
 
-// Pastikan folder upload ada
-if (!is_dir($upload_dir)) {
-    mkdir($upload_dir, 0777, true);
-}
+    // Cek apakah user sudah ada di tabel users
+    $user_check = $conn->prepare("SELECT id FROM users WHERE fullname = ?");
+    $user_check->bind_param("s", $fullname);
+    $user_check->execute();
+    $user_result = $user_check->get_result();
 
-// Fungsi untuk upload file sertifikat
-function uploadCertificate($fileInput, $event_id, $event_role, $conn, $upload_dir) {
-    if (!empty($_FILES[$fileInput]['name'])) {
-        $filename = basename($_FILES[$fileInput]['name']);
-        $filepath = $upload_dir . time() . "_" . $filename; // Gunakan timestamp agar unik
-
-        // Pindahkan file ke folder uploads
-        if (move_uploaded_file($_FILES[$fileInput]['tmp_name'], $filepath)) {
-            // Cek apakah sudah ada sertifikat untuk event dan role yang sama
-            $check_query = "SELECT id FROM certificate_template WHERE event_id = ? AND event_role = ?";
-            $stmt_check = $conn->prepare($check_query);
-            $stmt_check->bind_param("is", $event_id, $event_role);
-            $stmt_check->execute();
-            $stmt_check->store_result();
-
-            if ($stmt_check->num_rows > 0) {
-                // Update sertifikat jika sudah ada
-                $update_query = "UPDATE certificate_template SET template = ? WHERE event_id = ? AND event_role = ?";
-                $stmt_update = $conn->prepare($update_query);
-                $stmt_update->bind_param("sis", $filepath, $event_id, $event_role);
-                
-                if ($stmt_update->execute()) {
-                    return true;
-                } else {
-                    die("Database Error (Update): " . $stmt_update->error);
-                }
-            } else {
-                // Insert sertifikat baru jika belum ada
-                $insert_query = "INSERT INTO certificate_template (event_id, template, event_role) VALUES (?, ?, ?)";
-                $stmt_insert = $conn->prepare($insert_query);
-                $stmt_insert->bind_param("iss", $event_id, $filepath, $event_role);
-                
-                if ($stmt_insert->execute()) {
-                    return true;
-                } else {
-                    die("Database Error (Insert): " . $stmt_insert->error);
-                }
-            }
+    if ($user_result->num_rows > 0) {
+        $user = $user_result->fetch_assoc();
+        $user_id = $user["id"];
+    } else {
+        // Jika user belum ada, tambahkan ke tabel users
+        $insert_user = $conn->prepare("INSERT INTO users (fullname) VALUES (?)");
+        $insert_user->bind_param("s", $fullname);
+        if ($insert_user->execute()) {
+            $user_id = $insert_user->insert_id;
         } else {
-            die("Gagal mengunggah file.");
+            header("Location: event_details.php?id=$event_id&add_error=db");
+            exit();
         }
     }
-    return false;
+
+    // Cek apakah user sudah menjadi panitia di event ini
+    $check_participant = $conn->prepare("SELECT * FROM event_participants WHERE event_id = ? AND user_id = ? AND event_role = ?");
+    $check_participant->bind_param("iis", $event_id, $user_id, $event_role);
+    $check_participant->execute();
+    $result_check = $check_participant->get_result();
+
+    if ($result_check->num_rows > 0) {
+        header("Location: event_details.php?id=$event_id&add_error=exists");
+        exit();
+    }
+
+    // Tambahkan panitia ke event
+    $status_default = "active"; // Sesuaikan jika ada aturan status
+    $insert_participant = $conn->prepare("INSERT INTO event_participants (event_id, user_id, event_role, status, certificate_url) VALUES (?, ?, ?, ?, '')");
+    $insert_participant->bind_param("iiss", $event_id, $user_id, $event_role, $status_default);
+
+    if ($insert_participant->execute()) {
+        // Sekarang simpan ke certificate_templates
+        $insert_certificate = $conn->prepare("INSERT INTO certificate_templates (event_id, user_id, event_role, other_columns) VALUES (?, ?, ?, ?)");
+        $insert_certificate->bind_param("iiss", $event_id, $user_id, $event_role, $other_value); // Ganti $other_value dengan nilai yang sesuai
+
+        if ($insert_certificate->execute()) {
+            // Berhasil menyimpan ke certificate_templates
+        } else {
+            // Tangani kesalahan saat menyimpan ke certificate_templates
+            header("Location: event_details.php?id=$event_id&add_error=certificate");
+            exit();
+        }
+    } else {
+        // Tangani kesalahan saat menambahkan peserta
+        header("Location: event_details.php?id=$event_id&add_error=participant");
+        exit();
+    }
 }
-
-// Proses upload sertifikat peserta
-$participant_uploaded = uploadCertificate('participant_certificate', $event_id, 'participant', $conn, $upload_dir);
-
-// Proses upload sertifikat panitia
-$committee_uploaded = uploadCertificate('committee_certificate', $event_id, 'committee', $conn, $upload_dir);
-
-// Redirect dengan notifikasi
-if ($participant_uploaded || $committee_uploaded) {
-    header("Location: event_details.php?event_id=$event_id&upload_success=1");
-} else {
-    header("Location: event_details.php?event_id=$event_id&upload_error=1");
-}
-exit();
 ?>
