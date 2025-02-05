@@ -88,7 +88,7 @@ while ($row = $regresult->fetch_assoc()) {
 
                 // isi feedback
                 $feedquery =
-                "SELECT a.status, b.event_id 
+                "SELECT a.*, b.*
                 FROM event_feedbacks a 
                 JOIN event_feedback_templates b 
                 ON a.feedback_template_id = b.id
@@ -96,13 +96,10 @@ while ($row = $regresult->fetch_assoc()) {
                 $feedresult = mysqli_query($koneksi, $feedquery);
                 $row = mysqli_fetch_array($feedresult);
                 $feedregistered = false;
-                if ($row != null) {
-                    if (count($row) > 0) {
-                        //check if user already done input
-                        if ($row[0]["status"] == 1) {
-                            $feedregistered = true;
-                        }
-                    }
+                if ($row == null) {
+                    $feedregistered = true;
+                } elseif (count($row) <= 0) {
+                    $feedregistered = true;
                 }
 
                 ?>
@@ -115,3 +112,35 @@ while ($row = $regresult->fetch_assoc()) {
         </div>
     </body>
 </html>
+
+<?php
+if (isset($_POST["register"])) {
+    $email = $_SESSION['email'];
+    $id_peserta = $_SESSION["user"]["id"];
+    $query = "INSERT INTO `event_participants` (`event_id`, `user_id`, `status`, `event_role`, `certificate_url`) VALUES (".$event_id.", ".$user_id.", '0', 'participant', NULL) ";
+    $result = mysqli_query($koneksi, $query);
+    if (!$result) {
+        echo "<script>
+        alert('gagal mendaftar.');
+        document.location='index.php';
+        </script>";
+        exit();
+    }
+}
+
+if (isset($_POST["dcert"])) {
+    $query = "select certificate_url from event_participants where user_id = $user_id and event_id = $event_id limit 1";
+    $result = mysqli_query($koneksi, $query);
+    if ($result) {
+        $row = mysqli_fetch_array($result);
+        $filename = $row["certificate_url"];
+        echo "
+        <script>downcert('$filename', $event_id)</script>
+        ";
+    }
+}
+
+if (isset($_POST["feed"])) {
+    header("Location: /webinar-app/feedback.php?event_id=$event_id");
+}
+?>

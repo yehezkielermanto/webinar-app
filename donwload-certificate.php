@@ -4,8 +4,6 @@
     $back_file = $_GET['e'];
     $back_dir    ="asset/tsps/";
     $file = $back_dir.$back_file."/".$filename;
-//     echo "$file";
-//     die;
     if (file_exists($file)) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
