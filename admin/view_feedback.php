@@ -72,7 +72,7 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
             while ($row = mysqli_fetch_assoc($resEventFeedback)) {
                 $answer = json_decode($row["answer"]);
 
-                var_dump($answer);
+                // var_dump($answer);
                 ?>
                 <div>
                     <h2 style="color: #A987FF;">Feedback dari <?= $row["fullname"]; ?></h2>
