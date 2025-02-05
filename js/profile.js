@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const cContainer = document.getElementById("c-container");
         cContainer.innerHTML = "";
         if (editableData.length <= 0) {
-            cContainer.innerHTML = "<p>Tidak ada event yang sesuai.</p>";
+            cContainer.innerHTML = "<p>Tidak ada event.</p>";
         }
         renderCard(editableData.slice(0, display));
     }
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderCard(data) {
         const cContainer = document.getElementById("c-container");
         if (data.length <= 0) {
-            cContainer.innerHTML = "<p>Tidak ada event.</p>";
+            cContainer.innerHTML = "<p>Tidak ada event yang sesuai.</p>";
             return;
         }
         for (let i = 0; i < data.length; i++) {
