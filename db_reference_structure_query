@@ -232,7 +232,7 @@ ALTER TABLE `events`
 -- Indexes for table `event_feedbacks`
 --
 ALTER TABLE `event_feedbacks`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `event_feedback_templates`
