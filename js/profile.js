@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const cContainer = document.getElementById("c-container");
         cContainer.innerHTML = "";
         if (editableData.length <= 0) {
-            cContainer.innerHTML = "<p>Tidak ada event yang sesuai.</p>";
+            cContainer.innerHTML = "<p>Tidak ada event.</p>";
         }
         renderCard(editableData.slice(0, display));
     }
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function renderCard(data) {
         const cContainer = document.getElementById("c-container");
         if (data.length <= 0) {
-            cContainer.innerHTML = "<p>Tidak ada event.</p>";
+            cContainer.innerHTML = "<p>Tidak ada event yang sesuai.</p>";
             return;
         }
         for (let i = 0; i < data.length; i++) {
@@ -181,7 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
             editableData = jsonData;
             const newData = editableData.slice(0, display);
             renderCard(newData);
-            const totalPages = Math.ceil(editableData.length / display);
+            let totalPages = Math.ceil(editableData.length / display);
+            if (totalPages <= 0) {
+                totalPages = 1;
+            }
             currentPage.innerText = `${page}/${totalPages}`;
         } else {
             console.log("No data fetched or an error occurred.");
