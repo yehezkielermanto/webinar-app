@@ -198,8 +198,8 @@ CREATE TABLE `users` (
   `vkey` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `type` enum('INTERNAL','EXTERNAL') NOT NULL,
-  `status` tinyint(1) NOT NULL
-  `pfp_path` varchar(512),
+  `status` tinyint(1) NOT NULL,
+  `pfp_path` varchar(512)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
@@ -233,8 +233,6 @@ ALTER TABLE `events`
 --
 ALTER TABLE `event_feedbacks`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `feedback_template_id` (`feedback_template_id`),
-  ADD UNIQUE KEY `event_participant_id` (`event_participant_id`);
 
 --
 -- Indexes for table `event_feedback_templates`
@@ -255,7 +253,6 @@ ALTER TABLE `event_materials`
 --
 ALTER TABLE `event_participants`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
   ADD KEY `event_participants_event_id_fkey` (`event_id`);
 
 --

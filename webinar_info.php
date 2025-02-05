@@ -71,10 +71,13 @@ while ($row = $regresult->fetch_assoc()) {
             <div class="bottom">
                 <?php
                 // registered
-                $regquery = "select count(id) from event_participants where user_id = $user_id and event_id = $event_id";
+                $regquery = "select id from event_participants where user_id = $user_id and event_id = $event_id";
                 $regresult = mysqli_query($koneksi, $regquery);
                 $len = mysqli_num_rows($regresult);
-                $registered = $len > 0 ? true : false;
+                $registered = false;
+                if ($len > 0) {
+                    $registered = true;
+                }
                 
                 // download cert
                 $certquery = "select certificate_url from event_participants where user_id = $user_id and event_id = $event_id";
@@ -82,8 +85,10 @@ while ($row = $regresult->fetch_assoc()) {
                 $certlen = mysqli_num_rows($certresult);
                 $row = mysqli_fetch_array($certresult);
                 $certregistered = $certlen > 0 ? true : false;
-                if ($row != null || count($row) > 0 || $row != "") {
-                    $certregistered = true;
+                if ($row != null) {
+                    if ($row != "") {
+                        $certregistered = true;
+                    }
                 }
 
                 // isi feedback
@@ -96,16 +101,14 @@ while ($row = $regresult->fetch_assoc()) {
                 $feedresult = mysqli_query($koneksi, $feedquery);
                 $row = mysqli_fetch_array($feedresult);
                 $feedregistered = false;
-                if ($row == null) {
-                    $feedregistered = true;
-                } elseif (count($row) <= 0) {
+                if ($row == null && $registered == true) {
                     $feedregistered = true;
                 }
 
                 ?>
                 <form method="POST">
                     <button name="register" class="bottom-btn" <?= $registered == true ? "disabled" : "" ?> ><?= $registered == true ? "Sudah terdaftar" : "Ikuti webinar"?></button>
-                    <button name="dcert" class="bottom-btn" <?= $certregistered == false ? "disabled" : "" ?> ><?= $registered == false ? "Unduh sertifikat tidak tersedia" : "Unduh Sertifikat"?></button>
+                    <button name="dcert" class="bottom-btn" <?= $certregistered == false ? "disabled" : "" ?> ><?= $certregistered == false ? "Unduh sertifikat tidak tersedia" : "Unduh Sertifikat"?></button>
                     <button name="feed" class="bottom-btn" <?= $feedregistered == false ? "disabled" : "" ?> ><?= $feedregistered == false ? "Feedback tidak tersedia" : "Isi feedback"?></button>
                 </form>
             </div>
@@ -117,15 +120,15 @@ while ($row = $regresult->fetch_assoc()) {
 if (isset($_POST["register"])) {
     $email = $_SESSION['email'];
     $id_peserta = $_SESSION["user"]["id"];
-    $query = "INSERT INTO `event_participants` (`event_id`, `user_id`, `status`, `event_role`, `certificate_url`) VALUES (".$event_id.", ".$user_id.", '0', 'participant', NULL) ";
+    $query = "INSERT INTO `event_participants` (`event_id`, `user_id`, `status`, `event_role`, `certificate_url`) VALUES (".$event_id.", ".$user_id.", '0', 'PARTICIPANT', '') ";
     $result = mysqli_query($koneksi, $query);
     if (!$result) {
         echo "<script>
         alert('gagal mendaftar.');
-        document.location='index.php';
         </script>";
         exit();
     }
+    header("Location: webinar_info.php");
 }
 
 if (isset($_POST["dcert"])) {

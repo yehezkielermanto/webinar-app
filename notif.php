@@ -91,7 +91,9 @@ $result = mysqli_query($koneksi, $query);
         
         <div class="list-group">
             <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-                <a href="detail_webinar.php?id=<?= $row['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <a href="webinar_info.php?event_id=<?= $row['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <!-- TODO: later change it back to this after the page done -->
+                <!--<a href="detail_webinar.php?id=<?= $row['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">-->
                     <div>
                         <strong><?= htmlspecialchars($row['title']); ?></strong>
                         <p class="details"><?= htmlspecialchars($row['description']); ?></p>

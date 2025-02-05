@@ -46,13 +46,13 @@ if (isset($_GET["inc-feedback"])) {
             event_participants ep
         JOIN 
             events e 
-            ON ep.id = e.id
+            ON ep.event_id = e.id
         WHERE 
             ep.user_id = " . $user_id;
 } else {
 $query = "
     SELECT 
-        e.event_id, 
+        e.id, 
         e.poster_url, 
         e.event_name, 
         e.background_online_url, 
@@ -70,7 +70,7 @@ $query = "
         e.attendance_type, 
         e.slug, 
         e.remark, 
-        ep.event_participant_id, 
+        ep.id, 
         ep.user_id, 
         ep.status AS participant_status, 
         ep.event_role, 
@@ -80,7 +80,7 @@ $query = "
     JOIN 
         events e 
     ON 
-        ep.event_id = e.event_id
+        ep.event_id = e.id
     WHERE 
         ep.user_id =".$user_id."
     ORDER by $sortwith $sortby";
