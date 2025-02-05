@@ -29,6 +29,7 @@ while ($row = $result->fetch_assoc()) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Webinar Page</title>
         <link href="css/profile.css" rel="stylesheet">
+        <link href="css/webinar_info.css" rel="stylesheet">
         <script src="js/webinar_info.js"></script>
     </head>
     <body>
@@ -54,13 +55,17 @@ while ($row = $result->fetch_assoc()) {
         </div>
         <div class="container" style="flex-direction: column !important; padding: 20px !important;">
             <div style="height: 90vh; display: flex; flex-direction: column; text-align: center; align-items: center">
-                <?php
-                echo "<h1>". $obj[0]["title"] ."</h1>";
-                echo "<img src=".$obj[0]["poster_url"] . " style='height: 200px; max-width: 300px'/>";
-                echo "<div style='margin-top: 10px'></div>";
-                echo "<h2>". $obj[0]["speaker"] ."</h2>";
-                echo "<h4>". $obj[0]["description"] ."</h4>";
-                ?>
+                <img class="webinar-poster" src="<?= $obj[0]["poster_url"] ?>" style="height: 200px; max-height: 300px"/>
+                <h1 class="webinar-title accent-cf"> <?= $obj[0]["title"] ?></h1>
+                <div class="info-container">
+                <h3 class="webinar-speaker"><i class="nf nf-oct-people"></i> <?= $obj[0]["speaker"] ?></h3>
+                <h3 class="webinar-date"><i class="nf nf-oct-calendar"></i> <?= $obj[0]["date"] ?></h3>
+                <h3 class="webinar-time"><i class="nf nf-oct-clock"></i> <?= $obj[0]["start_time"] ?></h3>
+                </div>
+                <hr class="sep">
+                <div class="diag-box">
+                    <p class="m-f"><?= $obj[0]["description"] ?></p>
+                </div>
             </div>
         </div>
     </body>

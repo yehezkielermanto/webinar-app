@@ -181,7 +181,10 @@ document.addEventListener("DOMContentLoaded", function () {
             editableData = jsonData;
             const newData = editableData.slice(0, display);
             renderCard(newData);
-            const totalPages = Math.ceil(editableData.length / display);
+            let totalPages = Math.ceil(editableData.length / display);
+            if (totalPages <= 0) {
+                totalPages = 1;
+            }
             currentPage.innerText = `${page}/${totalPages}`;
         } else {
             console.log("No data fetched or an error occurred.");
