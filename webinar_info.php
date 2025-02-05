@@ -87,12 +87,29 @@ while ($row = $regresult->fetch_assoc()) {
                 }
 
                 // isi feedback
+                $feedquery =
+                "SELECT a.status, b.event_id 
+                FROM event_feedbacks a 
+                JOIN event_feedback_templates b 
+                ON a.feedback_template_id = b.id
+                WHERE a.event_participant_id = $user_id AND b.event_id = $event_id";
+                $feedresult = mysqli_query($koneksi, $feedquery);
+                $row = mysqli_fetch_array($feedresult);
+                $feedregistered = false;
+                if ($row != null) {
+                    if (count($row) > 0) {
+                        //check if user already done input
+                        if ($row[0]["status"] == 1) {
+                            $feedregistered = true;
+                        }
+                    }
+                }
+
                 ?>
                 <form method="POST">
                     <button name="register" class="bottom-btn" <?= $registered == true ? "disabled" : "" ?> ><?= $registered == true ? "Sudah terdaftar" : "Ikuti webinar"?></button>
                     <button name="dcert" class="bottom-btn" <?= $certregistered == false ? "disabled" : "" ?> ><?= $registered == false ? "Unduh sertifikat tidak tersedia" : "Unduh Sertifikat"?></button>
-                    <!--<button name="dcert" class="bottom-btn">Unduh Sertifikat</button>-->
-                    <button name="feed" class="bottom-btn">Isi Feedback</button>
+                    <button name="feed" class="bottom-btn" <?= $feedregistered == false ? "disabled" : "" ?> ><?= $feedregistered == false ? "Feedback tidak tersedia" : "Isi feedback"?></button>
                 </form>
             </div>
         </div>
