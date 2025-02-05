@@ -94,7 +94,7 @@ $tanggal_sekarang = date("Y-m-d ");
                                 $id_peserta_event = $row['user_id'];
 
                                 $judul = $row['title'];
-                                $avatar_event = $row['background_online_url'];
+                                $avatar_event = $row['poster_url'];
                                 $tanggal = $row['date'];
                                 $alamat_sertifikat =$row['certificate_url'];
                                 $date_format = date("d F Y",strtotime($tanggal));
@@ -144,7 +144,7 @@ $tanggal_sekarang = date("Y-m-d ");
                                 $id_peserta_event = $row['user_id'];
 
                                 $judul = $row['title'];
-                                $avatar_event = $row['background_online_url'];
+                                $avatar_event = $row['poster_url'];
                                 $tanggal = $row['date'];
                                 $alamat_sertifikat =$row['certificate_url'];
                                 $date_format = date("d F Y",strtotime($tanggal));
