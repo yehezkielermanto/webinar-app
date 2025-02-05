@@ -9,6 +9,7 @@ $koneksi = null;
 include 'koneksi.php';
 
 $userID = $_SESSION["user"]["id"];
+$event = array();
 
 if (isset($_POST["feedback_template_id"])) {
     $feedbackTemplateID = $_POST["feedback_template_id"];
