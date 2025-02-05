@@ -5,9 +5,11 @@ if (!isset($_SESSION["user"])) {
     exit;
 }
 
+$koneksi = null;
 include 'koneksi.php';
 
-$userID = $_SESSION["user"]["user_id"];
+$userID = $_SESSION["user"]["id"];
+$event = array();
 
 if (isset($_POST["feedback_template_id"])) {
     $feedbackTemplateID = $_POST["feedback_template_id"];
@@ -31,7 +33,7 @@ if (isset($_POST["feedback_template_id"])) {
     // html only
     $eventID = $_POST["event_id"];
 
-    $resEvent = $koneksi->query("SELECT * FROM events WHERE event_id = '$eventID'");
+    $resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
     $event = mysqli_fetch_assoc($resEvent);
 
     // Get user's event participant ID
@@ -51,7 +53,7 @@ if (isset($_GET['event_id'])) {
     // html only
     $eventID = $_GET["event_id"];
 
-    $resEvent = $koneksi->query("SELECT * FROM events WHERE event_id = '$eventID'");
+    $resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
     $event = mysqli_fetch_assoc($resEvent);
 
     // Get user's event participant ID

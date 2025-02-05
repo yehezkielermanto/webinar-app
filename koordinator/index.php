@@ -30,7 +30,7 @@ if (isset($_POST['tambah'])) {
 
 // Edit event
 if (isset($_POST['edit'])) {
-    $event_id = $_POST['event_id'];
+    $event_id = $_POST['id'];
     $event_name = $_POST['event_name'];
     $date = $_POST['date'];
     $start_time = $_POST['start_time'];
@@ -44,7 +44,7 @@ if (isset($_POST['edit'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
 
-    $stmt = $conn->prepare("UPDATE events SET event_name=?, date=?, start_time=?, end_time=?, type=?, link=?, speaker=?, is_internal=?, attendance_type=?, status=?, title=?, description=? WHERE event_id=?");
+    $stmt = $conn->prepare("UPDATE events SET event_name=?, date=?, start_time=?, end_time=?, type=?, link=?, speaker=?, is_internal=?, attendance_type=?, status=?, title=?, description=? WHERE id=?");
     $stmt->bind_param("sssssssissssi", $event_name, $date, $start_time, $end_time, $type, $link, $speaker, $is_internal, $attendance_type, $status, $title, $description, $event_id);
     
     if (!$stmt->execute()) {
@@ -60,7 +60,7 @@ if (isset($_POST['edit'])) {
 $event = null;
 if (isset($_GET['edit'])) {
     $event_id = $_GET['edit'];
-    $result = $conn->query("SELECT * FROM events WHERE event_id = $event_id");
+    $result = $conn->query("SELECT * FROM events WHERE id= $event_id");
     $event = $result->fetch_assoc();
 }
 ?>
@@ -78,7 +78,7 @@ if (isset($_GET['edit'])) {
     
     <form action="index.php" method="post">
         <?php if ($event): ?>
-            <input type="hidden" name="event_id" value="<?= $event['event_id'] ?>">
+            <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
         <?php endif; ?>
         <input type="text" name="event_name" placeholder="Nama Event" value="<?= $event ? $event['event_name'] : '' ?>" required>
         <input type="date" name="date" value="<?= $event ? $event['date'] : '' ?>" required>

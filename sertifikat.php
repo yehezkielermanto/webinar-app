@@ -10,16 +10,17 @@ $tanggal_sekarang = date("Y-m-d ");
            exit;
        }
       $nama_lengkap = $_SESSION["nama_lengkap"];
-      $id_peserta = $_SESSION["id_peserta"];
+      $id_peserta = $_SESSION["user"]["id"];
+    $koneksi = null;
       include "koneksi.php";
 
  // result sertificate
- $result_sertificate = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE id_peserta ='$id_peserta' and absen = 1 and a.id_event = b.id_event and '$tanggal_sekarang'>= b.tanggal");
+ $result_sertificate = $koneksi->query("SELECT a.* , b.* FROM event_participants a, events b WHERE user_id =$id_peserta and a.status = 1 and a.event_id = b.id and '$tanggal_sekarang'>= b.date");
 
  $const_locate_sertificate = "asset/TSP.jpg";
 
  // result feedback 
- $result_feed = $koneksi->query("SELECT a.* , b.* FROM peserta_event a,master_event b WHERE id_peserta ='$id_peserta' and absen = 0 and a.id_event = b.id_event and '$tanggal_sekarang'> b.tanggal");
+ $result_feed = $koneksi->query("SELECT a.* , b.* FROM event_participants a, events b WHERE user_id =$id_peserta and a.status = 0 and a.event_id = b.id and '$tanggal_sekarang'> b.date");
 
 
  //
@@ -31,7 +32,7 @@ $tanggal_sekarang = date("Y-m-d ");
     // echo $id_evn;
     // echo $link_feed;
     //update psrevn status
-    mysqli_query($koneksi , "UPDATE peserta_event SET absen=1 WHERE id_event ='$id_evn' and id_peserta ='$id_psr'"); 
+    mysqli_query($koneksi , "UPDATE event_participants SET status=1 WHERE event_id=$id_evn and user_id =$id_psr"); 
     header('Location: '.$link_feed.'');
 }
 
@@ -73,6 +74,7 @@ $tanggal_sekarang = date("Y-m-d ");
                 <a href="event.php">Webinar</a>
                 <a href="sertifikat.php">Certificate</a>
                 <a href="ganti-password.php">Ganti Password</a>
+                <a href="profile/index.php">Profile</a>
                 <a href="logout.php">Keluar</a>
             </div>
             <span style="font-size:25px;cursor:pointer; float: right;" onclick="openNav()">&#9776;</span>
@@ -88,14 +90,17 @@ $tanggal_sekarang = date("Y-m-d ");
             <?php
                          while ($row = $result_feed->fetch_assoc())
                          { 
-                                $id_event = $row['id_event'];
-                                $id_peserta_event = $row['id_peserta_event'];
+                                $id_event = $row['id'];
+                                $id_peserta_event = $row['user_id'];
 
-                                $judul = $row['judul'];
-                                $avatar_event = $row['avatar_event'];
-                                $tanggal = $row['tanggal'];
-                                $alamat_sertifikat =$row['lokasi_sertifikat'];
+                                $judul = $row['title'];
+                                $avatar_event = $row['poster_url'];
+                                $tanggal = $row['date'];
+                                $alamat_sertifikat =$row['certificate_url'];
                                 $date_format = date("d F Y",strtotime($tanggal));
+                                // TODO :
+                                // feedback is not here need to change the query later.
+                                // just need to query the `event_feedbacks`
                                 $feedback = $row['feedback'];
                                 
                               
@@ -130,18 +135,18 @@ $tanggal_sekarang = date("Y-m-d ");
             <!--Sertificate  -->
             <?php
                          while ($row = $result_sertificate->fetch_assoc()){
-                            if (is_null($row ['id_peserta_event']))
+                            if (is_null($row ['user_id']))
                             {
                                 echo $event_empty;
                             }
                             else {
-                                $id_event = $row['id_event'];
-                                $id_peserta_event = $row['id_peserta_event'];
+                                $id_event = $row['event_id'];
+                                $id_peserta_event = $row['user_id'];
 
-                                $judul = $row['judul'];
-                                $avatar_event = $row['avatar_event'];
-                                $tanggal = $row['tanggal'];
-                                $alamat_sertifikat =$row['lokasi_sertifikat'];
+                                $judul = $row['title'];
+                                $avatar_event = $row['poster_url'];
+                                $tanggal = $row['date'];
+                                $alamat_sertifikat =$row['certificate_url'];
                                 $date_format = date("d F Y",strtotime($tanggal));
 
                                 // echo "$id_event";
