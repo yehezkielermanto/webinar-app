@@ -14,26 +14,26 @@ if (!isset($_GET["event_id"])) {
     exit();
 }
 $eventID = $_GET["event_id"];
-$userID = $_SESSION["user"]["user_id"];
+$userID = $_SESSION["user"]["id"];
 
-$resEvent = $koneksi->query("SELECT * FROM events WHERE event_id = '$eventID'");
+$resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
 $event = mysqli_fetch_assoc($resEvent);
 
 // Get user's event participant ID
 $resEventParticipant = $koneksi->query("SELECT * FROM event_participants WHERE event_id = '$eventID' AND user_id = '$userID'");
 $eventParticipant = mysqli_fetch_assoc($resEventParticipant);
 
-$eventParticipantID = $eventParticipant["event_participant_id"];
+$eventParticipantID = $eventParticipant["id"];
 
 // Get the feedback template of the webinar
-$resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_template WHERE event_id = '$eventID'");
+$resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
 $feedbackTemplateID = $eventFeedbackTemplate["feedback_template_id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
 // Find if event_feedback answer exists, then redirect to feedback_finished.php
-$resEventFeedback = $koneksi->query("SELECT * FROM event_feedback WHERE feedback_template_id = '$feedbackTemplateID' AND event_participant_id = '$eventParticipantID'");
+$resEventFeedback = $koneksi->query("SELECT * FROM event_feedbacks WHERE feedback_template_id = '$feedbackTemplateID' AND event_participant_id = '$eventParticipantID'");
 
 if (mysqli_num_rows($resEventFeedback) > 0) {
     header("Location:feedback_finished.php?event_id=$eventID");

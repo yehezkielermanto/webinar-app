@@ -37,7 +37,7 @@ $result = $conn->query("SELECT * FROM events");
         </tr>
         <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
-                <td><?= $row['event_id'] ?></td>
+                <td><?= $row['id'] ?></td>
                 <td><?= $row['event_name'] ?></td>
                 <td><?= $row['date'] ?></td>
                 <td><?= $row['start_time'] ?></td>
@@ -51,8 +51,8 @@ $result = $conn->query("SELECT * FROM events");
                 <td><?= $row['title'] ?></td>
                 <td><?= $row['description'] ?></td>
                 <td>
-                    <a href="index.php?edit=<?= $row['event_id'] ?>">Edit</a>
-                    <a href="event_details.php?event_id=<?= $row['event_id'] ?>">Detail</a> 
+                    <a href="index.php?edit=<?= $row['id'] ?>">Edit</a>
+                    <a href="event_details.php?event_id=<?= $row['id'] ?>">Detail</a> 
                 </td>
             </tr>
         <?php endwhile; ?>

@@ -3,7 +3,7 @@ session_start();
 include 'koneksi.php'; // Pastikan file koneksi database tersedia
 
 // Ambil notifikasi dari database
-$id_peserta = $_SESSION['id_peserta']; // Sesuaikan dengan sesi pengguna
+$id_peserta = $_SESSION['user']["id"]; // Sesuaikan dengan sesi pengguna
 $currentdate = date("Y-m-d"); 
 $query = "SELECT * FROM events WHERE date >= '$currentdate'";
 $result = mysqli_query($koneksi, $query);
