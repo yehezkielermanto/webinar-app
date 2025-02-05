@@ -2,6 +2,7 @@
 session_start();
 
 // TODO: Fixed the query but it will not read the password correctly.
+// it triggered : Password tidak sama dengan password lama anda
 if (!isset($_SESSION["email"])) {
     header("Location:session.php");
     exit; 

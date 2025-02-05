@@ -1,4 +1,5 @@
 <?php
+$conn = null;
 include 'db.php';
 
 // Validasi event_id
@@ -9,7 +10,7 @@ if (!isset($_GET['event_id']) || !is_numeric($_GET['event_id'])) {
 $event_id = intval($_GET['event_id']); // Pastikan event_id adalah integer
 
 // Ambil data event
-$event_result = $conn->query("SELECT * FROM events WHERE event_id = $event_id");
+$event_result = $conn->query("SELECT * FROM events WHERE id = $event_id");
 
 // Validasi apakah event ditemukan
 if ($event_result->num_rows === 0) {
@@ -22,7 +23,7 @@ $event = $event_result->fetch_assoc();
 $participants_query = "
     SELECT ep.*, u.fullname, u.institution, u.phone, ep.certificate_url
     FROM event_participants ep
-    JOIN users u ON ep.user_id = u.user_id
+    JOIN users u ON ep.user_id = u.id
     WHERE ep.event_id = $event_id AND ep.event_role = 'participant'
 ";
 $participants_result = $conn->query($participants_query);
@@ -31,7 +32,7 @@ $participants_result = $conn->query($participants_query);
 $committee_query = "
     SELECT ep.*, u.fullname, u.institution, u.phone, ep.certificate_url
     FROM event_participants ep
-    JOIN users u ON ep.user_id = u.user_id
+    JOIN users u ON ep.user_id = u.id
     WHERE ep.event_id = $event_id AND ep.event_role = 'committee'
 ";
 $committee_result = $conn->query($committee_query);
