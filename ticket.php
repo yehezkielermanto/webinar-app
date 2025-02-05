@@ -5,7 +5,7 @@ AuthMiddleware::check();
 require_once __DIR__ . "/controller/SupportController.php";
 
 if ($_SESSION['user']['role'] !== 'ADMIN') {
-    header('Location: homepage.php');
+    header('Location: /webinar-app/beranda.php');
 }
 
 if (isset($_POST['logout'])) {
@@ -29,8 +29,8 @@ if (isset($_POST['ticket'])) {
     header('Location: ticket.php');
 }
 
-if (isset($_POST['event_cordinator'])) {
-    header('Location: koordinator/event_list.php');
+if (isset($_POST['event_register'])) {
+    header('Location: event_register.php');
 }
 
 
@@ -236,9 +236,9 @@ if (isset($_GET['status'])) {
 
                 <div class="mb-3">
                     <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
-                        <button type="submit" name="event_cordinator" class="nav-link">
+                        <button type="submit" name="event_register" class="nav-link">
                             <h5>
-                                Event Cordinator
+                                Event Register
                             </h5>
                         </button>
                     <?php endif; ?>

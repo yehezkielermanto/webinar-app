@@ -1,8 +1,13 @@
 <?php
-require __DIR__ . "/middleware/AuthMiddleware.php";
+
+require_once __DIR__ . "/middleware/AuthMiddleware.php";
 AuthMiddleware::check();
 
-require __DIR__ . "/controller/SupportController.php";
+require_once __DIR__ . "/controller/EventController.php";
+
+if ($_SESSION['user']['role'] !== 'ADMIN') {
+    header('Location: /webinar-app/beranda.php');
+}
 
 if (isset($_POST['logout'])) {
     session_destroy();
@@ -29,12 +34,12 @@ if (isset($_POST['event_register'])) {
     header('Location: event_register.php');
 }
 
+/**
+ * Get all events
+ */
+$eventController = new EventController();
+$events = $eventController->get();
 
-$supportController = new SupportController();
-
-if (isset($_GET['id'])) {
-    $support = $supportController->getbyId($_GET['id']);
-}
 
 ?>
 
@@ -44,7 +49,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Ticket Detail</title>
+    <title>Register Webinar</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
@@ -67,104 +72,63 @@ if (isset($_GET['id'])) {
 
                 <img src="./images/logo_if.png" alt="Logo" width="40" height="24" class="d-inline-block align-text-top">
 
-                <span class="h6 mx-2">Ticket Detail</span>
+                <span class="h6 mx-2">Register Webinar</span>
 
             </div>
         </div>
     </nav>
 
-    <div class="container my-3">
 
+    <div class="container my-3">
+        <!-- CARD SECTION -->
         <div class="row justify-content-center">
 
-            <h1 class="text-center my-5">Ticket <?= $_GET["id"] ?></h1>
+            <h1 class="text-center my-5">Register Webinar</h1>
 
             <div class="col-12 col-lg-6">
 
-                <div class="card mx-auto">
-                    <div class="card-body">
-                        <!-- SUBJECT -->
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="h5 fw-semibold">Subject: <?= $support["data"]["subject"] ?></p>
+                <?php if ($events['success']) : ?>
 
-                            <p class="text-muted">
-                                <?php
-                                $date = new DateTime();
-                                $dateTicket = new DateTime($support["data"]["created_at"], new DateTimeZone('Asia/Jakarta'));
+                    <?php if (count($events['data']) > 0) : ?>
 
-                                $interval = $date->diff($dateTicket);
+                        <?php foreach ($events['data'] as $event) : ?>
 
-                                $formatClock = $interval->d > 1 ? $dateTicket->format('D, d M Y, h:i A') : $dateTicket->format('h:i A');
+                            <?php if (!$event['published']) : ?>
 
-                                switch ($interval) {
-                                    case $interval->m > 1:
-                                        echo $formatClock;
-                                        break;
-                                    case $interval->d > 1 && $interval->d < 7:
-                                        echo $formatClock . " " . $interval->format('(%d days ago)');
-                                        break;
-                                    case $interval->d == 1:
-                                        echo $formatClock . " " . $interval->format('(%d day ago)');
-                                        break;
-                                    case $interval->h > 1:
-                                        echo $formatClock . " " . $interval->format('(%h hours ago)');
-                                        break;
-                                    case $interval->h == 1:
-                                        echo $formatClock . " " . $interval->format('(%h hour ago)');
-                                        break;
-                                    default:
-                                        echo $formatClock . " " . $interval->format('(%d days %H hours ago)');
-                                        break;
-                                }
-                                ?>
-                            </p>
-                        </div>
-                        <!-- TYPE -->
-                        <p class="card-text">
-                            <?php if ($support["data"]["type"] === "SUPPORT") : ?>
-                                <span class="badge bg-secondary">Support</span>
+                                <div class="card card-hover m-2">
+                                    <div class="card-body">
+                                        <p class="fw-bolder fs-4"><?= $event["title"] ?></p>
+                                        <h6 class="card-subtitle mb-2 text-body-secondary"><?= $event["description"] ?></h6>
+
+                                        <a href="event_register_detail.php?id=<?= $event["id"] ?>" class="text-decoration-none">Read more</a>
+
+                                    </div>
+                                </div>
+
                             <?php else : ?>
-                                <span class="badge bg-secondary">Question</span>
-                            <?php endif; ?>
-                        </p>
-                        <!-- DESCRIPTION -->
-                        <p class="card-text"><?= $support["data"]["description"] ?></p>
-                    </div>
-                </div>
 
-                <div class="card mx-auto mt-3">
-                    <div class="card-body">
+                                <div class="alert alert-info w-100" role="alert">
+                                    All webinar has been published
+                                </div>
 
-                        <h6 class="card-title">
-                            Answer
-                        </h6>
 
-                        <div class="mb-3">
-                            <?php if ($support["data"]["status"] == "PENDING") : ?>
-                                <span class="badge bg-warning text-light">Pending</span>
                             <?php endif; ?>
 
-                            <?php if ($support["data"]["status"] == "SOLVED") : ?>
-                                <span class="badge bg-success text-light">Solved</span>
-                            <?php endif; ?>
+                        <?php endforeach; ?>
+
+                    <?php else : ?>
+
+                        <div class="alert alert-info w-100" role="alert">
+                            No ticket found
                         </div>
 
-                        <?php if ($support["data"]["answer"] !== null) : ?>
+                    <?php endif; ?>
 
-                            <p class="card-text"><?= $support["data"]["answer"] ?></p>
-
-                        <?php else : ?>
-
-                            <p class="card-text">No answer yet</p>
-
-                        <?php endif; ?>
-                    </div>
-                </div>
+                <?php endif; ?>
 
             </div>
 
         </div>
-
     </div>
 
 
@@ -214,7 +178,7 @@ if (isset($_GET['id'])) {
                     <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
                         <button type="submit" name="event_register" class="nav-link">
                             <h5>
-                                Event Register
+                                Register Webinar
                             </h5>
                         </button>
                     <?php endif; ?>
@@ -235,8 +199,6 @@ if (isset($_GET['id'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-
 </body>
 
 </html>
