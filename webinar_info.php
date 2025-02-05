@@ -141,6 +141,7 @@ if (isset($_POST["dcert"])) {
         <script>downcert('$filename', $event_id)</script>
         ";
     }
+    header("Location: webinar_info.php");
 }
 
 if (isset($_POST["feed"])) {
