@@ -45,7 +45,7 @@ while ($row = $regresult->fetch_assoc()) {
                     <hr>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="">Profile</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="/webinar-app/profile/index.php">Profile</a></div>
                 </div>
             </div>
             <div class="floating-hamburg" id="toggle-menu">
@@ -126,7 +126,6 @@ if (isset($_POST["register"])) {
         echo "<script>
         alert('gagal mendaftar.');
         </script>";
-        exit();
     }
     header("Location: webinar_info.php");
 }
