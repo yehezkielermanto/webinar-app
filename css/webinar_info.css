@@ -45,6 +45,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 70%;
+    justify-content: center;
 }
 
 .bottom {
@@ -52,6 +53,7 @@
     margin-top: auto;
     flex-wrap: wrap;
     justify-content: center;
+    /*margin-top: 20vh;*/
 }
 
 .bottom-btn {
@@ -66,6 +68,16 @@
     color: rgb(182,163,232); 
     font-weight: bold;
 }
+
+.bottom-btn:disabled {
+    color: white;
+    background-color: gray;
+    border: 2px solid white;
+}
+
+.container {
+    min-height: 90vh;
+}
 @media screen and (max-width: 768px) {
     .webinar-speaker, .webinar-date, .webinar-time {
         margin: 5px;
@@ -74,6 +86,7 @@
     .diag-box {
         max-width: 70%;
         overflow: scroll;
+        min-height: 100%;
     }
 
     .webinar-poster {
@@ -84,4 +97,5 @@
         font-size: 14px;
         width: 80%;
     }
+    
 }

@@ -13,11 +13,12 @@ if (!isset($_GET["event_id"])) {
 }
 
 $event_id = $_GET["event_id"];
+$user_id = $_SESSION["user"]["id"];
 $query = "select * from events where id = $event_id limit 1";
-$result = mysqli_query($koneksi, $query);
-$result_len = mysqli_num_rows($result);
+$regresult = mysqli_query($koneksi, $query);
+$result_len = mysqli_num_rows($regresult);
 $obj = [];
-while ($row = $result->fetch_assoc()) {
+while ($row = $regresult->fetch_assoc()) {
     array_push($obj, $row);
 }
 
@@ -54,7 +55,7 @@ while ($row = $result->fetch_assoc()) {
             </div>
         </div>
         <div class="container" style="flex-direction: column !important; padding: 20px !important;">
-            <div style="height: 90vh; display: flex; flex-direction: column; text-align: center; align-items: center">
+            <div style="height: 100%; display: flex; flex-direction: column; text-align: center; align-items: center">
                 <img class="webinar-poster" src="<?= $obj[0]["poster_url"] ?>" style="height: 200px; max-height: 300px"/>
                 <h1 class="webinar-title accent-cf"> <?= $obj[0]["title"] ?></h1>
                 <div class="info-container">
@@ -66,11 +67,33 @@ while ($row = $result->fetch_assoc()) {
                 <div class="diag-box">
                     <p class="m-f"><?= $obj[0]["description"] ?></p>
                 </div>
-                <div class="bottom">
-                    <button class="bottom-btn">Daftar Webinar</button>
-                    <button class="bottom-btn">Unduh Sertifikat</button>
-                    <button class="bottom-btn">Isi Feedback</button>
-                </div>
+            </div>
+            <div class="bottom">
+                <?php
+                // registered
+                $regquery = "select count(id) from event_participants where user_id = $user_id and event_id = $event_id";
+                $regresult = mysqli_query($koneksi, $regquery);
+                $len = mysqli_num_rows($regresult);
+                $registered = $len > 0 ? true : false;
+                
+                // download cert
+                $certquery = "select certificate_url from event_participants where user_id = $user_id and event_id = $event_id";
+                $certresult = mysqli_query($koneksi, $certquery);
+                $certlen = mysqli_num_rows($certresult);
+                $row = mysqli_fetch_array($certresult);
+                $certregistered = $certlen > 0 ? true : false;
+                if ($row != null || count($row) > 0 || $row != "") {
+                    $certregistered = true;
+                }
+
+                // isi feedback
+                ?>
+                <form method="POST">
+                    <button name="register" class="bottom-btn" <?= $registered == true ? "disabled" : "" ?> ><?= $registered == true ? "Sudah terdaftar" : "Ikuti webinar"?></button>
+                    <button name="dcert" class="bottom-btn" <?= $certregistered == false ? "disabled" : "" ?> ><?= $registered == false ? "Unduh sertifikat tidak tersedia" : "Unduh Sertifikat"?></button>
+                    <!--<button name="dcert" class="bottom-btn">Unduh Sertifikat</button>-->
+                    <button name="feed" class="bottom-btn">Isi Feedback</button>
+                </form>
             </div>
         </div>
     </body>
