@@ -10,6 +10,7 @@ if ($eventFeedbackTemplate != null) {
     $feedbackTemplateID = $eventFeedbackTemplate["id"];
 }
 
+echo "";
 // echo $eventFeedbackTemplate["field"];
 
 if (isset($_POST["json"])) {

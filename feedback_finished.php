@@ -11,6 +11,8 @@ include 'koneksi.php';
 $userID = $_SESSION["user"]["id"];
 $event = array();
 
+echo "";
+
 if (isset($_POST["feedback_template_id"])) {
     $feedbackTemplateID = $_POST["feedback_template_id"];
     $eventParticipantID = $_POST["event_participant_id"];

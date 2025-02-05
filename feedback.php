@@ -16,6 +16,8 @@ if (!isset($_GET["event_id"])) {
 $eventID = $_GET["event_id"];
 $userID = $_SESSION["user"]["id"];
 
+echo "";
+
 $resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
 $event = mysqli_fetch_assoc($resEvent);
 

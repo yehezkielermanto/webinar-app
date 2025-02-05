@@ -10,6 +10,8 @@ $event = mysqli_fetch_assoc($resEvent);
 $resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
+echo "";
+
 $feedbackTemplateID = $eventFeedbackTemplate["id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
