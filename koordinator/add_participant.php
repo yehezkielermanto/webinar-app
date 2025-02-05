@@ -1,44 +1,56 @@
 <?php
 include 'db.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $event_id = intval($_POST['event_id']);
-    $fullname = $_POST['fullname'];
-    $event_role = $_POST['event_role'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $event_id = intval($_POST["event_id"]);
+    $fullname = trim($_POST["fullname"]);
+    $event_role = $_POST["event_role"] ?? "PARTICIPANT"; // Default: participant
 
-    // Cari user_id berdasarkan nama lengkap
-    $user_query = "SELECT user_id FROM users WHERE fullname = '$fullname'";
-    $user_result = $conn->query($user_query);
+    if ($event_role !== "COMMITTEE" && $event_role !== "PARTICIPANT") {
+        die("Role tidak valid.");
+    }
+
+    // Cek apakah user sudah ada di tabel users
+    $user_check = $conn->prepare("SELECT id FROM users WHERE fullname = ?");
+    $user_check->bind_param("s", $fullname);
+    $user_check->execute();
+    $user_result = $user_check->get_result();
 
     if ($user_result->num_rows > 0) {
         $user = $user_result->fetch_assoc();
-        $user_id = $user['user_id'];
-
-        // Cek apakah user sudah terdaftar sebagai panitia
-        $check_query = "SELECT * FROM event_participants WHERE event_id = $event_id AND user_id = $user_id AND event_role = 'committee'";
-        $check_result = $conn->query($check_query);
-
-        if ($check_result->num_rows > 0) {
-            // Jika user sudah ada sebagai panitia
-            header("Location: event_details.php?event_id=$event_id&add_error=exists");
-            exit();
-        } else {
-            // Simpan data ke database jika user belum ada
-            $sql = "INSERT INTO event_participants (event_id, user_id, event_role) VALUES ($event_id, $user_id, '$event_role')";
-            if ($conn->query($sql) === TRUE) {
-                // Redirect kembali ke halaman detail event dengan parameter sukses
-                header("Location: event_details.php?event_id=$event_id&add_success=1");
-                exit();
-            } else {
-                // Redirect dengan pesan error jika gagal
-                header("Location: event_details.php?event_id=$event_id&add_error=1");
-                exit();
-            }
-        }
+        $user_id = $user["id"];
     } else {
-        // Redirect dengan pesan error jika nama tidak ditemukan
-        header("Location: event_details.php?event_id=$event_id&add_error=1");
+        // Jika user belum ada, tambahkan ke tabel users
+        $insert_user = $conn->prepare("INSERT INTO users (fullname) VALUES (?)");
+        $insert_user->bind_param("s", $fullname);
+        if ($insert_user->execute()) {
+            $user_id = $insert_user->insert_id;
+        } else {
+            header("Location: event_details.php?id=$event_id&add_error=db");
+            exit();
+        }
+    }
+
+    // Cek apakah user sudah menjadi panitia di event ini
+    $check_participant = $conn->prepare("SELECT * FROM event_participants WHERE event_id = ? AND user_id = ? AND event_role = ?");
+    $check_participant->bind_param("iis", $event_id, $user_id, $event_role);
+    $check_participant->execute();
+    $result_check = $check_participant->get_result();
+
+    if ($result_check->num_rows > 0) {
+        header("Location: event_details.php?id=$event_id&add_error=exists");
         exit();
+    }
+
+    // Tambahkan panitia ke event
+    $status_default = "active"; // Sesuaikan jika ada aturan status
+    $insert_participant = $conn->prepare("INSERT INTO event_participants (event_id, user_id, event_role, status, certificate_url) VALUES (?, ?, ?, ?, '')");
+    $insert_participant->bind_param("iiss", $event_id, $user_id, $event_role, $status_default);
+
+    if ($insert_participant->execute()) {
+        header("Location: event_details.php?id=$event_id&add_success=1");
+    } else {
+        header("Location: event_details.php?id=$event_id&add_error=db");
     }
 }
 ?>
