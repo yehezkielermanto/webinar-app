@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 feedbackBtn.action = "/webinar-app/feedback.php";
                 feedbackBtn.classList.add("feedback-btn");
                 feedbackBtn.innerHTML = `
-                    <input type="text" name="event_id" value="${card.id}" hidden> 
+                    <input type="text" name="event_id" value="${card.event_id}" hidden> 
                     <button class="feedback-btn-btn">Berikan Feedback</button>
                 `;
                 outterDiv.appendChild(feedbackBtn);
