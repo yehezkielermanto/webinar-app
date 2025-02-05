@@ -9,7 +9,7 @@ if (!isset($_SESSION["email"])) {
 }
 
 if (isset($_POST['daftar'])) {
-    $user_id = $_SESSION["id_peserta"];
+    $user_id = $_SESSION["user"]["id"];
     $event_id = $_POST['eventid'];
     $query = "INSERT INTO `event_participants` (`event_id`, `user_id`, `status`, `event_role`, `certificate_url`) VALUES (".$event_id.", ".$user_id.", '1', 'participant', NULL) ";
     $result = mysqli_query($koneksi, $query);
