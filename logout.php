@@ -11,7 +11,7 @@ unset($_SESSION['gender'] );
 unset($_SESSION['institution'] );
 if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "admin") {
     unset($_SESSION['is_admin'] );
-    $location = "/admin/login.php";
+    $location = "/webinar-app/admin/login.php";
 }
 session_destroy();
 header("Location:" . $location);
