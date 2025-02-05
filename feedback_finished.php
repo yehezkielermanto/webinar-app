@@ -8,7 +8,7 @@ if (!isset($_SESSION["user"])) {
 $koneksi = null;
 include 'koneksi.php';
 
-$userID = $_SESSION["user"]["user_id"];
+$userID = $_SESSION["user"]["id"];
 
 if (isset($_POST["feedback_template_id"])) {
     $feedbackTemplateID = $_POST["feedback_template_id"];
