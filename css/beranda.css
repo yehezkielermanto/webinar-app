@@ -1,3 +1,11 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+*
+{
+    padding: 0;
+    margin: 0;
+    font-family: NerdFontsSymbols Nerd Font, Arial, Helvetica, sans-serif;
+}
+
 #cards{
   background-color: #00FA9A;
   padding-bottom: 10px;
@@ -21,4 +29,104 @@
 #cards h3 {
   color: black;
   padding-top: 15px
+}
+
+.container {
+    margin: 20px;
+    border-radius: 16px;
+    background-color: #f6f6f6;
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    align-content: center;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3));
+    height: 92vh;
+    padding: 10px;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.inner-header, .inner-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.inner-header {
+    justify-content: space-between;
+}
+
+.inner-container {
+    padding-top: 0;
+    width: 100%;
+}
+
+.inner-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.notif-button {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    position: sticky;
+    transform: translateX(-60px);
+}
+
+.if-logo {
+    max-width: 64px;
+    max-height: 64px;
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.coming-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: center;
+    overflow: scroll;
+    max-height: 200px;
+    background-color: rgba(0,0,0, 0.05);
+    border-radius: 16px;
+    margin: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.webinar {
+    background-color: #b6a3e8;
+    border-radius: 12px;
+    margin: 10px;
+}
+
+.wimg-container {
+    max-width: 200px;
+}
+
+.card-bottom {
+    max-height: 200px;
+}
+
+.footer {
+    margin-top: auto;
+    background-color: #b6a3e8;
+    border-radius: 0 0 12px 12px;
+    padding: 10px;
+    text-align: center;
+}
+
+.footer-entry {
+    display: flex;
+    justify-content: center;
+}
+
+.foot {
+    margin: 5px;
 }
