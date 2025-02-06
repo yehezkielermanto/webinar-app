@@ -67,10 +67,10 @@ if (isset($_GET['status'])) {
 
 </head>
 
-<body>
+<body class="m-2 shadow-lg rounded-4 min-vh-100" style="background-color: #f8f9fa;">
 
     <!-- NEW NAVBAR -->
-    <nav class="navbar navbar-expand-lg " style="background-color: #b7a3e8; color: white;">
+    <nav class="navbar navbar-expand-lg rounded-top-4" style="background-color: #b7a3e8; color: white;">
         <div class="container-fluid">
             <img src="./images/logo_if.png" alt="Logo" width="40" height="24" class="mx-2 d-inline-block align-text-top">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,7 +140,7 @@ if (isset($_GET['status'])) {
         </div>
     </nav>
 
-    <div class="container my-3">
+    <div class="container my-3 pb-3">
 
 
         <!-- CARD SECTION -->
