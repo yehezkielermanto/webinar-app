@@ -85,6 +85,8 @@ while ($r = $result2->fetch_assoc()) {
                 </div>
                 <div class="inner-content">
                     <div class="webinar-grid-outter">
+                        <p class="accent-cf bold-f drops-f xl-f">Halo, <?= $_SESSION["user"]["fullname"] ?></p>
+                        <br>
                         <p class="m-f accent-cf bold-f drops-f">Webinar yang tersedia</p>
                         <div class="coming-container">
                             <!-- start here -->
