@@ -60,7 +60,7 @@ if (isset($_POST['edit'])) {
 $event = null;
 if (isset($_GET['edit'])) {
     $event_id = $_GET['edit'];
-    $result = $conn->query("SELECT * FROM events WHERE event_id = $event_id");
+    $result = $conn->query("SELECT * FROM events WHERE id = $event_id");
     $event = $result->fetch_assoc();
 }
 ?>
@@ -78,7 +78,7 @@ if (isset($_GET['edit'])) {
     
     <form action="index.php" method="post">
         <?php if ($event): ?>
-            <input type="hidden" name="event_id" value="<?= $event['event_id'] ?>">
+            <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
         <?php endif; ?>
         <input type="text" name="event_name" placeholder="Nama Event" value="<?= $event ? $event['event_name'] : '' ?>" required>
         <input type="date" name="date" value="<?= $event ? $event['date'] : '' ?>" required>

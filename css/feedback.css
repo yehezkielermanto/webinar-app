@@ -1,13 +1,14 @@
 .feedback-submit {
-    background-color: #B6A3E8;
-    padding-inline: 1rem;
-    padding-block: 0.5rem;
-    border-radius: 1rem;
-    font-weight: bold;
-    font-size: 14px;
+  background-color: rgb(182, 163, 232);
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  border-radius: 1rem;
+  min-width: 5rem;
+  font-weight: bold;
+  font-size: 100%;
+  color: white;
 }
 
 .feedback-submit:hover {
-    background-color: #6B4ABE;
-    color: white;
+  background-color: rgb(88, 63, 150);
 }

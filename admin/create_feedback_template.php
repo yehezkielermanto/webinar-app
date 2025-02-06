@@ -3,6 +3,9 @@ include 'koneksi.php';
 
 $eventID = $_GET["event_id"];
 
+$resEvent = $koneksi->query("SELECT * FROM events WHERE id = '$eventID'");
+$event = mysqli_fetch_assoc($resEvent);
+
 $resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
@@ -35,138 +38,161 @@ if (isset($_POST["json"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import "https://www.nerdfonts.com/assets/css/webfont.css";
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    'sans': ["NerdFontsSymbols Nerd Font", "Arial", "Helvetica", "sans-serif"],
+                },
+                fontSize: {
+                    sm: '11pt',
+                    base: '14pt',
+                    xl: '22pt',
+                }
+            }
+        }
+    </script>
     <title>Create Feedback Template | DEBUG</title>
 </head>
 <body>
-    <div class="w-10/12 mx-auto my-4" id="add_div">
-        <button
-            type="button"
-            class="bg-blue-500 text-white px-2 py-1 rounded-full min-w-20"
-            onclick="toggleFormDisplay(true)">
-            ADD
-        </button>
-    </div>
-    <form
-        name="new_entry"
-        id="new_entry"
-        class="w-10/12 mx-auto my-4"
-        method="post"
-        onsubmit="return handleSubmit()">
-        <div class="mb-2">
-            <label for="category" class="text-sm">Category</label>
-            <input
-                type="text"
-                name="category"
-                id="category"
-                class="w-full border border-gray-300 rounded-md px-2 py-1"
-                placeholder="Leaving it blank will put the question in an empty category">
+    <div class="bg-[#F6F6F6] px-4 py-2 mx-8 my-4 rounded-2xl" style="filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3))">
+        <div class="w-11/12">
+            <h1 class="text-xl text-[#b6a3e8] font-bold">BUAT/EDIT FEEDBACK TEMPLATE - <?= $event['title']; ?></h1>
         </div>
-
-        <div class="mb-2">
-            <label for="html_name" class="text-sm">HTML Name <span class="text-red-500 font-bold">*</span></label>
-            <input
-                type="text"
-                name="html_name"
-                id="html_name"
-                class="w-full border border-gray-300 rounded-md px-2 py-1"
-                placeholder="Must be unique and usable for an HTML name and ID"
-                required>
-        </div>
-
-        <div class="mb-2">
-            <p class="text-sm flex-grow">Required? <span class="text-red-500 font-bold">*</span></p>
-            <div class="flex">
-                <div class="flex items-center mr-4">
-                    <input
-                        type="radio"
-                        name="required"
-                        value="true"
-                        id="radio_true"
-                        class="mr-1"
-                        required>
-                    <label for="radio_true">Required</label>
-                </div>
-                <div class="flex items-center">
-                    <input
-                        type="radio"
-                        name="required"
-                        value="false"
-                        id="radio_false"
-                        class="mr-1"
-                        required>
-                    <label for="radio_false">Optional</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-2">
-            <label for="question" class="text-sm">Display Question <span class="text-red-500 font-bold">*</span></label>
-            <input
-                type="text"
-                name="question"
-                id="question"
-                class="w-full border border-gray-300 rounded-md px-2 py-1 mb-2"
-                placeholder="Question to be displayed to the participants"
-                required>
-        </div>
-
-        <div class="mb-2">
-            <label for="input_type" class="text-sm">Input Type <span class="text-red-500 font-bold">*</span></label>
-            <br />
-            <select
-                name="input_type"
-                id="input_type"
-                class="w-1/2 border border-gray-300 rounded-md px-2 py-1 mb-2"
-                onchange="changeInputType()"
-                required>
-                <option value="none" selected disabled>- Choose an input type -</option>
-                <optgroup label="Basic Input">
-                    <option value="text">Short Text</option>
-                    <option value="number">Number</option>
-                    <option value="textarea">Paragraph</option>
-                </optgroup>
-                <optgroup label="Choice Input">
-                    <option value="radio">Radio Button</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="select">Dropdown</option>
-                </optgroup>
-                <optgroup label="Others">
-                    <option value="radio_scale">Linear Scale</option>
-                </optgroup>
-            </select>
-        </div>
-
-        <div id="extraForm"></div>
-
-        <div class="mb-2">
+        <hr class="border-[rgb(164,164,164)] my-4" />
+        <div class="w-11/12 mx-auto my-4" id="add_div">
             <button
                 type="button"
-                id="cancel_button"
-                class="bg-red-500 text-white px-2 py-1 rounded-full min-w-20"
-                onclick="toggleFormDisplay(false)">
-                CANCEL
-            </button>
-            <button
-                type="submit"
-                class="bg-blue-500 text-white px-2 py-1 rounded-full min-w-20">
-                SUBMIT
+                class="bg-[#b6a3e8] hover:bg-[#583F96] text-white font-bold px-4 py-1 rounded-full min-w-20"
+                onclick="toggleFormDisplay(true)">
+                ADD
             </button>
         </div>
-    </form>
-    <div id="table"></div>
-    <form name="finish" id="finish" action="#" method="post" class="w-10/12 mx-auto my-4">
-        <input type="hidden" name="json" id="json" value="">
+        <form
+            name="new_entry"
+            id="new_entry"
+            class="w-11/12 mx-auto my-4"
+            method="post"
+            onsubmit="return handleSubmit()">
+            <div class="mb-2">
+                <label for="category" class="text-sm">Category</label>
+                <input
+                    type="text"
+                    name="category"
+                    id="category"
+                    class="w-full border border-gray-300 rounded-md px-2 py-1"
+                    placeholder="Leaving it blank will put the question in an empty category">
+            </div>
 
-        <div class="flex justify-end">
-            <button
-                type="submit"
-                class="bg-green-500 text-white px-2 py-1 rounded-full min-w-20"
-                onclick="document.getElementById('json').value = JSON.stringify(jsonData)">
-                FINISH
-            </button>
-        </div>
-    </form>
+            <div class="mb-2">
+                <label for="html_name" class="text-sm">HTML Name <span class="text-red-500 font-bold">*</span></label>
+                <input
+                    type="text"
+                    name="html_name"
+                    id="html_name"
+                    class="w-full border border-gray-300 rounded-md px-2 py-1"
+                    placeholder="Must be unique and usable for an HTML name and ID"
+                    required>
+            </div>
+
+            <div class="mb-2">
+                <p class="text-sm flex-grow">Required? <span class="text-red-500 font-bold">*</span></p>
+                <div class="flex">
+                    <div class="flex items-center mr-4">
+                        <input
+                            type="radio"
+                            name="required"
+                            value="true"
+                            id="radio_true"
+                            class="mr-1"
+                            required>
+                        <label for="radio_true">Required</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input
+                            type="radio"
+                            name="required"
+                            value="false"
+                            id="radio_false"
+                            class="mr-1"
+                            required>
+                        <label for="radio_false">Optional</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label for="question" class="text-sm">Display Question <span class="text-red-500 font-bold">*</span></label>
+                <input
+                    type="text"
+                    name="question"
+                    id="question"
+                    class="w-full border border-gray-300 rounded-md px-2 py-1 mb-2"
+                    placeholder="Question to be displayed to the participants"
+                    required>
+            </div>
+
+            <div class="mb-2">
+                <label for="input_type" class="text-sm">Input Type <span class="text-red-500 font-bold">*</span></label>
+                <br />
+                <select
+                    name="input_type"
+                    id="input_type"
+                    class="w-1/2 border border-gray-300 rounded-md px-2 py-1 mb-2"
+                    onchange="changeInputType()"
+                    required>
+                    <option value="none" selected disabled>- Choose an input type -</option>
+                    <optgroup label="Basic Input">
+                        <option value="text">Short Text</option>
+                        <option value="number">Number</option>
+                        <option value="textarea">Paragraph</option>
+                    </optgroup>
+                    <optgroup label="Choice Input">
+                        <option value="radio">Radio Button</option>
+                        <option value="checkbox">Checkbox</option>
+                        <option value="select">Dropdown</option>
+                    </optgroup>
+                    <optgroup label="Others">
+                        <option value="radio_scale">Linear Scale</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div id="extraForm"></div>
+
+            <div class="mb-2">
+                <button
+                    type="button"
+                    id="cancel_button"
+                    class="bg-gray-300 text-[#583F96] hover:bg-gray-200 hover:text-[#b090ff] font-bold px-4 py-1 rounded-full min-w-20"
+                    onclick="toggleFormDisplay(false)">
+                    CANCEL
+                </button>
+                <button
+                    type="submit"
+                    class="bg-[#b6a3e8] hover:bg-[#583F96] text-white font-bold px-4 py-1 rounded-full min-w-20">
+                    SUBMIT
+                </button>
+            </div>
+        </form>
+        <div id="table"></div>
+        <form name="finish" id="finish" action="#" method="post" class="w-11/12 mx-auto my-4">
+            <input type="hidden" name="json" id="json" value="">
+
+            <div class="flex justify-end">
+                <button
+                    type="submit"
+                    class="bg-[#b6a3e8] hover:bg-[#583F96] text-white font-bold px-2 py-1 rounded-full min-w-20"
+                    onclick="document.getElementById('json').value = JSON.stringify(jsonData)">
+                    FINISH
+                </button>
+            </div>
+        </form>
+    </div>
 
     <script>
         const form = document.getElementById('new_entry');
@@ -283,8 +309,9 @@ if (isset($_POST["json"])) {
 
             jsonData.forEach(element => {
                 tableData += `
-                    <div class="my-4 w-10/12 mx-auto">
-                        <h2 class="text-2xl font-bold mb-2">${element.category != "" ? element.category : "<i>- Untitled -</i>"}</h2>
+                    <div class="my-4 py-2 px-3 rounded-2xl w-11/12 mx-auto bg-gradient-to-t from-50%
+                        from-[rgba(164,164,164,0)] to-100% to-[rgba(0,0,0,0.05)]">
+                        <h2 class="text-xl font-bold mb-2 text-[#B6A3E8]">${element.category != "" ? element.category : "<i>- Untitled -</i>"}</h2>
                 `;
 
                 element.entries.forEach((entry, index) => {
@@ -293,19 +320,19 @@ if (isset($_POST["json"])) {
                     tableData += `
                         <div class="flex">
                             <div class="flex-grow">
-                                <h3>${entry.question}</h3>
+                                <h3 class="text-base">${entry.question}</h3>
                                 <p class="text-sm text-gray-500">${entry.html_name} - ${entry.required ? "Required" : "Optional"} - ${entry.input_type}</p>
                             </div>
                             <div class="ml-2">
                                 <button
                                     type="button"
-                                    class="bg-blue-500 text-white px-2 py-1 rounded-full min-w-20"
+                                    class="bg-[#b6a3e8] hover:bg-[#583F96] text-white font-bold px-2 py-1 rounded-full min-w-20"
                                     onclick = "prepareEditing('${element.category}', ${index})">
                                     EDIT
                                 </button>
                                 <button
                                     type="button"
-                                    class="bg-red-500 text-white px-2 py-1 rounded-full min-w-20"
+                                    class="bg-gray-300 text-[#583F96] hover:bg-gray-200 hover:text-[#b090ff] font-bold px-2 py-1 rounded-full min-w-20"
                                     onclick = "prepareDeleting('${element.category}', ${index})">
                                     DELETE
                                 </button>
@@ -314,7 +341,7 @@ if (isset($_POST["json"])) {
                     `;
 
                     if (index != element.entries.length - 1) {
-                        tableData += `<hr class="my-2">`;
+                        tableData += `<hr class="my-2 border-[rgb(164,164,164)]">`;
                     }
                 });
 

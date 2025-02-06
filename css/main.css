@@ -1,6 +1,8 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+
 @font-face {
   font-family: SourceSansPro-Regular;
   src: url("../fonts/source-sans-pro/SourceSansPro-Regular.ttf");
@@ -33,12 +35,12 @@
 body,
 html {
   height: 100%;
-  font-family: SourceSansPro-Regular, sans-serif;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
 }
 
 /*---------------------------------------------*/
 a {
-  font-family: SourceSansPro-Regular;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -68,7 +70,7 @@ h6 {
 }
 
 p {
-  font-family: SourceSansPro-Regular;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
   font-size: 14px;
   line-height: 1.7;
   color: #666666;
@@ -142,14 +144,14 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
 .txt1 {
-  font-family: SourceSansPro-Regular;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
   font-size: 16px;
   line-height: 1.4;
   color: #999999;
 }
 
 .txt2 {
-  font-family: SourceSansPro-Regular;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
   font-size: 18px;
   line-height: 1.4;
   text-align: center;
@@ -216,7 +218,8 @@ iframe {
 
 .login-form-title {
   display: block;
-  font-family: SourceSansPro-Bold;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
+  font-weight: bold;
   font-size: 30px;
   color: #4b2354;
   line-height: 1.2;
@@ -234,7 +237,8 @@ iframe {
 }
 
 .input {
-  font-family: SourceSansPro-Bold;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
+  font-weight: bold;
   font-size: 16px;
   color: #4b2354;
   line-height: 1.2;
@@ -369,7 +373,8 @@ iframe {
   padding: 0 45px 0 22px;
   pointer-events: none;
 
-  font-family: SourceSansPro-Bold;
+  font-family: "NerdFontsSymbols Nerd Font", Arial, Helvetica, sans-serif;
+  font-weight: bold;
   font-size: 16px;
   color: #fa4251;
   line-height: 1.2;

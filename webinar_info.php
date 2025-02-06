@@ -4,12 +4,12 @@ $koneksi = null;
 include "koneksi.php";
 
 if(!isset($_SESSION['email'])){
-    header("Location: /webinar-app/index.php");
+    header("Location: index.php");
     exit;
 }
 
 if (!isset($_GET["event_id"])) {
-    header("Location: /webinar-app/index.php");
+    header("Location: index.php");
 }
 
 $event_id = $_GET["event_id"];
@@ -144,6 +144,6 @@ if (isset($_POST["dcert"])) {
 }
 
 if (isset($_POST["feed"])) {
-    header("Location: /webinar-app/feedback.php?event_id=$event_id");
+    header("Location: feedback.php?event_id=$event_id");
 }
 ?>
