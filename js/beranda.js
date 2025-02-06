@@ -5,4 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
         sidebar.hidden = !sidebar.hidden;
     });
 
+    const notifMenu = document.getElementById("toggle-notif");
+    const theMenu = document.getElementById("notif-menu");
+    notifMenu.addEventListener("click", function() {
+        theMenu.hidden = !theMenu.hidden;
+    });
 });
