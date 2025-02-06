@@ -1,9 +1,10 @@
 <?php
 session_start();
+$koneksi = null;
 include 'koneksi.php'; // Pastikan file koneksi database tersedia
 
 // Ambil notifikasi dari database
-$id_peserta = $_SESSION['id_peserta']; // Sesuaikan dengan sesi pengguna
+$id_peserta = $_SESSION['user']["id"]; // Sesuaikan dengan sesi pengguna
 $currentdate = date("Y-m-d"); 
 $query = "SELECT * FROM events WHERE date >= '$currentdate'";
 $result = mysqli_query($koneksi, $query);
@@ -21,7 +22,7 @@ $result = mysqli_query($koneksi, $query);
     <style>
         body {
             background-color: #f4f6f9;
-            font-family: 'Poppins', sans-serif;
+            font-family: NerdFontsSymbols Nerd Font, Arial, Helvetica, sans-serif;
         }
         .container {
             max-width: 650px;
@@ -41,7 +42,7 @@ $result = mysqli_query($koneksi, $query);
             gap: 10px;
             font-size: 1.8rem;
             font-weight: 700;
-            color: #4e73df;
+            color: #b6a3e8;
             margin-bottom: 20px;
         }
         .header-title i {
@@ -49,7 +50,7 @@ $result = mysqli_query($koneksi, $query);
         }
         .list-group-item {
             transition: all 0.3s ease;
-            border-left: 5px solid #4e73df;
+            border-left: 5px solid #b6a3e8;
             border-radius: 10px;
             margin-bottom: 15px;
             padding: 15px;
@@ -69,17 +70,20 @@ $result = mysqli_query($koneksi, $query);
             align-items: center;
             gap: 8px;
             font-weight: 600;
-            background-color: #4e73df;
+            background-color: #b6a3e8;
             color: white;
             border-radius: 8px;
             padding: 8px 15px;
         }
         .btn-back:hover {
-            background-color: #3e5bb3;
+            background-color: #bfafef;
         }
         .list-group-item .time {
             font-size: 0.8rem;
             color: #007bff;
+        }
+        .list-group-item .time {
+            color: #b6a3e8;
         }
     </style>
 </head>
@@ -91,7 +95,9 @@ $result = mysqli_query($koneksi, $query);
         
         <div class="list-group">
             <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-                <a href="detail_webinar.php?id=<?= $row['event_id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <a href="webinar_info.php?event_id=<?= $row['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <!-- TODO: later change it back to this after the page done -->
+                <!--<a href="detail_webinar.php?id=<?= $row['id']; ?>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">-->
                     <div>
                         <strong><?= htmlspecialchars($row['title']); ?></strong>
                         <p class="details"><?= htmlspecialchars($row['description']); ?></p>

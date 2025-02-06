@@ -6,7 +6,8 @@
     font-family: NerdFontsSymbols Nerd Font, Arial, Helvetica, sans-serif;
 }
 
-.container { margin: 20px;
+.container {
+    margin: 20px;
     border-radius: 16px;
     background-color: #f6f6f6;
     display: flex;
