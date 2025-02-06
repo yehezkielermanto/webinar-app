@@ -55,24 +55,85 @@ $events = $eventController->get();
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
 
+    <style>
+        .card-hover:hover {
+            box-shadow: 0 0 10px rgba(183, 163, 232, 0.8);
+            transition: 0.3s;
+            transition-timing-function: ease-in-out;
+        }
+    </style>
+
 </head>
 
 <body>
 
-    <!-- NAVBAR | CAN IMPROVE WITH COMPONENT -->
-    <nav class="navbar bg-body-tertiary sticky-sm-top">
+
+    <!-- NEW NAVBAR -->
+    <nav class="navbar navbar-expand-lg " style="background-color: #b7a3e8; color: white;">
         <div class="container-fluid">
-            <div class="">
+            <img src="./images/logo_if.png" alt="Logo" width="40" height="24" class="mx-2 d-inline-block align-text-top">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <span class="mx-2 h6">Event Register</span>
+                    </li>
+                </ul>
 
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                    <span class="material-symbols-outlined">
-                        menu
+                <form action="" method="post">
+
+                    <span class="navbar-text" style="color: white;">
+                        <ul class="navbar-nav me-auto mx-2 mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <button type="submit" name="home" class="nav-link active">
+                                    <h6 class="text-white">
+                                        Home
+                                    </h6>
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button type="submit" name="support" class="nav-link">
+                                    <h6 class="text-white">
+                                        Support
+                                    </h6>
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button type="submit" name="my_ticket" class="nav-link">
+                                    <h6 class="text-white">
+                                        My Ticket
+                                    </h6>
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
+                                    <button type="submit" name="ticket" class="nav-link">
+                                        <h6 class="text-white">
+                                            Ticket
+                                        </h6>
+                                    </button>
+                                <?php endif; ?>
+                            </li>
+
+                            <li class="nav-item">
+                                <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
+                                    <button type="submit" name="event_register" class="nav-link active">
+                                        <h6 class="text-white">
+                                            Event Register
+                                        </h6>
+                                    </button>
+                                <?php endif; ?>
+                            </li>
+
+                        </ul>
                     </span>
-                </button>
 
-                <img src="./images/logo_if.png" alt="Logo" width="40" height="24" class="d-inline-block align-text-top">
-
-                <span class="h6 mx-2">Register Webinar</span>
+                </form>
 
             </div>
         </div>
@@ -105,13 +166,6 @@ $events = $eventController->get();
                                     </div>
                                 </div>
 
-                            <?php else : ?>
-
-                                <div class="alert alert-info w-100" role="alert">
-                                    All webinar has been published
-                                </div>
-
-
                             <?php endif; ?>
 
                         <?php endforeach; ?>
@@ -119,7 +173,7 @@ $events = $eventController->get();
                     <?php else : ?>
 
                         <div class="alert alert-info w-100" role="alert">
-                            No ticket found
+                            No event found
                         </div>
 
                     <?php endif; ?>
@@ -132,70 +186,6 @@ $events = $eventController->get();
     </div>
 
 
-    <!-- NAVIGATION | CAN IMPROVE WITH COMPONENT -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h4 class="offcanvas-title" id="offcanvasExampleLabel">Webinar UKDC</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body ms-3">
-            <form method="post">
-                <div class="mb-3">
-                    <button type="submit" name="home" class="nav-link">
-                        <h5>
-                            Home
-                        </h5>
-                    </button>
-                </div>
-
-                <div class="mb-3">
-                    <button type="submit" name="support" class="nav-link">
-                        <h5>
-                            Support
-                        </h5>
-                    </button>
-                </div>
-
-                <div class="mb-3">
-                    <button type="submit" name="my_ticket" class="nav-link">
-                        <h5>
-                            My Ticket
-                        </h5>
-                    </button>
-                </div>
-
-                <div class="mb-3">
-                    <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
-                        <button type="submit" name="ticket" class="nav-link">
-                            <h5>
-                                Ticket
-                            </h5>
-                        </button>
-                    <?php endif; ?>
-                </div>
-
-                <div class="mb-3">
-                    <?php if ($_SESSION['user']['role'] === 'ADMIN') : ?>
-                        <button type="submit" name="event_register" class="nav-link">
-                            <h5>
-                                Register Webinar
-                            </h5>
-                        </button>
-                    <?php endif; ?>
-                </div>
-
-                <div class="mb-3">
-                    <button type="submit" name="logout" class="nav-link">
-                        <h5>
-                            Logout
-                        </h5>
-                    </button>
-                </div>
-
-
-            </form>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
