@@ -165,7 +165,7 @@ while ($r = $result2->fetch_assoc()) {
                 <div class="footer-entry">
                     <p class="s-f foot"><i class="nf nf-fa-building"></i> <a href="https://maps.app.goo.gl/TS4wXL4TqFEHyiuD7">JL. IR.H. Soekarno no.201, Surabaya</a> &nbsp</p>
                     <p class="s-f foot"><i class="nf nf-fa-phone"></i> (031) 5914157, 5946482 &nbsp</p>
-                    <p class="s-f foot"><i class="nf nf-md-email"></i> <a href="mailto://info@ukdc.ac.id">info@ukdc.ac.id(informasi)</a>, <a href="mailto://pmb@ukdc.ac.id">pmb@ukdc.ac.id(pmb)</a></p>
+                    <p class="s-f foot"><i class="nf nf-md-email"></i> <a href="mailto:info@ukdc.ac.id">info@ukdc.ac.id(informasi)</a>, <a href="mailto:pmb@ukdc.ac.id">pmb@ukdc.ac.id(pmb)</a></p>
                 </div>
             </div>
         </div>
