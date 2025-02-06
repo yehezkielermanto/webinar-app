@@ -529,7 +529,7 @@ $result_event_feature = $koneksi->query(
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/webinar-app/support.php">
-                            <i class="fas fa-key me-1"></i> Support 
+                            <i class="fas fa-key me-1"></i> Support Page
                         </a>
                     </li>
                     <li class="nav-item">

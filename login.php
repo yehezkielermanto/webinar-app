@@ -87,7 +87,7 @@ if (isset($_POST['login'])) {
                             </div>
 
                             <div class="d-grid">
-                                <button type="submit" name="login" class="btn btn-primary btn-sm">Login</button>
+                                <button type="submit" name="login" class="btn btn-sm text-white" style="background-color:  #b7a3e8;" >Login</button>
                             </div>
                         </form>
 
