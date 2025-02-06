@@ -166,13 +166,6 @@ $events = $eventController->get();
                                     </div>
                                 </div>
 
-                            <?php else : ?>
-
-                                <div class="alert alert-info w-100" role="alert">
-                                    All webinar has been published
-                                </div>
-
-
                             <?php endif; ?>
 
                         <?php endforeach; ?>
@@ -180,7 +173,7 @@ $events = $eventController->get();
                     <?php else : ?>
 
                         <div class="alert alert-info w-100" role="alert">
-                            No ticket found
+                            No event found
                         </div>
 
                     <?php endif; ?>
