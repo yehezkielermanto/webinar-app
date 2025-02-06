@@ -21,7 +21,7 @@
 
     <div class="container-login" style="background-image: url('images/bg08.jpg');">
         <div class="wrap-login p-l-55 p-r-55 p-t-1 p-b-30" style="min-height:95vh;">
-            <form class="login-form validate-form" action="masuk.php" method="POST">
+            <form class="login-form validate-form" action="login.php" method="POST">
                 <span>
                     <img class="image p-l-48 p-t-1 p-b-1" src="images/logo_if.png" style="max-width: 225px;">
                 </span>

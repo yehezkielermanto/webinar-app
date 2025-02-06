@@ -54,18 +54,8 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
         style="background-color: #F6F6F6; padding-inline: 1rem; padding-block: 0.5rem;
         margin-inline: 2rem; margin-block: 1rem; border-radius: 1rem;"
     >
-        <div style="display: flex; align-items: center;">
-            <div>
-                <a href="beranda.php">
-                    <svg class="icon-responsive" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" style="fill: #A987FF;">
-                        <!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                        <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
-                    </svg>
-                </a>
-            </div>
-            <div>
-                <h1 style="color: #A987FF;">FORM PENGISIAN FEEDBACK - <?= $event['title']; ?></h1>
-            </div>
+        <div>
+            <h1 style="color: #A987FF;">FORM PENGISIAN FEEDBACK - <?= $event['title']; ?></h1>
         </div>
         <hr style="border-color: #EAEAEA; margin-block: 1rem;" />
 
@@ -295,6 +285,12 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
                 </div>
                 <?php
             }
+        } else {
+            ?>
+                <div style="margin-bottom: 1rem; padding-block: 0.5rem; padding-inline: 1rem; text-align: center;">
+                    Belum ada peserta webinar yang menjawab feedback webinar ini.
+                </div>
+            <?php
         }
         ?>
     </div>
