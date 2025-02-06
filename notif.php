@@ -1,5 +1,6 @@
 <?php
 session_start();
+$koneksi = null;
 include 'koneksi.php'; // Pastikan file koneksi database tersedia
 
 // Ambil notifikasi dari database
@@ -21,7 +22,7 @@ $result = mysqli_query($koneksi, $query);
     <style>
         body {
             background-color: #f4f6f9;
-            font-family: 'Poppins', sans-serif;
+            font-family: NerdFontsSymbols Nerd Font, Arial, Helvetica, sans-serif;
         }
         .container {
             max-width: 650px;
@@ -41,7 +42,7 @@ $result = mysqli_query($koneksi, $query);
             gap: 10px;
             font-size: 1.8rem;
             font-weight: 700;
-            color: #4e73df;
+            color: #b6a3e8;
             margin-bottom: 20px;
         }
         .header-title i {
@@ -49,7 +50,7 @@ $result = mysqli_query($koneksi, $query);
         }
         .list-group-item {
             transition: all 0.3s ease;
-            border-left: 5px solid #4e73df;
+            border-left: 5px solid #b6a3e8;
             border-radius: 10px;
             margin-bottom: 15px;
             padding: 15px;
@@ -69,17 +70,20 @@ $result = mysqli_query($koneksi, $query);
             align-items: center;
             gap: 8px;
             font-weight: 600;
-            background-color: #4e73df;
+            background-color: #b6a3e8;
             color: white;
             border-radius: 8px;
             padding: 8px 15px;
         }
         .btn-back:hover {
-            background-color: #3e5bb3;
+            background-color: #bfafef;
         }
         .list-group-item .time {
             font-size: 0.8rem;
             color: #007bff;
+        }
+        .list-group-item .time {
+            color: #b6a3e8;
         }
     </style>
 </head>

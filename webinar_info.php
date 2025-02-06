@@ -34,7 +34,7 @@ while ($row = $regresult->fetch_assoc()) {
         <script src="js/webinar_info.js"></script>
     </head>
     <body>
-        <div class="floating-menu">
+                <div class="floating-menu">
             <div class="hamburg-menu" id="hmenu" hidden>
                 <div class="hamburg-inner m-f">
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/webinar-app/beranda.php">Home</a></div>
@@ -45,12 +45,24 @@ while ($row = $regresult->fetch_assoc()) {
                     <hr>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
                     <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-headset"></i> <a href="/webinar-app/support.php">Support</a></div>
+                    <hr>
+                    <?php
+                    if (isset($_SESSION["is_admin"])) {
+                    if ($_SESSION["is_admin"] == "ADMIN") {
+                    echo "
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <hr>
+                    ";
+                    }
+                    }
+                    ?>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="/webinar-app/profile/index.php">Profile</a></div>
                 </div>
             </div>
             <div class="floating-hamburg" id="toggle-menu">
                 <p class="accent-cf bold-f">
-                <i class="nf nf-md-menu"></i>
+                    <i class="nf nf-md-menu"></i>
                 </p>
             </div>
         </div>

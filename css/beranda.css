@@ -1,3 +1,11 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+*
+{
+    padding: 0;
+    margin: 0;
+    font-family: NerdFontsSymbols Nerd Font, Arial, Helvetica, sans-serif;
+}
+
 #cards{
   background-color: #00FA9A;
   padding-bottom: 10px;
@@ -21,4 +29,184 @@
 #cards h3 {
   color: black;
   padding-top: 15px
+}
+
+.container {
+    margin: 20px;
+    border-radius: 16px;
+    background-color: #f6f6f6;
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    align-content: center;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3));
+    /*height: 92vh;*/
+    height: 93%;
+    max-height: 100vh;
+    padding: 10px;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.webinar-grid-outter {
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.inner-header, .inner-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.inner-header {
+    justify-content: space-between;
+}
+
+.inner-container {
+    padding-top: 0;
+    width: 100%;
+}
+
+.inner-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    max-height: 70vh;
+}
+
+.notif-button {
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    position: sticky;
+    transform: translateX(-60px);
+}
+
+.if-logo {
+    max-width: 64px;
+    max-height: 64px;
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.coming-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: center;
+    overflow: scroll;
+    max-height: 400px;
+    background-color: rgba(0,0,0, 0.05);
+    border-radius: 16px;
+    margin: 10px;
+    min-width: 90vw;
+    /*min-height: 50vh;*/
+}
+
+.webinar {
+    text-decoration: none;
+    background-color: #b6a3e8;
+    border-radius: 12px;
+    margin: 10px;
+    min-width: 200px;
+    max-width: 200px;
+    max-height: 210px;
+}
+
+.wimg-container {
+    max-width: 200px;
+}
+
+.card-bottom {
+    max-height: 200px;
+}
+
+.footer {
+    margin-top: auto;
+    background-color: #b6a3e8;
+    border-radius: 0 0 12px 12px;
+    padding: 10px;
+    text-align: center;
+}
+
+.footer-entry {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.foot {
+    margin: 5px;
+}
+
+.floating-notif {
+    position: absolute;
+    top: 80px;
+    right: 80px;
+    background-color: white;
+    border-radius: 12px;
+    padding: 10px;
+    width: 400px;
+    height: 150px;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3));
+}
+
+.webinar-notif {
+    display: flex;
+    background-color: #b6a3e8;
+    padding: 10px;
+    border-radius: 6px;
+    align-items: center;
+    align-content: center;
+    font-size: 12pt;
+    justify-content: space-between;
+}
+
+.beranda-card-bottom {
+    padding: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .notif-button {
+        margin-bottom: 10px;
+        transform: none;
+    }
+    .inner-header {
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: left;
+    }
+    .if-logo {
+        margin-left: 0;
+    }
+    .inner-left {
+        margin-right: 25%;
+    }
+    .coming-container {
+        max-height: 35vh;
+        min-width: 70%;
+    }
+    .floating-notif {
+        position: absolute;
+        top: 140px;
+        right: 20%;
+        background-color: white;
+        border-radius: 12px;
+        padding: 10px;
+        width: 50%;
+        height: 150px;
+        filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3));
+    }
 }
