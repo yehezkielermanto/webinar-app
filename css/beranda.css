@@ -173,6 +173,11 @@
     padding: 10px;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
 @media screen and (max-width: 768px) {
     .notif-button {
         margin-bottom: 10px;
