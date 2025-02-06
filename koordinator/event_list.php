@@ -33,6 +33,7 @@ $result = $conn->query("SELECT * FROM events");
             <th>Status</th>
             <th>Judul</th>
             <th>Deskripsi</th>
+            <th>Feedback</th>
             <th>Aksi</th>
         </tr>
         <?php while ($row = $result->fetch_assoc()): ?>
@@ -50,6 +51,10 @@ $result = $conn->query("SELECT * FROM events");
                 <td><?= $row['status'] ?></td>
                 <td><?= $row['title'] ?></td>
                 <td><?= $row['description'] ?></td>
+                <td>
+                    <a href="../admin/create_feedback_template.php?event_id=<?= $row['id'] ?>">Buat/Edit Template</a>
+                    <a href="../admin/view_feedback.php?event_id=<?= $row['id'] ?>">Lihat Tanggapan</a>
+                </td>
                 <td>
                     <a href="index.php?edit=<?= $row['id'] ?>">Edit</a>
                     <a href="event_details.php?event_id=<?= $row['id'] ?>">Detail</a> 
