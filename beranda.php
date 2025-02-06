@@ -52,6 +52,18 @@ while ($r = $result2->fetch_assoc()) {
                     <hr>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
                     <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-headset"></i> <a href="/webinar-app/support.php">Support</a></div>
+                    <hr>
+                    <?php
+                    if (isset($_SESSION["is_admin"])) {
+                    if ($_SESSION["is_admin"] == "ADMIN") {
+                    echo "
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <hr>
+                    ";
+                    }
+                    }
+                    ?>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="/webinar-app/profile/index.php">Profile</a></div>
                 </div>
             </div>
@@ -68,7 +80,8 @@ while ($r = $result2->fetch_assoc()) {
                         <img class="if-logo" src="./images/logo_IF_square.png">
                         <p class="xl-f accent-cf bold-f page-title">DC-Webinar</p>
                     </div>
-                    <button id="toggle-notif" class="notif-button accent-cf"><i class="nf nf-md-bell"></i></button>
+                    <!--<button id="toggle-notif" class="notif-button accent-cf"><i class="nf nf-md-bell"></i></button>-->
+                    <button class="notif-button accent-cf" onclick="window.location.href='notif.php'"><i class="nf nf-md-bell"></i></button>
                 </div>
                 <div class="inner-content">
                     <div class="webinar-grid-outter">

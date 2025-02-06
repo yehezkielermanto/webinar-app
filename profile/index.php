@@ -31,12 +31,24 @@ if ($_SESSION['pfp'] == null) {
                     <hr>
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
                     <hr>
-                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="">Profile</a></div>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-headset"></i> <a href="/webinar-app/support.php">Support</a></div>
+                    <hr>
+                    <?php
+                    if (isset($_SESSION["is_admin"])) {
+                    if ($_SESSION["is_admin"] == "ADMIN") {
+                    echo "
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <hr>
+                    ";
+                    }
+                    }
+                    ?>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="/webinar-app/profile/index.php">Profile</a></div>
                 </div>
             </div>
             <div class="floating-hamburg" id="toggle-menu">
                 <p class="accent-cf bold-f">
-                <i class="nf nf-md-menu"></i>
+                    <i class="nf nf-md-menu"></i>
                 </p>
             </div>
         </div>
