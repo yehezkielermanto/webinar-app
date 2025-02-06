@@ -112,7 +112,7 @@ if (isset($_POST['registration'])) {
                             </div>
 
                             <div class="d-grid">
-                                <button type="submit" name="registration" class="btn btn-primary">Register</button>
+                                <button type="submit" name="registration" class="btn text-white" style="background-color:  #b7a3e8;">Register</button>
                             </div>
                         </form>
                     </div>
