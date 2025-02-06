@@ -248,7 +248,7 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
                                             ?>
                                             </tr>
                                             <tr>
-                                                <td colspan="5"><hr /></td>
+                                                <td colspan="<?= $q->radio_range_high - $q->radio_range_low + 1 ?>"><hr /></td>
                                             </tr>
                                             <tr>
                                             <?php
