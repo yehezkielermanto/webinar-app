@@ -1,0 +1,22 @@
+.p-this {
+    padding:15px;
+}
+
+.sertifikat-content {
+    display:flex;
+    flex-direction:column;
+    text-align:center;
+}
+
+.list-sertifikat {
+    display:flex;
+}
+
+.sertifikat {
+    display:flex;
+    flex-direction:column;
+    max-width:80%;
+    margin:auto;
+    background-color: rgba(0,0,0, 0.05);
+    border-radius:12px;
+}
