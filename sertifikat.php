@@ -21,7 +21,7 @@ function create_sertif_card(array $a) {
 
     if ($cerurl != "") {
         echo "
-            <a href='./donwload-certificate.php?l=$path&e=$event_id' class='sertifikat-card'>
+            <a href='/webinar-app/donwload-certificate.php?l=$path&e=$event_id' class='sertifikat-card'>
                 <div class='sertifikat-card-upper'>
                     <img class='cert-img' src='$cerurl'>
                 </div>
