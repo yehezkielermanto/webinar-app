@@ -11,8 +11,6 @@ $event = mysqli_fetch_assoc($resEvent);
 $resEventFeedbackTemplate = $koneksi->query("SELECT * FROM event_feedback_templates WHERE event_id = '$eventID'");
 $eventFeedbackTemplate = mysqli_fetch_assoc($resEventFeedbackTemplate);
 
-echo "";
-
 $feedbackTemplateID = $eventFeedbackTemplate["id"];
 $feedback = json_decode($eventFeedbackTemplate["field"]);
 
@@ -38,6 +36,18 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
             width: 32px; height: 32px;
         }
 
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .kembali-btn {
+            background-color: #b6a3e8;
+            color: white;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
         @media (min-width: 1024px) {
             .responsive-answer {
                 width: 50%;
@@ -55,8 +65,9 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
         style="background-color: #F6F6F6; padding-inline: 1rem; padding-block: 0.5rem;
         margin-inline: 2rem; margin-block: 1rem; border-radius: 1rem;"
     >
-        <div>
+        <div class="form-header">
             <h1 style="color: #A987FF;">FORM PENGISIAN FEEDBACK - <?= $event['title']; ?></h1>
+                <button class="kembali-btn" onclick="window.location.href='/webinar-app/koordinator/event_list.php'">Kembali</button>
         </div>
         <hr style="border-color: #EAEAEA; margin-block: 1rem;" />
 

@@ -1,4 +1,5 @@
 <?php
+$koneksi = null;
 include 'koneksi.php';
 
 $eventID = $_GET["event_id"];
@@ -60,8 +61,11 @@ if (isset($_POST["json"])) {
 </head>
 <body>
     <div class="bg-[#F6F6F6] px-4 py-2 mx-8 my-4 rounded-2xl" style="filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3))">
-        <div class="w-11/12">
+        <div class="flex justify-between align-middle pt-2">
             <h1 class="text-xl text-[#b6a3e8] font-bold">BUAT/EDIT FEEDBACK TEMPLATE - <?= $event['title']; ?></h1>
+                <button 
+                class="bg-[#b6a3e8] hover:bg-[#583F96] text-white font-bold px-4 py-1 rounded-full min-w-20"
+                    onclick="window.location.href='/webinar-app/koordinator/event_list.php'">Kembali</button>
         </div>
         <hr class="border-[rgb(164,164,164)] my-4" />
         <div class="w-11/12 mx-auto my-4" id="add_div">
