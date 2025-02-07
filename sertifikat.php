@@ -1,23 +1,57 @@
 <?php
 session_start();
 
-// TO-DO : THIS CERTIFICATE ONLY PLACEHOLDER
-
 if (!isset($_SESSION["email"])) {
     header("Location: login.php");
 }
 
 $koneksi = null;
 include "koneksi.php";
+$user_id = $_SESSION['user']['id'];
+date_default_timezone_set('Asia/Jakarta');
+$currentdate = date("Y-m-d");
 
-$email = $_SESSION["user"]["email"];
+$certarray = array();
+
+function create_sertif_card(array $a) {
+    $name = $a["title"];
+    $cerurl = $a["certificate_url"];
+    $path = $a["certificate_url"];
+    $event_id = $a["event_id"];
+
+    if ($cerurl != "") {
+        echo "
+            <a href='./donwload-certificate.php?l=$path&e=$event_id' class='sertifikat-card'>
+                <div class='sertifikat-card-upper'>
+                    <img class='cert-img' src='$cerurl'>
+                </div>
+                <div class='sertifikat-card-bottom'>
+                    <p class='accent-cf bold-f m-f'>$name</p>
+                </div>
+            </a>
+        ";
+    }
+}
+
+$query = "
+    select e.*, ep.certificate_url, ep.event_id
+    from events e
+    join event_participants ep
+    on e.id = ep.event_id
+    where ep.status = 1 and ep.user_id = $user_id and e.date <= '$currentdate'
+";
+$result = mysqli_query($koneksi, $query);
+while ($row = $result->fetch_assoc()) {
+    array_push($certarray, $row);
+}
+
 ?>
 
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Profile</title>
+        <title>Sertifikat</title>
         <link href="css/profile.css" rel="stylesheet">
         <link href="css/beranda.css" rel="stylesheet">
         <link href="css/sertifikat.css" rel="stylesheet">
@@ -69,78 +103,18 @@ $email = $_SESSION["user"]["email"];
                     <p class="accent-cf bold-f drops-f xl-f">Halo, <?= $_SESSION["user"]["fullname"] ?></p>
                     <p class="m-f accent-cf bold-f drops-f p-this">Sertifikat Webinar</p>
                     <div class="list-sertif">
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Hello World !</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
-                        <div class="sertifikat-card">
-                            <div class="sertifikat-card-upper">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
-                            </div>
-                            <div class="sertifikat-card-bottom">
-                                <p>Nama Sertifikat</p>
-                            </div>
-                        </div>
+                        <?php
+                        if (count($certarray) <= 0) {
+                            echo "<div class='empty-event'>";
+                            echo "<p>Tidak ada sertifikat yang tersedia, silahkan ikuti webinar yang ada.</p>";
+                            echo "<button class='simp-btn bold-f s-f accent-cf' onclick='window.location.href=\"event.php\"'>Cari event.</button>";
+                            echo "</div>";
+                        } else {
+                            foreach ($certarray as $elm) {
+                                create_sertif_card($elm);
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
