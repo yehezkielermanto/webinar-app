@@ -87,14 +87,15 @@ while ($r = $result2->fetch_assoc()) {
                     <div class="webinar-grid-outter">
                         <p class="accent-cf bold-f drops-f xl-f">Halo, <?= $_SESSION["user"]["fullname"] ?></p>
                         <br>
-                        <p class="m-f accent-cf bold-f drops-f">Webinar yang tersedia</p>
+                        <!-- container list webinar yang diikuti mau datang -->
+                        <p class="m-f accent-cf bold-f drops-f">Webinar yang akan datang</p>
                         <div class="coming-container">
                             <!-- start here -->
                             <?php
-                            if (count($row) <= 0) {
-                            echo "<p>Tidak ada webinar yang tersedia.</p>";
+                            if (count($row2) <= 0) {
+                            echo "<p>Tidak ada webinar yang kamu ikuti.</p>";
                             } else {
-                            foreach ($row as $card) {
+                            foreach ($row2 as $card) {
                             $poster_url = $card["poster_url"];
                             $title = $card["title"];
                             $speaker = $card["speaker"];
@@ -121,15 +122,14 @@ while ($r = $result2->fetch_assoc()) {
                             ?>
                             <!-- end here -->
                         </div>
-                        <!-- container list webinar yang diikuti mau datang -->
-                        <p class="m-f accent-cf bold-f drops-f">Webinar yang akan datang</p>
+                        <p class="m-f accent-cf bold-f drops-f">Webinar yang tersedia</p>
                         <div class="coming-container">
                             <!-- start here -->
                             <?php
-                            if (count($row2) <= 0) {
-                            echo "<p>Tidak ada webinar yang kamu ikuti.</p>";
+                            if (count($row) <= 0) {
+                            echo "<p>Tidak ada webinar yang tersedia.</p>";
                             } else {
-                            foreach ($row2 as $card) {
+                            foreach ($row as $card) {
                             $poster_url = $card["poster_url"];
                             $title = $card["title"];
                             $speaker = $card["speaker"];
