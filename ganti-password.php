@@ -1,25 +1,20 @@
-<!--Backend Start Here-->
 <?php
 session_start();
 
 if (!isset($_SESSION["email"])) {
-header("Location: login.php");
+    header("Location: login.php");
 }
 
 $koneksi = null;
 include "koneksi.php";
 
-$error="";
-$kunci=NULL;
-$sukses=NULL;
-$email = $_SESSION["email"];
+$email = $_SESSION["user"]["email"];
 
-// Mengambil Password user dan Syarat Password
-$password = $_SESSION["password"];
-$uppercase = preg_match('@[A-Z]@', $password);
-$lowercase = preg_match('@[a-z]@', $password);
-$number = preg_match('@[0-9]@', $password);
-$specialChar = preg_match('@[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]@', $password);
+// TODO: add password requirement for later :
+// $uppercase = preg_match('@[A-Z]@', $password);
+// $lowercase = preg_match('@[a-z]@', $password);
+// $number = preg_match('@[0-9]@', $password);
+// $specialChar = preg_match('@[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]@', $password);
 
 if(isset($_POST["submit"])){
     // Ambil data dari yang di input user
@@ -29,44 +24,38 @@ if(isset($_POST["submit"])){
     $konfirmasi_password_baru = $_POST["konfirmasi_password_baru"];
 
     // Cek bahwa password ini tidak kosong
-    if($password_lama!="" && $password_baru!="" && $konfirmasi_password_baru!=""){
-        $query = "SELECT password FROM users WHERE email='$email'";
+    if($password_lama != "" && $password_baru != "" && $konfirmasi_password_baru != ""){
+        $query = "SELECT password FROM users WHERE email='$email' limit 1";
         $result = mysqli_query($koneksi, $query);
-        while ($row = mysqli_fetch_array($result)) {
-        $cryptKey = $row['password'];
+        $row = mysqli_fetch_array($result); 
+        $cryptKey = $row["password"];
+        $old_password_same = password_verify($password_lama, $cryptKey);
+        if (!$old_password_same) {
+            echo "<script> alert('password lama tidak sesuai.');";
+            echo "window.location.href='/webinar-app/ganti-password.php'</script>";
+            die();
         }
 
-        // Cek apakah password lama sesuai
-        if($password_lama == $cryptKey){
-            // Cek lagi apakah pass baru dan konfirmasi sesuai
-            if($password_baru == $konfirmasi_password_baru){
-                // Cek lagi untuk syarat password
-                if(!$uppercase || !$lowercase || !$number || !$specialChar || strlen($password_baru) < 8){
-                $kunci= "Password harus ada 8 karakter, harus memuat satu huruf kapital, angka, dan karakter spesial";
-                // Kalau Memenuhi syarat
-                } else{
-                    $tmp_password = $password_baru;
-                    $query = "UPDATE users SET password ='$tmp_password' WHERE email='$email'";
-                    $result = mysqli_query($koneksi, $query);
-                    session_unset();
-                    session_destroy();
-                    $sukses = 'Password berhasil diubah klik <a href="login.php" class="alert-link">link ini</a> untuk login';
-                }
-            } else{
-                $sukses = '<strong>Password dan konfirmasi tidak sesuai</strong>';
+        // Cek lagi apakah pass baru dan konfirmasi sesuai
+        if($password_baru == $konfirmasi_password_baru){
+            $tmp_password = password_hash($password_baru, PASSWORD_DEFAULT);
+            $query = "UPDATE users SET password ='$tmp_password' WHERE email='$email' limit 1";
+            $result = mysqli_query($koneksi, $query);
+            if ($result) {
+                session_unset();
+                session_destroy();
+                echo "<script> alert('Password berhasil diubah klik'); window.location.href='/webinar-app/index.php';</script>";
             }
         } else{
-            $sukses = '<strong>Password tidak sama dengan password lama anda</strong>';
+            echo "<script> alert('Ulangi Password yang sama 2x'); window.location.href='/webinar-app/ganti-password.php';</script>";
         }
     } else{
-    $error = '<strong>Password tidak sama dengan password lama Anda</strong>';
+            echo "<script> alert('Password tidak boleh kosong'); window.location.href='/webinar-app/ganti-password.php';</script>";
     }
 }
 
 ?>
-<!--Backend End Here-->
 
-<!--Frontend Start Here-->
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -150,4 +139,3 @@ if(isset($_POST["submit"])){
         </div>
     </body>
 </html>
-<!--Frontend Stop Here-->
