@@ -34,7 +34,7 @@ while ($row = $regresult->fetch_assoc()) {
         <script src="js/webinar_info.js"></script>
     </head>
     <body>
-                <div class="floating-menu">
+        <div class="floating-menu">
             <div class="hamburg-menu" id="hmenu" hidden>
                 <div class="hamburg-inner m-f">
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/webinar-app/beranda.php">Home</a></div>

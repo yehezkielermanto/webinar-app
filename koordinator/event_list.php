@@ -1,4 +1,16 @@
 <?php
+session_start();
+if (!isset($_SESSION["email"])) {
+    header("Location: /webinar-app/index.php");
+}
+
+if (!isset($_SESSION["is_admin"])) {
+    if ($_SESSION["is_admin"] != "ADMIN") {
+        header("Location: /webinar-app/beranda.php");
+    }
+}
+
+$conn = null;
 include 'db.php';
 
 // Ambil semua event

@@ -86,9 +86,16 @@ if (isset($_GET['event_id'])) {
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/feedback.css">
+        <link rel="stylesheet" type="text/css" href="css/profile.css">
+        <script src="js/beranda.js"></script>
     <style>
         .responsive-alignment {
             text-align: left;
+        }
+
+        .floating-hamburg, .floating-menu {
+            width: 48px;
+            height: 48px;
         }
 
         @media (min-width: 1024px) {
@@ -100,6 +107,39 @@ if (isset($_GET['event_id'])) {
     <title>Feedback</title>
 </head>
 <body>
+        <!-- floating hamburger menu -->
+        <div class="floating-menu">
+            <div class="hamburg-menu" id="hmenu" hidden>
+                <div class="hamburg-inner m-f">
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/webinar-app/beranda.php">Home</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-lightning_bolt"></i> <a href="/webinar-app/event.php">Webinar</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-certificate"></i> <a href="/webinar-app/sertifikat.php">Certificate</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-key"></i> <a href="/webinar-app/ganti-password.php">Ganti Password</a></div>
+                    <hr>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-headset"></i> <a href="/webinar-app/support.php">Support</a></div>
+                    <hr>
+                    <?php
+                    if (isset($_SESSION["is_admin"])) {
+                    if ($_SESSION["is_admin"] == "ADMIN") {
+                    echo "
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <hr>
+                    ";
+                    }
+                    }
+                    ?>
+                    <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-account"></i> <a href="/webinar-app/profile/index.php">Profile</a></div>
+                </div>
+            </div>
+            <div class="floating-hamburg" id="toggle-menu">
+                <p class="accent-cf bold-f">
+                    <i class="nf nf-md-menu"></i>
+                </p>
+            </div>
+        </div>
     <div
         style="background-color: #F6F6F6; padding-inline: 1rem; padding-block: 0.5rem;
         margin-inline: 2rem; margin-block: 1rem; border-radius: 1rem;"

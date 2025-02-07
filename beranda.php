@@ -35,7 +35,7 @@ while ($r = $result2->fetch_assoc()) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Profile</title>
+        <title>Beranda</title>
         <link href="css/profile.css" rel="stylesheet">
         <link href="css/beranda.css" rel="stylesheet">
         <script src="js/beranda.js"></script>
