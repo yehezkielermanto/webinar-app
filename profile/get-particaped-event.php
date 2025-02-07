@@ -31,7 +31,7 @@ $query = "";
 header('Content-Type: application/json');
 if (isset($_GET["inc-feedback"])) {
     $query = "
-    SELECT e.*, ep.event_role, 
+    SELECT e.*, ep.event_role, ep.event_id,
     COUNT(ef.id) AS feedback_given
     FROM events e
     JOIN event_participants ep ON ep.event_id = e.id

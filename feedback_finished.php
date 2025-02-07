@@ -30,7 +30,12 @@ if (isset($_POST["feedback_template_id"])) {
 
     $query = "INSERT INTO event_feedbacks (feedback_template_id, event_participant_id, answer, created_at, `status`) VALUES ($feedbackTemplateID, $eventParticipantID, '$answer', NOW(), $status)";
 
-    $koneksi->query($query);
+    $res = $koneksi->query($query);
+
+    if ($res) {
+        $second_query = "UPDATE event_participants SET status = 1 WHERE user_id = $userID and id = $eventParticipantID";
+        $res2 = $koneksi->query($second_query);
+    }
 
     // html only
     $eventID = $_POST["event_id"];

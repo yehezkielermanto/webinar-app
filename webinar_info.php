@@ -92,7 +92,11 @@ while ($row = $regresult->fetch_assoc()) {
                 }
                 
                 // download cert
-                $certquery = "select certificate_url from event_participants where user_id = $user_id and event_id = $event_id";
+                $certquery = "
+                select certificate_url
+                from event_participants
+                where user_id = $user_id and event_id = $event_id and status = 1
+                ";
                 $certresult = mysqli_query($koneksi, $certquery);
                 $certlen = mysqli_num_rows($certresult);
                 $row = mysqli_fetch_array($certresult);
