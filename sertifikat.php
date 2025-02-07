@@ -77,7 +77,7 @@ $email = $_SESSION["user"]["email"];
                                 <p>Hello World !</p>
                             </div>
                         </div>
-                        <div class="sertifikat-card">b
+                        <div class="sertifikat-card">
                             <div class="sertifikat-card-upper">
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstiDzAbJoKeUxG0rnuhguZNMEXYf4fjtcYg&s">
                             </div>
