@@ -34,7 +34,7 @@ while ($row = $regresult->fetch_assoc()) {
         <script src="js/webinar_info.js"></script>
     </head>
     <body>
-                <div class="floating-menu">
+        <div class="floating-menu">
             <div class="hamburg-menu" id="hmenu" hidden>
                 <div class="hamburg-inner m-f">
                     <div class="hamburg-btn"><i class="accent-cf mr-5 nf nf-md-home"></i> <a href="/webinar-app/beranda.php">Home</a></div>
@@ -92,7 +92,11 @@ while ($row = $regresult->fetch_assoc()) {
                 }
                 
                 // download cert
-                $certquery = "select certificate_url from event_participants where user_id = $user_id and event_id = $event_id";
+                $certquery = "
+                select certificate_url
+                from event_participants
+                where user_id = $user_id and event_id = $event_id and status = 1
+                ";
                 $certresult = mysqli_query($koneksi, $certquery);
                 $certlen = mysqli_num_rows($certresult);
                 $row = mysqli_fetch_array($certresult);
