@@ -13,6 +13,13 @@ $currentdate = date("Y-m-d");
 
 $certarray = array();
 
+function create_empty_dialog() {
+    echo "<div class='empty-event'>";
+    echo "<p>Tidak ada sertifikat yang tersedia, silahkan ikuti webinar yang ada.</p>";
+    echo "<button class='simp-btn bold-f s-f accent-cf' onclick='window.location.href=\"beranda.php\"'>Cari event.</button>";
+    echo "</div>";
+}
+
 function create_sertif_card(array $a) {
     $name = $a["title"];
     $cerurl = $a["certificate_url"];
@@ -30,7 +37,9 @@ function create_sertif_card(array $a) {
                 </div>
             </a>
         ";
+        return true;
     }
+    return false;
 }
 
 $query = "
@@ -39,6 +48,7 @@ $query = "
     join event_participants ep
     on e.id = ep.event_id
     where ep.status = 1 and ep.user_id = $user_id and e.date <= '$currentdate'
+    -- where ep.status = 1 and ep.user_id = $user_id
 ";
 $result = mysqli_query($koneksi, $query);
 while ($row = $result->fetch_assoc()) {
@@ -75,7 +85,7 @@ while ($row = $result->fetch_assoc()) {
                     if (isset($_SESSION["is_admin"])) {
                     if ($_SESSION["is_admin"] == "ADMIN") {
                     echo "
-                    <div class='hamburg-btn'>,<i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
                     <hr>
                     ";
                     }
@@ -105,13 +115,16 @@ while ($row = $result->fetch_assoc()) {
                     <div class="list-sertif">
                         <?php
                         if (count($certarray) <= 0) {
-                            echo "<div class='empty-event'>";
-                            echo "<p>Tidak ada sertifikat yang tersedia, silahkan ikuti webinar yang ada.</p>";
-                            echo "<button class='simp-btn bold-f s-f accent-cf' onclick='window.location.href=\"event.php\"'>Cari event.</button>";
-                            echo "</div>";
+                            create_empty_dialog();
                         } else {
+                            $counter = 0;
                             foreach ($certarray as $elm) {
-                                create_sertif_card($elm);
+                                if (create_sertif_card($elm)) {
+                                    $counter += 1;
+                                }
+                            }
+                            if ($counter <= 0) {
+                                create_empty_dialog();
                             }
                         }
                         ?>

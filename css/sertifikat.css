@@ -53,9 +53,11 @@
     padding: 30px;
 }
 
-.sertifikat-card-upper img {
+.cert-img {
     width: 100%;
     border-radius: 8px;
     min-height: 200px;
     border: none;
+    max-height: 200px;
+
 }

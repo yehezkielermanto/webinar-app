@@ -4,6 +4,8 @@
     padding: 0;
     margin: 0;
     font-family: NerdFontsSymbols Nerd Font, Arial, Helvetica, sans-serif;
+    transition: background-color ease-in-out 0.1s;
+    transition: color ease-in-out 0.1s;
 }
 
 .container {
