@@ -16,7 +16,7 @@ $certarray = array();
 function create_empty_dialog() {
     echo "<div class='empty-event'>";
     echo "<p>Tidak ada sertifikat yang tersedia, silahkan ikuti webinar yang ada.</p>";
-    echo "<button class='simp-btn bold-f s-f accent-cf' onclick='window.location.href=\"event.php\"'>Cari event.</button>";
+    echo "<button class='simp-btn bold-f s-f accent-cf' onclick='window.location.href=\"beranda.php\"'>Cari event.</button>";
     echo "</div>";
 }
 
@@ -85,7 +85,7 @@ while ($row = $result->fetch_assoc()) {
                     if (isset($_SESSION["is_admin"])) {
                     if ($_SESSION["is_admin"] == "ADMIN") {
                     echo "
-                    <div class='hamburg-btn'>,<i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
                     <hr>
                     ";
                     }

@@ -9,7 +9,7 @@ include "koneksi.php";
 
 $user_id = $_SESSION["user"]["id"];
 $currentdate = date("Y-m-d"); 
-$query = "SELECT * FROM events WHERE date >= '$currentdate'";
+$query = "SELECT * FROM events WHERE date >= '$currentdate' order by date";
 $result = mysqli_query($koneksi, $query);
 $row = array();
 while ($r = $result->fetch_assoc()) {
