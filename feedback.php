@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION["user"])) {
-    header("Location:session.php");
+    header("Location:/webinar-app/index.php");
     exit;
 }
 
@@ -53,10 +53,10 @@ if ($eventFeedbackTemplate != null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="images/icons/" />
-    <link rel="stylesheet" type="text/css" href="css/util.css"/>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-    <link rel="stylesheet" type="text/css" href="css/feedback.css"/>
-        <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/feedback.css">
+        <link rel="stylesheet" type="text/css" href="css/profile.css">
         <script src="js/beranda.js"></script>
     <style>
         .responsive-answer {

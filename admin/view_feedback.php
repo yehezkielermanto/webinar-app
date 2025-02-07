@@ -1,4 +1,5 @@
 <?php
+$koneksi = null;
 include 'koneksi.php';
 
 $eventID = $_GET["event_id"];
@@ -63,7 +64,7 @@ $resEventFeedback = $koneksi->query("SELECT f.id, f.feedback_template_id, f.even
         if ($resEventFeedback->num_rows > 0) {
             while ($row = mysqli_fetch_assoc($resEventFeedback)) {
                 $answer = json_decode($row["answer"]);
-
+                $eventParticipantID = $row["event_participant_id"];
                 // var_dump($answer);
                 ?>
                 <div>
