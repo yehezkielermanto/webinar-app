@@ -26,7 +26,7 @@ function create_sertif_card(array $a) {
                     <img class='cert-img' src='$cerurl'>
                 </div>
                 <div class='sertifikat-card-bottom'>
-                    <p class='accent-cf bold-f m-f'>$name</p>
+                    <p class='accent-cf bold-f m-f certname'>$name</p>
                 </div>
             </a>
         ";
