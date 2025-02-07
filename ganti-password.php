@@ -10,12 +10,6 @@ include "koneksi.php";
 
 $email = $_SESSION["user"]["email"];
 
-// TODO: add password requirement for later :
-// $uppercase = preg_match('@[A-Z]@', $password);
-// $lowercase = preg_match('@[a-z]@', $password);
-// $number = preg_match('@[0-9]@', $password);
-// $specialChar = preg_match('@[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]@', $password);
-
 if(isset($_POST["submit"])){
     // Ambil data dari yang di input user
     $cryptKey="";
@@ -31,6 +25,17 @@ if(isset($_POST["submit"])){
         $cryptKey = $row["password"];
         $old_password_same = password_verify($password_lama, $cryptKey);
         if (!$old_password_same) {
+            echo "<script> alert('Password harus memiliki Huruf Besar, Huruf Kecil, Nomor, dan Simbol');";
+            echo "window.location.href='/webinar-app/ganti-password.php'</script>";
+            die();
+        }
+
+        $uppercase = preg_match('@[A-Z]@', $password_baru);
+        $lowercase = preg_match('@[a-z]@', $password_baru);
+        $number = preg_match('@[0-9]@', $password_baru);
+        $specialChar = preg_match('@[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]@', $password_baru);
+
+        if(!$uppercase || !$lowercase || !$number || !$specialChar){
             echo "<script> alert('password lama tidak sesuai.');";
             echo "window.location.href='/webinar-app/ganti-password.php'</script>";
             die();
