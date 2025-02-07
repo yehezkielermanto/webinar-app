@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // setup card anchor
             let cardAnchor = document.createElement("a");
 
-            cardAnchor.href = `/webinar-app/webinar_info.php?event_id=${card.event_id}`;
+            cardAnchor.href = `/webinar-app/webinar_info.php?event_id=${card.id}`;
 
             // setup card div
             cardAnchor.classList.add("card-link");
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 feedbackBtn.action = "/webinar-app/feedback.php";
                 feedbackBtn.classList.add("feedback-btn");
                 feedbackBtn.innerHTML = `
-                    <input type="text" name="event_id" value="${card.event_id}" hidden> 
+                    <input type="text" name="event_id" value="${card.id}" hidden> 
                     <button class="feedback-btn-btn">Berikan Feedback</button>
                 `;
                 outterDiv.appendChild(feedbackBtn);

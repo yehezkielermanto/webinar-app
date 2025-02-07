@@ -109,7 +109,10 @@ while ($row = $regresult->fetch_assoc()) {
                 FROM event_feedbacks a 
                 JOIN event_feedback_templates b 
                 ON a.feedback_template_id = b.id
-                WHERE a.event_participant_id = $user_id AND b.event_id = $event_id";
+                JOIN event_participants c
+                ON c.id = a.event_participant_id
+                where c.user_id = $user_id
+                ";
                 $feedresult = mysqli_query($koneksi, $feedquery);
                 $row = mysqli_fetch_array($feedresult);
                 $feedregistered = false;

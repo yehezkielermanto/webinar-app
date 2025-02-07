@@ -31,24 +31,14 @@ $query = "";
 header('Content-Type: application/json');
 if (isset($_GET["inc-feedback"])) {
     $query = "
-        SELECT 
-            e.*, 
-            ep.*, 
-            CASE 
-                WHEN (
-                    SELECT COUNT(*) 
-                    FROM event_feedbacks ef 
-                    WHERE ef.event_participant_id = ep.user_id
-                ) > 0 THEN 1 
-                ELSE 0 
-            END AS feedback_given
-        FROM 
-            event_participants ep
-        JOIN 
-            events e 
-            ON ep.event_id = e.id
-        WHERE 
-            ep.user_id = " . $user_id;
+    SELECT e.*, ep.event_role, 
+    COUNT(ef.id) AS feedback_given
+    FROM events e
+    JOIN event_participants ep ON ep.event_id = e.id
+    LEFT JOIN event_feedbacks ef ON ef.event_participant_id = ep.id
+    WHERE ep.user_id = $user_id
+    GROUP BY e.id;
+        ";
 } else {
 $query = "
     SELECT 
