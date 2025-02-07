@@ -25,7 +25,7 @@ if(isset($_POST["submit"])){
         $cryptKey = $row["password"];
         $old_password_same = password_verify($password_lama, $cryptKey);
         if (!$old_password_same) {
-            echo "<script> alert('Password harus memiliki Huruf Besar, Huruf Kecil, Nomor, dan Simbol');";
+            echo "<script> alert('password lama tidak sesuai.');";
             echo "window.location.href='/webinar-app/ganti-password.php'</script>";
             die();
         }
@@ -36,7 +36,7 @@ if(isset($_POST["submit"])){
         $specialChar = preg_match('/[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]/', $password_baru);
 
         if(!$uppercase || !$lowercase || !$number || !$specialChar){
-            echo "<script> alert('password lama tidak sesuai.');";
+            echo "<script> alert('Password harus memiliki Huruf Besar, Huruf Kecil, Nomor, dan Simbol');";
             echo "window.location.href='/webinar-app/ganti-password.php'</script>";
             die();
         }
@@ -89,7 +89,7 @@ if(isset($_POST["submit"])){
                     if (isset($_SESSION["is_admin"])) {
                     if ($_SESSION["is_admin"] == "ADMIN") {
                     echo "
-                    <div class='hamburg-btn'>,<i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
+                    <div class='hamburg-btn'><i class='accent-cf mr-5 nf nf-fa-gear'></i> <a href='/webinar-app/koordinator/event_list.php'>Koordinator</a></div>
                     <hr>
                     ";
                     }
@@ -137,7 +137,7 @@ if(isset($_POST["submit"])){
                                 <td><input type="password" name="konfirmasi_password_baru" autocomplete="off" required></td>
                             </tr>
                         </table>
-                        <button type="submit" class="submit-change" name="submit" value="Ganti Password">Ganti Password</button>
+                        <button class='changepass-btn' type="submit" class="submit-change" name="submit" value="Ganti Password">Ganti Password</button>
                     </form>
                 </div>
             </div>
