@@ -33,7 +33,7 @@ if(isset($_POST["submit"])){
         $uppercase = preg_match('@[A-Z]@', $password_baru);
         $lowercase = preg_match('@[a-z]@', $password_baru);
         $number = preg_match('@[0-9]@', $password_baru);
-        $specialChar = preg_match('@[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]@', $password_baru);
+        $specialChar = preg_match('/[!@#$%^&*()_+\-=\[\]{};:\\|,.<>\/?~]/', $password_baru);
 
         if(!$uppercase || !$lowercase || !$number || !$specialChar){
             echo "<script> alert('password lama tidak sesuai.');";
