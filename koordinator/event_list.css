@@ -8,11 +8,25 @@ body {
   line-height: 1.6;
 }
 
+.container {
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 16px;
+    height: 92vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    background-color: red;
+    background-color: #f6f6f6;
+    filter: drop-shadow(0px 5px 10px rgba(0,0,0,0.3));
+    padding: 15px;
+}
+
 /* Header styling */
 h1 {
   text-align: center;
   color: #b6a3e8;
   margin-top: 20px;
+    margin-bottom: 0;
 }
 
 /* Navigation link styling */
