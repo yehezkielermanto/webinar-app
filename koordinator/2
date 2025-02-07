@@ -2,7 +2,7 @@
 session_start();
 include 'db.php';
 
-if (!isset($_SESSION['email']) || $_SESSION['user']['role'] !== 'ADMIN') {
+if (!isset($_SESSION['email']) || $_SESSION['role'] !== 'ADMIN') {
     header("Location: /webinar-app/beranda.php");
     exit;
 }

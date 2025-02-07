@@ -1,5 +1,11 @@
 <?php
+session_start();
 include 'db.php';
+
+if (!isset($_SESSION['email']) || $_SESSION['user']['role'] !== 'ADMIN') {
+    header("Location: /webinar-app/beranda.php");
+    exit;
+}
 
 // Tambah event
 if (isset($_POST['tambah'])) {

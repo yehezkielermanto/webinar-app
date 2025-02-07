@@ -1,5 +1,11 @@
 <?php
+session_start();
 include 'db.php';
+
+if (!isset($_SESSION['email']) || $_SESSION['user']['role'] !== 'ADMIN') {
+    header("Location: /webinar-app/beranda.php");
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $event_id = intval($_POST["event_id"]);
